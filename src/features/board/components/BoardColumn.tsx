@@ -1,4 +1,5 @@
 import { useDroppable } from '@dnd-kit/core';
+import { Tooltip } from '@mui/material';
 import type { Status, Ticket } from '@/types';
 import clsx from '@/utils/clsx';
 import { BoardCard } from './BoardCard';
@@ -33,13 +34,14 @@ export function BoardColumn({ status, tickets, now, dropAllowed }: Props) {
       aria-label={`${status}: ${tickets.length} tickets`}
     >
       <header className={styles.columnHead}>
-        <h2>
-          <span className={styles.statusDot} aria-hidden />
-          {status}
-        </h2>
+        <Tooltip title={HINT[status]} placement="top-start">
+          <h2>
+            <span className={styles.statusDot} aria-hidden />
+            {status}
+          </h2>
+        </Tooltip>
         <span className={styles.count}>{tickets.length}</span>
       </header>
-      <p className={styles.columnHint}>{HINT[status]}</p>
       <div className={styles.cards}>
         {tickets.length === 0 ? (
           <p className={styles.columnEmpty}>Sin tickets</p>

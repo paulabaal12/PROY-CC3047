@@ -28,15 +28,14 @@ export function BoardCardContent({ ticket, now, overlay }: Props) {
     ? 'usuario'
     : (ticket.assignee as RoleId);
   return (
-    <div
-      className={clsx(
-        styles.card,
-        ticket.priority === 'Crítica' && styles.critical,
-        overlay && styles.overlay,
-      )}
-    >
+    <div className={clsx(styles.card, overlay && styles.overlay)}>
       <div className={styles.cardTop}>
-        <span className={styles.cardId}>{ticket.id}</span>
+        <span className={styles.cardId}>
+          {ticket.priority === 'Crítica' && (
+            <span className={styles.p1Dot} aria-label="P1" role="img" />
+          )}
+          {ticket.id}
+        </span>
         <span className={styles.cardIcons}>
           {(ticket.isProblem || ticket.knownError) && (
             <Tooltip title={ticket.knownError ? 'Error conocido' : 'Problema'}>
@@ -61,7 +60,7 @@ export function BoardCardContent({ ticket, now, overlay }: Props) {
       <p className={styles.cardCategory}>{categoryName(ticket.category)}</p>
       <div className={styles.cardFooter}>
         <span className={styles.cardAssignee}>
-          <PersonAvatar name={holder} role={holderRole} size={22} />
+          <PersonAvatar name={holder} role={holderRole} size={20} />
           <span>{holder}</span>
         </span>
         <div className={styles.cardSla}>

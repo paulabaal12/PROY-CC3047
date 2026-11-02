@@ -1,51 +1,43 @@
 @use 'styles/mixins' as *;
 @use 'styles/tokens' as *;
 
-// ── P1 banner: sober, tinted, one line on desktop ──
+// ── P1 banner: neutral card, the red dot carries the state ──
 .p1Banner {
+  @include card;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: $s-3 $s-4;
+  gap: $s-2 $s-4;
   margin-bottom: $s-6;
   padding: $s-3 $s-4;
-  border: 1px solid #fecaca;
-  border-radius: $radius;
-  background: #fef2f2;
-  color: #7f1d1d;
 }
 
-:global([data-theme='dark']) .p1Banner {
-  background: rgba(239, 68, 68, 0.08);
-  border-color: rgba(239, 68, 68, 0.3);
-  color: #fecaca;
-}
-
-.p1Icon {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
+.p1Dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
   flex: none;
   border-radius: 50%;
-  background: rgba(239, 68, 68, 0.12);
-  color: #dc2626;
+  background: $p-critica;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
 }
 
 .p1Text {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 2px $s-2;
   flex: 1 1 280px;
   min-width: 0;
+  font-size: 0.875rem;
 
   strong {
-    font-family: $font-heading;
-    font-size: 0.875rem;
     font-weight: 600;
+    color: var(--heading);
   }
 
   span {
-    font-size: 0.8125rem;
-    opacity: 0.85;
+    color: var(--text-2);
   }
 }
 
@@ -56,44 +48,43 @@
 }
 
 .p1Link {
-  @include focus-ring;
   display: inline-flex;
   align-items: center;
   height: 28px;
   padding: 0 $s-3;
-  border-radius: 99px;
-  background: var(--surface);
-  border: 1px solid #fecaca;
-  color: #b91c1c;
-  font-size: 0.75rem;
-  font-weight: 600;
-  text-decoration: none;
+  border-radius: 6px;
+  border: 1px solid var(--border-strong);
+  color: var(--text) !important;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  text-decoration: none !important;
 
   &:hover {
-    border-color: #f87171;
+    background: var(--surface-2);
   }
 }
 
-// ── Filters: every control is 40px tall ──
+// ── Filters: every control is 36px ──
 .filters {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: $s-3;
-  margin-bottom: $s-5;
+  gap: $s-2;
+  margin-bottom: $s-4;
 }
 
 .search {
-  flex: 1 1 240px;
-  min-width: 200px;
+  flex: 1 1 220px;
+  min-width: 180px;
+  max-width: 320px;
 }
 
 .select {
   flex: 1 1 100%;
 
   @include up($bp-sm) {
-    flex: 0 1 200px;
-    min-width: 168px;
+    flex: 0 1 190px;
+    min-width: 160px;
   }
 }
 
@@ -107,27 +98,28 @@
   @include focus-ring;
   display: inline-flex;
   align-items: center;
-  gap: $s-2;
-  height: $h-md;
+  gap: 6px;
+  height: $h;
   padding: 0 $s-3;
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-strong);
   border-radius: $radius-control;
   background: var(--surface);
-  color: var(--text);
+  color: var(--text-2);
   font: 500 0.8125rem/1 $font-body;
   cursor: pointer;
   transition:
-    border-color 140ms ease,
-    background 140ms ease;
+    background 120ms ease,
+    color 120ms ease;
 
   &:hover {
-    border-color: var(--border-strong);
+    color: var(--text);
+    background: var(--surface-2);
   }
 }
 
 .priorityOn {
+  background: var(--primary-tint);
   border-color: var(--primary);
-  background: var(--primary-soft);
   color: var(--primary);
 }
 
@@ -140,14 +132,15 @@
 .resultCount {
   margin: 0 0 $s-3;
   font-size: 0.8125rem;
-  color: var(--text-muted);
+  color: var(--text-2);
 }
 
-// ── Board ──
+// ── Board: four columns of equal width ──
 .board {
   display: grid;
   gap: $s-4;
   grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
 
   @include up($bp-sm) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -159,21 +152,23 @@
 }
 
 .column {
-  --status: #94a3b8;
+  --status: #{$p-planificada};
+  min-width: 0;
   display: flex;
   flex-direction: column;
+  gap: $s-3;
   min-height: 240px;
   padding: $s-3;
   border: 1px dashed transparent;
-  border-radius: $radius-lg;
+  border-radius: $radius;
   background: var(--column-bg);
   transition:
-    border-color 140ms ease,
-    background 140ms ease;
+    border-color 120ms ease,
+    background 120ms ease;
 }
 
 .column[data-status='Abierto'] {
-  --status: #{$sky};
+  --status: #{$accent};
 }
 
 .column[data-status='En progreso'] {
@@ -186,7 +181,6 @@
 
 .over {
   border-color: var(--primary);
-  background: var(--primary-soft);
 }
 
 .denied {
@@ -198,17 +192,18 @@
   align-items: center;
   justify-content: space-between;
   gap: $s-2;
-  padding: $s-1 $s-1 0;
+  height: 28px;
+  padding: 0 $s-1;
 
   h2 {
     display: flex;
     align-items: center;
     gap: $s-2;
     margin: 0;
-    font-family: $font-heading;
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     font-weight: 600;
     color: var(--heading);
+    cursor: default;
   }
 }
 
@@ -220,27 +215,16 @@
 }
 
 .count {
-  min-width: 24px;
-  height: 22px;
-  padding: 0 $s-2;
-  border-radius: 99px;
-  background: var(--surface);
-  color: var(--text-muted);
   font-size: 0.75rem;
-  font-weight: 600;
-  line-height: 22px;
-  text-align: center;
-}
-
-.columnHint {
-  margin: 2px $s-1 $s-3;
-  font-size: 0.75rem;
-  color: var(--text-muted);
+  font-weight: 500;
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
 }
 
 .cards {
   display: grid;
-  gap: $s-3;
+  grid-template-columns: minmax(0, 1fr);
+  gap: $s-2;
 }
 
 .columnEmpty {
@@ -250,16 +234,25 @@
   border-radius: $radius;
   text-align: center;
   font-size: 0.8125rem;
-  color: var(--text-muted);
+  color: var(--text-3);
 }
 
-// ── Card: same structure and minimum height for every ticket ──
+// ── Ticket card: identical structure and minimum height ──
 .draggable {
-  @include focus-ring;
+  min-width: 0;
   border-radius: $radius;
   cursor: grab;
   touch-action: none;
   user-select: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
 }
 
 .dragging {
@@ -268,24 +261,18 @@
 
 .card {
   @include card;
-  @include hover-lift;
+  @include hover-border;
+  min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: $s-2;
-  min-height: 168px;
-  padding: $s-4;
-}
-
-.critical {
-  box-shadow:
-    inset 2px 0 0 #{$p-critica},
-    var(--shadow-xs);
+  gap: 6px;
+  min-height: 148px;
+  padding: 14px;
 }
 
 .overlay {
   cursor: grabbing;
-  transform: rotate(1.5deg);
-  box-shadow: var(--shadow-drag);
+  box-shadow: $shadow-overlay;
 }
 
 .cardTop {
@@ -293,14 +280,15 @@
   align-items: center;
   justify-content: space-between;
   gap: $s-2;
-  min-height: 26px;
+  height: 22px;
 }
 
 .cardId {
-  font-family: $font-heading;
+  @include id-text;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.75rem;
-  font-weight: 600;
-  color: var(--primary);
 }
 
 .cardIcons {
@@ -310,16 +298,13 @@
 }
 
 .problemIcon {
-  color: #dc2626;
-  font-size: 1.05rem !important;
+  color: var(--text-2);
+  font-size: 1rem !important;
 }
 
 .hintIcon {
-  color: #fff;
-  background: #f97316;
-  border-radius: 50%;
+  color: $p-alta;
   font-size: 1rem !important;
-  padding: 1px;
 }
 
 .cardTitle {
@@ -327,7 +312,7 @@
   margin: 0;
   min-height: calc(1.4em * 2);
   font-size: 0.875rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.4;
   color: var(--heading);
 }
@@ -335,28 +320,30 @@
 .cardCategory {
   margin: 0;
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-2);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .cardFooter {
-  display: grid;
-  gap: $s-2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $s-3;
   margin-top: auto;
-  padding-top: $s-3;
+  padding-top: $s-2;
   border-top: 1px solid var(--border);
 }
 
 .cardAssignee {
   display: flex;
   align-items: center;
-  gap: $s-2;
+  gap: 6px;
+  flex: 0 1 auto;
   min-width: 0;
   font-size: 0.75rem;
-  font-weight: 500;
-  color: var(--text);
+  color: var(--text-2);
 
   > span:last-child {
     white-space: nowrap;
@@ -366,10 +353,18 @@
 }
 
 .cardSla {
-  min-height: 26px;
+  display: flex;
+  justify-content: flex-end;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 62%;
 }
 
 .cardDone {
+  display: block;
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-3);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

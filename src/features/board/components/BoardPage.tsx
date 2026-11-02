@@ -1,4 +1,3 @@
-import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
 import {
   DndContext,
   DragOverlay,
@@ -31,17 +30,13 @@ function P1Banner({ tickets }: { tickets: Ticket[] }) {
   const many = tickets.length > 1;
   return (
     <div className={styles.p1Banner} role="alert">
-      <span className={styles.p1Icon} aria-hidden>
-        <ReportProblemOutlinedIcon fontSize="small" />
-      </span>
+      <span className={styles.p1Dot} aria-hidden />
       <div className={styles.p1Text}>
         <strong>
           {tickets.length} incidente{many ? 's' : ''} crítico{many ? 's' : ''} (P1) abierto
           {many ? 's' : ''}
         </strong>
-        <span>
-          Objetivo: restaurar en 90 min o menos (meta interna: 75). Aparecen primero en su columna.
-        </span>
+        <span>Restaurar en 90 min o menos (meta interna: 75).</span>
       </div>
       <div className={styles.p1Links}>
         {tickets.map((t) => (
@@ -137,22 +132,9 @@ export function BoardPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Service Desk"
+        breadcrumbs={[{ label: 'Soporte' }, { label: 'Tablero' }]}
         title="Tablero"
-        subtitle="Dos colas separadas. Arrastra las tarjetas para cambiar su estado; dentro de cada columna se ordenan por prioridad y antigüedad."
-        stats={[
-          { label: 'activos', value: counts.Incidente + counts.Solicitud },
-          {
-            label: 'P1 abiertos',
-            value: p1Open.length,
-            tone: p1Open.length ? 'danger' : 'default',
-          },
-          {
-            label: 'con SLA vencido',
-            value: breachedActive,
-            tone: breachedActive ? 'danger' : 'default',
-          },
-        ]}
+        subtitle={`${counts.Incidente + counts.Solicitud} activos · ${p1Open.length} P1 abiertos · ${breachedActive} con SLA vencido · arrastra las tarjetas para cambiar su estado`}
       />
       <P1Banner tickets={p1Open} />
 
