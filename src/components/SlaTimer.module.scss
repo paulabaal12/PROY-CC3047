@@ -87,3 +87,10 @@
   border-radius: 99px;
   transition: width 400ms ease;
 }
+
+.exempt {
+  margin: 0;
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--text-muted);
+}

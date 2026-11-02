@@ -142,7 +142,12 @@ export function DynamicField({ field, value, details, error, onChange }: Props) 
     return (
       <Stack gap={1}>
         <Stack direction={{ xs: 'column', sm: 'row' }} gap={1} alignItems={{ sm: 'center' }}>
-          <Button variant="outlined" component="label" startIcon={<AttachFileIcon />}>
+          <Button
+            variant="outlined"
+            component="label"
+            startIcon={<AttachFileIcon />}
+            sx={{ whiteSpace: 'nowrap', flex: 'none' }}
+          >
             Adjuntar archivo
             <input
               hidden

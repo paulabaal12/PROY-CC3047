@@ -66,10 +66,14 @@ export function getTicketSla(ticket: Ticket, now: Date, cfg: WindowConfig = DEFA
   };
 }
 
+/** Problem records are managed by problem management, not by the incident SLA clocks. */
+export const isSlaExempt = (ticket: Ticket): boolean => ticket.isProblem;
+
 const isBad = (c: SlaClock) => c.state === 'breached' || c.state === 'missed';
 
 /** True if either the response or the resolution target was (or is being) missed. */
 export function isSlaBreached(ticket: Ticket, now: Date, cfg: WindowConfig = DEFAULT_WINDOW): boolean {
+  if (isSlaExempt(ticket)) return false;
   const sla = getTicketSla(ticket, now, cfg);
   return isBad(sla.response) || isBad(sla.resolution);
 }

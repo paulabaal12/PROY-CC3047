@@ -5,7 +5,7 @@ import { t } from '@/config/texts';
 import type { Ticket } from '@/types';
 import { formatBusinessMinutes } from '@/utils/businessHours';
 import { formatDateTime } from '@/utils/dates';
-import { getTicketSla, type SlaClock } from '@/utils/sla';
+import { getTicketSla, isSlaExempt, type SlaClock } from '@/utils/sla';
 import styles from './SlaTimer.module.scss';
 
 const STATE_CLASS: Record<SlaClock['state'], string> = {
@@ -60,6 +60,9 @@ interface Props {
 
 /** Response and resolution clocks: green, yellow (< 25% left) and red (overdue). */
 export function SlaTimer({ ticket, now, compact = false }: Props) {
+  if (isSlaExempt(ticket)) {
+    return <p className={styles.exempt}>Registro de problema: se gestiona por causa raíz, sin SLA de incidente.</p>;
+  }
   const sla = getTicketSla(ticket, now);
   if (compact) {
     // Cards show the clock that matters right now.

@@ -234,6 +234,7 @@
 .charts {
   display: grid;
   gap: 20px;
+  align-items: start;
   margin-top: 20px;
 
   @include up($bp-md) {
