@@ -1,3 +1,8 @@
+import AdminPanelSettingsOutlinedIcon from '@mui/icons-material/AdminPanelSettingsOutlined';
+import EngineeringOutlinedIcon from '@mui/icons-material/EngineeringOutlined';
+import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
+import HeadsetMicOutlinedIcon from '@mui/icons-material/HeadsetMicOutlined';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import {
   Button,
@@ -6,20 +11,48 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  FormControlLabel,
   InputAdornment,
-  Stack,
   Switch,
   TextField,
 } from '@mui/material';
-import { useState } from 'react';
-import { Panel, PageHeader } from '@/components';
+import { useState, type ReactNode } from 'react';
+import { PageHeader } from '@/components';
 import { ROLES } from '@/config/roles';
 import { SERVICE_WINDOW } from '@/config/sla';
 import { useRole } from '@/features/auth';
 import { useSettings, useToast } from '@/hooks';
 import { ticketService } from '@/services';
+import type { RoleId } from '@/types';
 import styles from './Settings.module.scss';
+
+const ROLE_ICON: Record<RoleId, ReactNode> = {
+  usuario: <PersonOutlineIcon />,
+  'service-desk': <HeadsetMicOutlinedIcon />,
+  'resp-tecnico': <EngineeringOutlinedIcon />,
+  'resp-contenido': <FactCheckOutlinedIcon />,
+  dueno: <AdminPanelSettingsOutlinedIcon />,
+};
+
+/** One settings row: title and description on the left, the control on the right. */
+function Row({
+  title,
+  description,
+  children,
+}: {
+  title: string;
+  description?: ReactNode;
+  children?: ReactNode;
+}) {
+  return (
+    <div className={styles.row}>
+      <div className={styles.rowText}>
+        <h3>{title}</h3>
+        {description && <p>{description}</p>}
+      </div>
+      {children && <div className={styles.rowControl}>{children}</div>}
+    </div>
+  );
+}
 
 export function SettingsPage() {
   const { settings, updateSettings } = useSettings();
@@ -40,44 +73,54 @@ export function SettingsPage() {
   };
 
   return (
-    <>
-      <PageHeader eyebrow="Preferencias" title="Configuración" />
-      <div className={styles.grid}>
-        <Panel title="Apariencia">
-          <FormControlLabel
-            control={
-              <Switch
-                checked={settings.themeMode === 'dark'}
-                onChange={(e) => updateSettings({ themeMode: e.target.checked ? 'dark' : 'light' })}
-              />
-            }
-            label="Modo noche"
+    <div className={styles.page}>
+      <PageHeader
+        breadcrumbs={[{ label: 'Cuenta' }, { label: 'Configuración' }]}
+        title="Configuración"
+        subtitle="Preferencias de este navegador y valores de referencia del servicio."
+      />
+
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Apariencia</h2>
+        <Row title="Modo noche" description="Cambia la interfaz a un tema oscuro.">
+          <Switch
+            checked={settings.themeMode === 'dark'}
+            onChange={(e) => updateSettings({ themeMode: e.target.checked ? 'dark' : 'light' })}
+            slotProps={{ input: { 'aria-label': 'Modo noche' } }}
           />
-        </Panel>
+        </Row>
+      </section>
 
-        <Panel title="Rol simulado">
-          <p className={styles.text}>
-            Activo: <strong>{roleDef.name}</strong> ({roleDef.persona.name}). Cámbialo desde el
-            selector de la barra lateral.
-          </p>
-          <ul className={styles.roles}>
-            {ROLES.map((r) => (
-              <li key={r.id}>
-                <strong>{r.name}:</strong> {r.permissions.join(' · ')}
-              </li>
-            ))}
-          </ul>
-        </Panel>
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Rol simulado</h2>
+        <Row
+          title={roleDef.name}
+          description={`Sesión de ${roleDef.persona.name}. Cámbialo desde el selector de la barra lateral.`}
+        />
+        <ul className={styles.roles}>
+          {ROLES.map((r) => (
+            <li key={r.id} className={r.id === roleDef.id ? styles.current : undefined}>
+              <span className={styles.roleIcon} aria-hidden>
+                {ROLE_ICON[r.id]}
+              </span>
+              <div>
+                <strong>{r.name}</strong>
+                <span>{r.permissions.join(' · ')}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </section>
 
-        <Panel title="Disponibilidad de referencia (UptimeRobot)">
-          <p className={styles.text}>
-            El objetivo de disponibilidad (≥ 99% mensual) lo mide UptimeRobot. Registra aquí el
-            valor del mes para el Dashboard.
-          </p>
-          <Stack direction="row" gap={1.5} alignItems="center" className={styles.inline}>
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Disponibilidad</h2>
+        <Row
+          title="Disponibilidad del mes"
+          description="La mide UptimeRobot; el objetivo es 99% mensual. Se muestra en el Dashboard."
+        >
+          <div className={styles.inline}>
             <TextField
               type="number"
-              label="Disponibilidad del mes"
               value={availability}
               onChange={(e) => setAvailability(e.target.value)}
               error={!validAvailability}
@@ -85,7 +128,7 @@ export function SettingsPage() {
               className={styles.inlineField}
               slotProps={{
                 input: { endAdornment: <InputAdornment position="end">%</InputAdornment> },
-                htmlInput: { step: 0.01, min: 0, max: 100 },
+                htmlInput: { step: 0.01, min: 0, max: 100, 'aria-label': 'Disponibilidad del mes' },
               }}
             />
             <Button
@@ -98,31 +141,35 @@ export function SettingsPage() {
             >
               Guardar
             </Button>
-          </Stack>
-          {!validAvailability && <p className={styles.error}>Ingresa un valor entre 0 y 100.</p>}
-        </Panel>
+          </div>
+        </Row>
+        {!validAvailability && <p className={styles.error}>Ingresa un valor entre 0 y 100.</p>}
+      </section>
 
-        <Panel title="Ventana de servicio">
-          <p className={styles.text}>
-            {SERVICE_WINDOW.label}. Los feriados de Guatemala no cuentan para el SLA.
-          </p>
-        </Panel>
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Ventana de servicio</h2>
+        <Row
+          title={SERVICE_WINDOW.label}
+          description="El reloj del SLA solo corre dentro de la ventana; los feriados de Guatemala no cuentan."
+        />
+      </section>
 
-        <Panel title="Datos de demostración" tone="danger">
-          <p className={styles.text}>
-            Borra los tickets guardados en este navegador y vuelve a cargar los ~28 tickets de
-            ejemplo (fechas de las últimas 3 semanas).
-          </p>
+      <section className={styles.section}>
+        <h2 className={styles.sectionTitle}>Datos de demostración</h2>
+        <Row
+          title="Restablecer datos"
+          description="Borra los tickets de este navegador y vuelve a cargar los ~28 tickets de ejemplo."
+        >
           <Button
             variant="outlined"
             color="error"
             startIcon={<RestartAltIcon />}
             onClick={() => setConfirm(true)}
           >
-            Restablecer datos de demostración
+            Restablecer
           </Button>
-        </Panel>
-      </div>
+        </Row>
+      </section>
 
       <Dialog open={confirm} onClose={() => setConfirm(false)}>
         <DialogTitle>¿Restablecer los datos?</DialogTitle>
@@ -146,6 +193,6 @@ export function SettingsPage() {
           </Button>
         </DialogActions>
       </Dialog>
-    </>
+    </div>
   );
 }

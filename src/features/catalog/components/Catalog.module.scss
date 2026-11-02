@@ -1,163 +1,105 @@
 @use 'styles/mixins' as *;
 @use 'styles/tokens' as *;
 
+.stack {
+  display: grid;
+  gap: $s-6;
+}
+
 .sectionTitle {
-  @include heading(1.125rem);
   display: flex;
   align-items: center;
   gap: $s-2;
-  margin: $s-8 0 $s-4;
+  margin: 0 0 $s-3;
+  font-size: 0.9375rem;
+  font-weight: 600;
   color: var(--heading);
 
-  &:first-of-type {
-    margin-top: 0;
-  }
-
-  em {
-    display: inline-grid;
-    place-items: center;
-    min-width: 24px;
-    height: 24px;
-    padding: 0 $s-2;
-    border-radius: 99px;
-    background: var(--primary-soft);
-    color: var(--primary);
-    font-family: $font-body;
+  span {
     font-size: 0.75rem;
-    font-style: normal;
-    font-weight: 600;
+    font-weight: 500;
+    color: var(--text-2);
+    font-variant-numeric: tabular-nums;
   }
 }
 
-.grid {
+.serviceCell {
   display: grid;
-  gap: $s-4;
-
-  @include up($bp-md) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-.service {
-  @include hover-lift;
-  display: flex;
-  flex-direction: column;
-  gap: $s-3;
-}
-
-.serviceTop {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.number {
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: $radius-control;
-  background: var(--accent-soft);
-  color: var(--primary);
-  font-family: $font-heading;
-  font-size: 0.875rem;
-  font-weight: 600;
+  gap: 2px;
+  padding: $s-1 0;
 }
 
 .serviceName {
-  @include heading(1.0625rem);
-  margin: 0;
+  font-weight: 600;
   color: var(--heading);
 }
 
 .why {
-  margin: 0;
-  line-height: 1.6;
-  font-size: 0.875rem;
-  color: var(--text);
-
-  span {
-    display: block;
-    margin-bottom: 2px;
-    font-weight: 600;
-    color: var(--primary);
-  }
-}
-
-.facts {
-  display: grid;
-  gap: $s-3;
-  margin: 0;
-  padding-top: $s-3;
-  border-top: 1px solid var(--border);
   font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--text-2);
 
-  dt {
-    @include label;
-  }
-
-  dd {
-    margin: 2px 0 0;
+  strong {
+    font-weight: 500;
+    color: var(--text);
   }
 }
 
-.inline {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px;
-}
-
-.fieldChips {
-  display: flex;
-  flex-wrap: wrap;
+.priorityCell {
+  display: grid;
+  justify-items: start;
   gap: 4px;
 }
 
-.cta {
-  margin-top: auto !important;
-  align-self: flex-start;
+.muted {
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--text-2);
 }
 
+// ── Priority matrix ──
 .tableWrap {
   overflow-x: auto;
 }
 
 .matrix {
   width: 100%;
-  min-width: 620px;
-  border-collapse: separate;
-  border-spacing: $s-2;
+  min-width: 600px;
+  border-collapse: collapse;
 
   th {
-    padding: $s-2;
+    height: 36px;
+    padding: 0 $s-3;
     text-align: left;
-    font-family: $font-heading;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--heading);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-2);
     cursor: help;
+  }
+
+  tbody th {
+    font-size: 0.8125rem;
+    color: var(--text);
   }
 
   td {
     padding: $s-3;
     border: 1px solid var(--border);
-    border-radius: $radius-control;
-    background: var(--surface-muted);
     vertical-align: top;
 
     span {
       display: block;
-      margin-top: $s-2;
+      margin-top: 6px;
       font-size: 0.75rem;
-      color: var(--text-muted);
+      color: var(--text-2);
+      font-variant-numeric: tabular-nums;
     }
   }
 }
 
 .criteria {
   display: grid;
-  gap: $s-5;
+  gap: $s-6;
   margin-top: $s-5;
   padding-top: $s-5;
   border-top: 1px solid var(--border);
@@ -167,44 +109,83 @@
   }
 
   h3 {
-    @include heading(0.9375rem);
     margin: 0 0 $s-2;
+    font-size: 0.8125rem;
+    font-weight: 600;
     color: var(--heading);
   }
 
-  ul {
+  dl {
     margin: 0;
-    padding-left: 18px;
+  }
+
+  dl > div {
     display: grid;
-    gap: $s-1;
+    grid-template-columns: 64px minmax(0, 1fr);
+    gap: $s-3;
+    padding: 6px 0;
+    border-bottom: 1px solid var(--border);
     font-size: 0.8125rem;
-    line-height: 1.55;
+    line-height: 1.5;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  dt {
+    font-weight: 500;
+  }
+
+  dd {
+    margin: 0;
+    color: var(--text-2);
   }
 }
 
-.window {
-  margin: $s-5 0 0;
-  padding: $s-3 $s-4;
-  border-radius: $radius-control;
-  background: var(--primary-soft);
-  font-size: 0.8125rem;
-}
-
+// Two cards of equal height.
 .twoCols {
   display: grid;
-  gap: $s-4;
-  margin-top: $s-4;
+  gap: $s-6;
+  align-items: stretch;
 
   @include up($bp-md) {
     grid-template-columns: 1fr 1fr;
   }
 }
 
-.plainList {
+.kv {
   margin: 0;
-  padding-left: 18px;
-  display: grid;
-  gap: $s-2;
-  font-size: 0.8125rem;
-  line-height: 1.5;
+
+  > div {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: $s-3;
+    padding: $s-2 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    @media (max-width: ($bp-sm - 1)) {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2px;
+    }
+  }
+
+  dt {
+    font-weight: 500;
+  }
+
+  dd {
+    margin: 0;
+    color: var(--text-2);
+  }
 }

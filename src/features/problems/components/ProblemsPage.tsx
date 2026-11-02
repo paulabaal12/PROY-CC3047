@@ -1,7 +1,7 @@
 import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined';
-import { Alert, Chip, Tab, Tabs } from '@mui/material';
+import { Chip, Tab, Tabs } from '@mui/material';
 import { useMemo, useState } from 'react';
-import { PRIORITY_COLORS, toneSx } from '@/app/theme';
+import { NEUTRAL_TONE, toneSx } from '@/app/theme';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   CardListSkeleton,
@@ -26,20 +26,20 @@ function ProblemCard({ problem, all }: { problem: Ticket; all: Ticket[] }) {
   return (
     <Panel className={styles.card} as="article">
       <div className={styles.top}>
-        <RouterLink to={`/tickets/${problem.id}`} className={styles.id}>
-          {problem.id}
-        </RouterLink>
+        <span className={styles.id}>{problem.id}</span>
         <div className={styles.chips}>
-          {problem.knownError ? (
-            <Chip size="small" label="Error conocido" sx={toneSx(PRIORITY_COLORS.Alta)} />
-          ) : (
-            <Chip size="small" label="Problema" sx={toneSx(PRIORITY_COLORS.Crítica)} />
-          )}
+          <Chip
+            size="small"
+            label={problem.knownError ? 'Error conocido' : 'Problema'}
+            sx={toneSx(NEUTRAL_TONE)}
+          />
           <PriorityChip priority={problem.priority} />
           <StatusChip status={problem.status} />
         </div>
       </div>
-      <h3 className={styles.title}>{problem.title}</h3>
+      <h3 className={styles.title}>
+        <RouterLink to={`/tickets/${problem.id}`}>{problem.title}</RouterLink>
+      </h3>
       <p className={styles.meta}>
         {categoryName(problem.category)} · {assigneeName(problem.assignee)} · desde{' '}
         {formatDate(problem.createdAt)}
@@ -50,24 +50,20 @@ function ProblemCard({ problem, all }: { problem: Ticket; all: Ticket[] }) {
           {problem.rootCause}
         </p>
       )}
-      {problem.workaround ? (
-        <Alert severity="success" variant="outlined">
-          <strong>Workaround:</strong> {problem.workaround}
-        </Alert>
-      ) : (
-        <Alert severity="warning" variant="outlined">
-          Sin workaround documentado todavía.
-        </Alert>
-      )}
+      <div className={problem.workaround ? styles.workaround : styles.noWorkaround}>
+        <span>Workaround</span>
+        {problem.workaround ?? 'Sin workaround documentado todavía.'}
+      </div>
       <div className={styles.block}>
         <span>Incidentes asociados ({incidents.length})</span>
         {incidents.length === 0 ? (
           <em>Ninguno</em>
         ) : (
-          <ul>
+          <ul className={styles.rows}>
             {incidents.map((i) => (
               <li key={i.id}>
-                <RouterLink to={`/tickets/${i.id}`}>{i.id}</RouterLink> {i.title} ·{' '}
+                <RouterLink to={`/tickets/${i.id}`}>{i.id}</RouterLink>
+                <span>{i.title}</span>
                 <em>{i.status}</em>
               </li>
             ))}
@@ -77,10 +73,11 @@ function ProblemCard({ problem, all }: { problem: Ticket; all: Ticket[] }) {
       {changes.length > 0 && (
         <div className={styles.block}>
           <span>Cambios para la solución definitiva</span>
-          <ul>
+          <ul className={styles.rows}>
             {changes.map((c) => (
               <li key={c.id}>
-                <RouterLink to={`/tickets/${c.id}`}>{c.id}</RouterLink> {c.changeType} ·{' '}
+                <RouterLink to={`/tickets/${c.id}`}>{c.id}</RouterLink>
+                <span>{c.changeType}</span>
                 <em>{c.status}</em>
               </li>
             ))}
@@ -106,9 +103,9 @@ export function ProblemsPage() {
   return (
     <>
       <PageHeader
-        eyebrow="Gestión de problemas"
+        breadcrumbs={[{ label: 'Soporte' }, { label: 'Problemas' }]}
         title="Problemas y errores conocidos"
-        subtitle="Causas raíz que agrupan incidentes repetidos, con su workaround para que Nivel 1 responda rápido."
+        subtitle="Causas raíz que agrupan incidentes repetidos, con su workaround para Nivel 1."
       />
       <Tabs value={filter} onChange={(_, v: Filter) => setFilter(v)} sx={{ mb: 2 }}>
         <Tab value="all" label="Todos" />
@@ -119,7 +116,7 @@ export function ProblemsPage() {
         <CardListSkeleton count={2} />
       ) : problems.length === 0 ? (
         <EmptyState
-          icon={<BugReportOutlinedIcon fontSize="large" />}
+          icon={<BugReportOutlinedIcon />}
           title="No hay problemas registrados"
           description="Desde el detalle de un incidente, usa “Crear problema” cuando se repite o se desconoce su causa."
         />

@@ -1,19 +1,19 @@
 @use 'styles/mixins' as *;
 @use 'styles/tokens' as *;
 
+// Cards of the same row stretch to the same height.
 .grid {
   display: grid;
-  gap: $s-4;
+  gap: $s-6;
+  align-items: stretch;
 
   @include up($bp-lg) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-.card {
-  display: grid;
-  gap: $s-4;
-  align-content: start;
+.card > div {
+  gap: $s-3;
 }
 
 .top {
@@ -25,15 +25,7 @@
 }
 
 .id {
-  font-family: $font-heading;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--primary);
-  text-decoration: none;
-
-  &:hover {
-    text-decoration: underline;
-  }
+  @include id-text;
 }
 
 .chips {
@@ -43,15 +35,18 @@
 }
 
 .title {
-  @include heading(1.0625rem);
+  @include heading(1rem);
   margin: 0;
-  color: var(--heading);
+
+  a {
+    color: var(--heading);
+  }
 }
 
 .meta {
   margin: -$s-2 0 0;
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-2);
 }
 
 .block {
@@ -62,18 +57,73 @@
   > span {
     @include label;
     display: block;
-    margin-bottom: $s-1;
-  }
-
-  ul {
-    margin: 0;
-    padding-left: 18px;
-    display: grid;
-    gap: 2px;
+    margin-bottom: 2px;
   }
 
   em {
     font-style: normal;
-    color: var(--text-muted);
+    color: var(--text-2);
+  }
+}
+
+.workaround,
+.noWorkaround {
+  padding: $s-2 $s-3;
+  border-left: 3px solid $success;
+  border-radius: 0 6px 6px 0;
+  background: var(--surface-2);
+  font-size: 0.875rem;
+  line-height: 1.55;
+
+  > span {
+    @include label;
+    display: block;
+    margin-bottom: 2px;
+  }
+}
+
+.noWorkaround {
+  border-left-color: var(--border-strong);
+  color: var(--text-2);
+}
+
+.rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    grid-template-columns: 76px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: $s-3;
+    min-height: 36px;
+    border-bottom: 1px solid var(--border);
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  a {
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
+
+  em {
+    font-size: 0.75rem;
+  }
+}
+
+// A lone card in the last row takes the full width.
+.grid > :last-child:nth-child(odd) {
+  @include up($bp-lg) {
+    grid-column: 1 / -1;
   }
 }

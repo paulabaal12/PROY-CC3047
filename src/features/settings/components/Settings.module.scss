@@ -1,52 +1,127 @@
 @use 'styles/mixins' as *;
 @use 'styles/tokens' as *;
 
-.grid {
-  display: grid;
-  gap: $s-4;
-  align-items: start;
-
-  @include up($bp-md) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
+// Single centered column of 760px.
+.page {
+  max-width: 760px;
+  margin: 0 auto;
 }
 
-.text {
-  margin: 0 0 $s-4;
-  font-size: 0.875rem;
-  line-height: 1.55;
-  color: var(--text-muted);
-
-  strong {
-    font-weight: 600;
-    color: var(--text);
-  }
+.section {
+  @include card;
+  margin-bottom: $s-6;
+  padding: $s-5;
 }
 
-.roles {
-  margin: 0;
-  padding-left: 18px;
-  display: grid;
-  gap: $s-2;
-  font-size: 0.8125rem;
-
-  strong {
-    font-weight: 600;
-  }
+.sectionTitle {
+  @include heading(1rem);
+  margin: 0 0 $s-3;
+  color: var(--heading);
 }
 
-// Field and button share the 40px height and the same baseline.
-.inline {
+.row {
+  display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: $s-3 $s-6;
+}
+
+.rowText {
+  flex: 1 1 280px;
+  min-width: 0;
+
+  h3 {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--heading);
+  }
+
+  p {
+    margin: 2px 0 0;
+    font-size: 0.8125rem;
+    color: var(--text-2);
+  }
+}
+
+.rowControl {
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+// Field and button share the 36px height and the same center line.
+.inline {
+  display: flex;
+  align-items: center;
+  gap: $s-2;
 }
 
 .inlineField {
-  flex: 1 1 200px;
-  max-width: 260px;
+  width: 140px;
 }
 
 .error {
   margin: $s-2 0 0;
   font-size: 0.75rem;
   color: #dc2626;
+}
+
+.roles {
+  display: grid;
+  margin: $s-4 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--border);
+
+  li {
+    display: grid;
+    grid-template-columns: 32px minmax(0, 1fr);
+    align-items: center;
+    gap: $s-3;
+    min-height: 52px;
+    padding: $s-2 0;
+    border-bottom: 1px solid var(--border);
+
+    &:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    div {
+      display: grid;
+      min-width: 0;
+    }
+
+    strong {
+      font-size: 0.8125rem;
+      font-weight: 500;
+    }
+
+    span {
+      font-size: 0.75rem;
+      color: var(--text-2);
+    }
+  }
+}
+
+.roleIcon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: $radius-control;
+  border: 1px solid var(--border);
+  color: var(--text-2);
+
+  svg {
+    font-size: 18px;
+  }
+}
+
+.current .roleIcon {
+  background: var(--primary-tint);
+  border-color: transparent;
+  color: var(--primary);
 }
