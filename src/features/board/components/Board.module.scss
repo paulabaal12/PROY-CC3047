@@ -1,0 +1,277 @@
+@use 'styles/mixins' as *;
+@use 'styles/tokens' as *;
+
+// ── P1 banner ──
+.p1Banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding: 14px 18px;
+  border: 2px solid $navy;
+  border-radius: $radius;
+  background: $p-critica;
+  color: #fff;
+  box-shadow: 4px 4px 0 $navy;
+}
+
+.p1Icon {
+  font-size: 2rem !important;
+  animation: pulse 1.6s ease-in-out infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes pulse {
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+.p1Text {
+  display: grid;
+  flex: 1 1 260px;
+
+  strong {
+    @include display(1.05rem);
+  }
+
+  span {
+    font-size: 0.88rem;
+  }
+}
+
+.p1Links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.p1Link {
+  @include focus-ring;
+  padding: 4px 10px;
+  border-radius: 8px;
+  background: #fff;
+  color: $navy;
+  border: 2px solid $navy;
+  font-weight: 800;
+  text-decoration: none;
+
+  &:hover {
+    background: $sky-light;
+  }
+}
+
+// ── Filters ──
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.search {
+  flex: 1 1 220px;
+
+  :global(.MuiInputBase-root) {
+    background: var(--surface);
+  }
+}
+
+.select {
+  flex: 0 1 200px;
+  min-width: 160px;
+
+  :global(.MuiInputBase-root) {
+    background: var(--surface);
+  }
+}
+
+.priorityFilter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.resultCount {
+  margin: 0 0 10px;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+// ── Board ──
+.board {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: minmax(0, 1fr);
+
+  @include up($bp-sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @include up($bp-lg) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-height: 220px;
+  padding: 12px;
+  border: 2px solid var(--border);
+  border-radius: $radius;
+  background: var(--column-bg);
+  transition:
+    border-color 140ms ease,
+    background 140ms ease;
+}
+
+.over {
+  border-color: var(--primary);
+  border-style: dashed;
+  background: var(--accent-soft);
+}
+
+.denied {
+  border-color: $p-critica;
+  border-style: dashed;
+}
+
+.columnHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  h2 {
+    @include display(0.95rem);
+    margin: 0;
+    color: var(--ink);
+  }
+}
+
+.column[data-status='Abierto'] .columnHead h2 {
+  box-shadow: inset 0 -4px 0 $sky;
+}
+
+.column[data-status='En progreso'] .columnHead h2 {
+  box-shadow: inset 0 -4px 0 $primary;
+}
+
+.column[data-status='Resuelto'] .columnHead h2 {
+  box-shadow: inset 0 -4px 0 $success;
+}
+
+.column[data-status='Cerrado'] .columnHead h2 {
+  box-shadow: inset 0 -4px 0 $p-planificada;
+}
+
+.count {
+  @include display(0.8rem);
+  min-width: 28px;
+  padding: 3px 8px;
+  border-radius: 99px;
+  text-align: center;
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.columnHint {
+  @include accent;
+  margin: 0 0 8px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.cards {
+  display: grid;
+  gap: 12px;
+}
+
+.columnEmpty {
+  margin: 12px 0;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+// ── Card ──
+.draggable {
+  @include focus-ring;
+  border-radius: $radius;
+  cursor: grab;
+  touch-action: none;
+}
+
+.dragging {
+  opacity: 0.35;
+}
+
+.card {
+  @include hard-card;
+  @include lift;
+  display: grid;
+  gap: 6px;
+  padding: 12px;
+}
+
+.critical {
+  box-shadow: 4px 4px 0 $p-critica;
+  border-left-width: 6px;
+}
+
+.overlay {
+  cursor: grabbing;
+  transform: rotate(2deg);
+  box-shadow: 8px 8px 0 var(--shadow-strong);
+}
+
+.cardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.cardId {
+  @include display(0.8rem);
+  color: var(--primary);
+}
+
+.cardIcons {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.problemIcon {
+  color: $p-critica;
+  font-size: 1.15rem !important;
+}
+
+.hintIcon {
+  color: #fff;
+  background: #b45309;
+  border-radius: 50%;
+  font-size: 1.1rem !important;
+}
+
+.cardTitle {
+  margin: 0;
+  font-weight: 700;
+  font-size: 0.92rem;
+  line-height: 1.3;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.cardMeta {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
