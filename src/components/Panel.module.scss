@@ -1,33 +1,48 @@
 @use 'styles/mixins' as *;
+@use 'styles/tokens' as *;
 
 .card {
-  @include hard-card;
-  padding: 20px;
+  @include card;
+  padding: $s-5;
   min-width: 0;
+
+  @include up($bp-sm) {
+    padding: $s-6;
+  }
 }
 
 .interactive {
-  @include lift;
+  @include hover-lift;
 }
 
 .accent {
-  background: var(--accent-soft);
+  background: var(--surface-muted);
 }
 
 .danger {
-  box-shadow: 4px 4px 0 var(--p-critica);
+  border-left: 2px solid $p-critica;
 }
 
 .head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 14px;
+  gap: $s-3;
+  margin-bottom: $s-4;
+}
+
+.headText {
+  min-width: 0;
 }
 
 .title {
-  @include display(1rem);
+  @include heading(1rem);
   margin: 0;
   color: var(--heading);
+}
+
+.subtitle {
+  margin: 2px 0 0;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
 }

@@ -1,39 +1,78 @@
 @use 'styles/mixins' as *;
+@use 'styles/tokens' as *;
 
 .header {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: $s-4;
+  margin-bottom: $s-6;
+}
+
+.text {
+  min-width: 0;
 }
 
 .eyebrow {
-  margin: 0 0 4px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  margin: 0 0 $s-1;
+  font-size: 0.8125rem;
+  font-weight: 500;
   color: var(--primary);
 }
 
 .title {
-  @include display(clamp(1.5rem, 3vw, 2.1rem));
+  @include heading(clamp(1.5rem, 2.6vw, 1.875rem));
   margin: 0;
   color: var(--heading);
 }
 
 .subtitle {
-  @include accent;
-  margin: 6px 0 0;
-  font-size: 1.1rem;
+  margin: $s-2 0 0;
+  max-width: 72ch;
+  font-size: 0.9375rem;
   color: var(--text-muted);
-  max-width: 70ch;
+}
+
+.stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $s-2;
+  margin: $s-4 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 28px;
+    padding: 0 $s-3;
+    border-radius: 99px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    font-size: 0.8125rem;
+    color: var(--text-muted);
+  }
+
+  strong {
+    font-family: $font-heading;
+    font-weight: 600;
+    color: var(--heading);
+  }
+
+  li[data-tone='danger'] strong {
+    color: #dc2626;
+  }
+
+  li[data-tone='success'] strong {
+    color: #047857;
+  }
 }
 
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  align-items: center;
+  gap: $s-2;
 }

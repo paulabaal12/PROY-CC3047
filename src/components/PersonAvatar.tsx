@@ -1,12 +1,13 @@
 import { Avatar } from '@mui/material';
 import type { RoleId } from '@/types';
 
-const ROLE_COLOR: Record<RoleId, string> = {
-  usuario: '#94A3B8',
-  'service-desk': '#3AAFD3',
-  'resp-tecnico': '#2563EB',
-  'resp-contenido': '#2DC1A5',
-  dueno: '#F4A261',
+// Soft tinted backgrounds per role, with dark text for contrast.
+const ROLE_COLOR: Record<RoleId, { bg: string; ink: string }> = {
+  usuario: { bg: '#E2E8F0', ink: '#334155' },
+  'service-desk': { bg: '#E0F2FE', ink: '#0369A1' },
+  'resp-tecnico': { bg: '#DBEAFE', ink: '#1D4ED8' },
+  'resp-contenido': { bg: '#D1FAE5', ink: '#047857' },
+  dueno: { bg: '#FFEDD5', ink: '#C2410C' },
 };
 
 const initials = (name: string) =>
@@ -27,17 +28,18 @@ export function PersonAvatar({
   role: RoleId;
   size?: number;
 }) {
+  const c = ROLE_COLOR[role];
   return (
     <Avatar
       aria-hidden
       sx={{
         width: size,
         height: size,
-        fontSize: size * 0.38,
-        fontWeight: 800,
-        bgcolor: ROLE_COLOR[role],
-        color: '#0A1A2E',
-        border: '2px solid #0A1A2E',
+        fontSize: size * 0.36,
+        fontWeight: 600,
+        fontFamily: "'Poppins', sans-serif",
+        bgcolor: c.bg,
+        color: c.ink,
       }}
     >
       {initials(name)}

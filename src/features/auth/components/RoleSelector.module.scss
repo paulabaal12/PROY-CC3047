@@ -1,33 +1,54 @@
 @use 'styles/tokens' as *;
 
-.wrapper {
+.card {
   display: grid;
-  gap: 6px;
+  gap: $s-3;
+  padding: $s-3;
+  border-radius: $radius;
+  background: rgba(255, 255, 255, 0.05);
 }
 
-// The selector lives on the navy sidebar: light text and borders.
-.field {
-  :global(.MuiInputBase-root) {
+.who {
+  display: flex;
+  align-items: center;
+  gap: $s-3;
+  min-width: 0;
+}
+
+.whoText {
+  display: grid;
+  min-width: 0;
+  line-height: 1.3;
+
+  strong {
+    font-size: 0.8125rem;
+    font-weight: 600;
     color: #fff;
-    background: rgba(255, 255, 255, 0.06);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  :global(.MuiInputLabel-root),
-  :global(.MuiInputLabel-root.Mui-focused) {
-    color: $sky;
+  span {
+    font-size: 0.6875rem;
+    color: #8fb3d9;
+  }
+}
+
+// Sits on the navy sidebar: translucent field, light text.
+.field {
+  :global(.MuiOutlinedInput-root) {
+    height: $h-sm !important;
+    background: rgba(255, 255, 255, 0.06);
+    color: #e2ecf8;
+    font-size: 0.8125rem;
   }
 
   :global(.MuiOutlinedInput-notchedOutline) {
-    border-color: rgba(58, 175, 211, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.12) !important;
   }
 
   :global(.MuiSelect-icon) {
-    color: $sky;
+    color: #8fb3d9;
   }
-}
-
-.persona {
-  margin: 0;
-  font-size: 0.75rem;
-  color: #b9cce3;
 }

@@ -1,22 +1,26 @@
 import type { ElementType, ReactNode } from 'react';
 import clsx from '@/utils/clsx';
-import styles from './HardCard.module.scss';
+import styles from './Panel.module.scss';
 
 interface Props {
   children: ReactNode;
   title?: ReactNode;
+  /** Short helper line under the title. */
+  subtitle?: ReactNode;
   action?: ReactNode;
   className?: string;
-  /** Lifts on hover (clickable cards). */
+  /** Lifts softly on hover (clickable cards). */
   interactive?: boolean;
+  /** `accent`: tinted surface; `danger`: thin red accent on the left edge. */
   tone?: 'default' | 'accent' | 'danger';
   as?: ElementType;
 }
 
-/** Surface with a 2px ink border and hard offset shadow ("Pacífico Tropical"). */
-export function HardCard({
+/** White card with a hairline border: the base surface of the app. */
+export function Panel({
   children,
   title,
+  subtitle,
   action,
   className,
   interactive = false,
@@ -35,7 +39,10 @@ export function HardCard({
     >
       {(title || action) && (
         <div className={styles.head}>
-          {title && <h2 className={styles.title}>{title}</h2>}
+          <div className={styles.headText}>
+            {title && <h2 className={styles.title}>{title}</h2>}
+            {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
+          </div>
           {action}
         </div>
       )}

@@ -1,6 +1,7 @@
 import { Chip, Tooltip } from '@mui/material';
-import { PRIORITY_COLORS } from '@/app/theme';
+import { PRIORITY_COLORS, toneSx } from '@/app/theme';
 import type { Impact, Priority, Urgency } from '@/types';
+import styles from './Chips.module.scss';
 
 interface Props {
   priority: Priority;
@@ -9,13 +10,15 @@ interface Props {
   size?: 'small' | 'medium';
 }
 
+/** Tinted chip with a colored dot: the color supports the label, it never replaces it. */
 export function PriorityChip({ priority, impact, urgency, size = 'small' }: Props) {
-  const { bg, ink } = PRIORITY_COLORS[priority];
+  const tone = PRIORITY_COLORS[priority];
   const chip = (
     <Chip
       size={size}
+      icon={<span className={styles.dot} style={{ background: tone.color }} aria-hidden />}
       label={priority}
-      sx={{ bgcolor: bg, color: ink, border: '2px solid #0A1A2E', fontWeight: 800 }}
+      sx={{ ...toneSx(tone), fontWeight: 600, '& .MuiChip-icon': { ml: '8px', mr: '-4px' } }}
     />
   );
   if (!impact || !urgency) return chip;
