@@ -50,7 +50,10 @@ describe('ticketService.create', () => {
 
   it('persiste en el storage y filtra por solicitante', async () => {
     await service.create(incident, user);
-    await service.create({ ...incident, requester: { name: 'Otro', email: 'otro@example.com' } }, user);
+    await service.create(
+      { ...incident, requester: { name: 'Otro', email: 'otro@example.com' } },
+      user,
+    );
     const mine = await service.list({ requesterEmail: 'lucia.mendez@example.com' });
     expect(mine).toHaveLength(1);
   });
@@ -136,7 +139,11 @@ describe('escalamiento, problemas y cambios', () => {
     expect(problem.linkedTicketIds).toEqual([b.id]);
     const linked = await service.get(b.id);
     expect(linked?.history.some((h) => h.kind === 'problem')).toBe(true);
-    const ke = await service.markKnownError(a.id, { rootCause: 'GH', workaround: 'Usar caché' }, desk);
+    const ke = await service.markKnownError(
+      a.id,
+      { rootCause: 'GH', workaround: 'Usar caché' },
+      desk,
+    );
     expect(ke.knownError).toBe(true);
     expect(ke.workaround).toBe('Usar caché');
   });
@@ -189,7 +196,8 @@ describe('seed de demostración', () => {
       const created = new Date(t.createdAt).getTime();
       expect(created).toBeLessThanOrEqual(now.getTime());
       expect(now.getTime() - created).toBeLessThan(threeWeeks);
-      for (const c of t.comments) expect(new Date(c.createdAt).getTime()).toBeLessThanOrEqual(now.getTime());
+      for (const c of t.comments)
+        expect(new Date(c.createdAt).getTime()).toBeLessThanOrEqual(now.getTime());
     }
   });
 
@@ -202,7 +210,11 @@ describe('seed de demostración', () => {
   });
 
   it('se carga al primer arranque y se restablece', async () => {
-    const svc = createTicketService({ storage: createMemoryStorage(), now: () => now, seed: buildSeed });
+    const svc = createTicketService({
+      storage: createMemoryStorage(),
+      now: () => now,
+      seed: buildSeed,
+    });
     const list = await svc.list();
     expect(list).toHaveLength(seed.length);
     await svc.create(incident, user);

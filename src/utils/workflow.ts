@@ -16,8 +16,10 @@ export const canTransition = (from: Status, to: Status): boolean =>
 export const transitionError = (from: Status, to: Status): string | null => {
   if (canTransition(from, to)) return null;
   if (from === 'Cerrado') return 'Un ticket cerrado no se reabre: creá uno nuevo y vinculalo.';
-  if (to === 'Cerrado') return 'Solo se cierra un ticket resuelto (el solicitante confirma la solución).';
+  if (to === 'Cerrado')
+    return 'Solo se cierra un ticket resuelto (el solicitante confirma la solución).';
   return `No se puede pasar de ${from} a ${to}.`;
 };
 
-export const isActive = (status: Status): boolean => status === 'Abierto' || status === 'En progreso';
+export const isActive = (status: Status): boolean =>
+  status === 'Abierto' || status === 'En progreso';

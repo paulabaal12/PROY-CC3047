@@ -8,9 +8,9 @@ export const COUNTRIES: Country[] = catalog.countries;
 export const STUDIOS: Studio[] = [...catalog.studios].sort((a, b) => a.name.localeCompare(b.name));
 export const GAMES: Game[] = [...catalog.games].sort((a, b) => a.name.localeCompare(b.name));
 
-export const PLATFORMS: string[] = Array.from(new Set(catalog.games.flatMap((g) => g.platforms))).sort(
-  (a, b) => a.localeCompare(b),
-);
+export const PLATFORMS: string[] = Array.from(
+  new Set(catalog.games.flatMap((g) => g.platforms)),
+).sort((a, b) => a.localeCompare(b));
 
 export const GAME_STATUS_LABELS: Record<GameStatus, string> = {
   released: 'Publicado (released)',
@@ -22,8 +22,10 @@ export const GAME_STATUS_LABELS: Record<GameStatus, string> = {
 const studioById = new Map(catalog.studios.map((s) => [s.id, s]));
 const gameBySlug = new Map(catalog.games.map((g) => [g.slug, g]));
 
-export const findStudio = (id?: string): Studio | undefined => (id ? studioById.get(id) : undefined);
-export const findGame = (slug?: string): Game | undefined => (slug ? gameBySlug.get(slug) : undefined);
+export const findStudio = (id?: string): Studio | undefined =>
+  id ? studioById.get(id) : undefined;
+export const findGame = (slug?: string): Game | undefined =>
+  slug ? gameBySlug.get(slug) : undefined;
 export const countryName = (code?: string): string =>
   COUNTRIES.find((c) => c.code === code)?.name ?? code ?? '';
 

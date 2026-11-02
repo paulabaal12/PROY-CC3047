@@ -18,7 +18,15 @@ const initials = (name: string) =>
     .map((p) => p[0]?.toUpperCase())
     .join('');
 
-export function PersonAvatar({ name, role, size = 36 }: { name: string; role: RoleId; size?: number }) {
+export function PersonAvatar({
+  name,
+  role,
+  size = 36,
+}: {
+  name: string;
+  role: RoleId;
+  size?: number;
+}) {
   return (
     <Avatar
       aria-hidden

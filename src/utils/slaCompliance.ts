@@ -38,7 +38,8 @@ function measure(tickets: Ticket[], target: number, internal: number): Objective
   };
 }
 
-export const isP1Incident = (t: Ticket): boolean => t.type === 'Incidente' && t.priority === 'Crítica';
+export const isP1Incident = (t: Ticket): boolean =>
+  t.type === 'Incidente' && t.priority === 'Crítica';
 
 /** Objective 2: P1 incidents restored in ≤ 90 min (internal: ≤ 75 min). */
 export const p1RestoreCompliance = (tickets: Ticket[]): ObjectiveResult =>

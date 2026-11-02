@@ -11,7 +11,17 @@ import { DonutChart, HorizontalBars } from './Charts';
 import { SlaObjectives } from './SlaObjectives';
 import styles from './Dashboard.module.scss';
 
-function Kpi({ label, value, hint, tone }: { label: string; value: string; hint?: string; tone?: 'danger' | 'ok' }) {
+function Kpi({
+  label,
+  value,
+  hint,
+  tone,
+}: {
+  label: string;
+  value: string;
+  hint?: string;
+  tone?: 'danger' | 'ok';
+}) {
   return (
     <HardCard className={styles.kpi} tone={tone === 'danger' ? 'danger' : 'default'}>
       <p className={styles.kpiLabel}>{label}</p>
@@ -41,12 +51,24 @@ export function DashboardPage() {
       />
 
       <div className={styles.filterRow} role="group" aria-label="Filtros del dashboard">
-        <TextField select size="small" label="Tipo" value={type} onChange={(e) => setType(e.target.value as TypeFilter)}>
+        <TextField
+          select
+          size="small"
+          label="Tipo"
+          value={type}
+          onChange={(e) => setType(e.target.value as TypeFilter)}
+        >
           <MenuItem value="all">Incidentes y solicitudes</MenuItem>
           <MenuItem value="Incidente">Solo incidentes</MenuItem>
           <MenuItem value="Solicitud">Solo solicitudes</MenuItem>
         </TextField>
-        <TextField select size="small" label="Periodo" value={range} onChange={(e) => setRange(e.target.value as RangeFilter)}>
+        <TextField
+          select
+          size="small"
+          label="Periodo"
+          value={range}
+          onChange={(e) => setRange(e.target.value as RangeFilter)}
+        >
           <MenuItem value="7">Últimos 7 días</MenuItem>
           <MenuItem value="30">Últimos 30 días</MenuItem>
           <MenuItem value="all">Todo el historial</MenuItem>
@@ -81,7 +103,11 @@ export function DashboardPage() {
           <DonutChart data={data.byCategory} theme={theme} />
         </ChartCard>
         <ChartCard title="Tickets por prioridad" data={data.byPriority}>
-          <HorizontalBars data={data.byPriority} theme={theme} colorFor={(d) => theme.priority(d.key as Priority)} />
+          <HorizontalBars
+            data={data.byPriority}
+            theme={theme}
+            colorFor={(d) => theme.priority(d.key as Priority)}
+          />
         </ChartCard>
         <ChartCard title="Tickets por estado" data={data.byStatus}>
           <HorizontalBars data={data.byStatus} theme={theme} />

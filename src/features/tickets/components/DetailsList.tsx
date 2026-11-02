@@ -5,7 +5,8 @@ import { formatDateTime } from '@/utils/dates';
 import styles from './DetailsList.module.scss';
 
 function display(field: FieldDef, value: DetailValue | undefined): string {
-  if (value === undefined || value === '' || (Array.isArray(value) && value.length === 0)) return '—';
+  if (value === undefined || value === '' || (Array.isArray(value) && value.length === 0))
+    return '—';
   if (field.kind === 'studio' && typeof value === 'string')
     return value === NEW_STUDIO ? 'Nuevo estudio' : (findStudio(value)?.name ?? value);
   if (field.kind === 'game' && typeof value === 'string') return findGame(value)?.name ?? value;
@@ -39,13 +40,21 @@ export function DetailsList({ ticket }: { ticket: Ticket }) {
         <p className={styles.catalog}>
           Ficha del catálogo:{' '}
           {studio && (
-            <a href={`https://centralamerica.games/es/estudios/${studio.id}/`} target="_blank" rel="noreferrer">
+            <a
+              href={`https://centralamerica.games/es/estudios/${studio.id}/`}
+              target="_blank"
+              rel="noreferrer"
+            >
               {studio.name} ({countryName(studio.country)})
             </a>
           )}
           {studio && game && ' · '}
           {game && (
-            <a href={`https://centralamerica.games/es/juegos/${game.slug}/`} target="_blank" rel="noreferrer">
+            <a
+              href={`https://centralamerica.games/es/juegos/${game.slug}/`}
+              target="_blank"
+              rel="noreferrer"
+            >
               {game.name}
             </a>
           )}

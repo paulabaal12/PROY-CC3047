@@ -101,18 +101,45 @@ const SPECS: SeedSpec[] = [
     day: 13,
     at: [9, 12],
     status: 'Cerrado',
-    details: { url: 'https://centralamerica.games/', desde: '', error: 'HTTP 503 Service Unavailable' },
+    details: {
+      url: 'https://centralamerica.games/',
+      desde: '',
+      error: 'HTTP 503 Service Unavailable',
+    },
     respondAfter: 4,
     resolveAfter: 70,
     closeAfter: 400,
     escalations: [
-      { after: 8, route: 'funcional', to: 'resp-tecnico', reason: 'Incidente Crítico que Nivel 1 no resolvió en ≤ 10 min' },
-      { after: 20, route: 'funcional', to: 'proveedor-github', reason: 'Caída o degradación de GitHub Pages / Actions' },
+      {
+        after: 8,
+        route: 'funcional',
+        to: 'resp-tecnico',
+        reason: 'Incidente Crítico que Nivel 1 no resolvió en ≤ 10 min',
+      },
+      {
+        after: 20,
+        route: 'funcional',
+        to: 'proveedor-github',
+        reason: 'Caída o degradación de GitHub Pages / Actions',
+      },
     ],
     comments: [
-      { after: 4, role: 'service-desk', text: 'Confirmado: el sitio no carga desde dos redes distintas. Se escala a técnico.' },
-      { after: 25, role: 'resp-tecnico', text: 'Incidente abierto en githubstatus.com. Seguimos su actualización.', internal: true },
-      { after: 70, role: 'resp-tecnico', text: 'GitHub Pages restablecido. Sitio responde 200 en /es/ y /en/.' },
+      {
+        after: 4,
+        role: 'service-desk',
+        text: 'Confirmado: el sitio no carga desde dos redes distintas. Se escala a técnico.',
+      },
+      {
+        after: 25,
+        role: 'resp-tecnico',
+        text: 'Incidente abierto en githubstatus.com. Seguimos su actualización.',
+        internal: true,
+      },
+      {
+        after: 70,
+        role: 'resp-tecnico',
+        text: 'GitHub Pages restablecido. Sitio responde 200 en /es/ y /en/.',
+      },
     ],
   },
   {
@@ -137,15 +164,43 @@ const SPECS: SeedSpec[] = [
     respondAfter: 22,
     resolveAfter: 135,
     escalations: [
-      { after: 22, route: 'funcional', to: 'resp-tecnico', reason: 'Incidente Crítico que Nivel 1 no resolvió en ≤ 10 min' },
-      { after: 45, route: 'funcional', to: 'proveedor-github', reason: 'Problema de dominio o certificado HTTPS' },
+      {
+        after: 22,
+        route: 'funcional',
+        to: 'resp-tecnico',
+        reason: 'Incidente Crítico que Nivel 1 no resolvió en ≤ 10 min',
+      },
+      {
+        after: 45,
+        route: 'funcional',
+        to: 'proveedor-github',
+        reason: 'Problema de dominio o certificado HTTPS',
+      },
       { after: 80, route: 'jerarquica', to: 'dueno', reason: 'P1 que se proyecta a más de 90 min' },
     ],
     comments: [
-      { after: 22, role: 'service-desk', text: 'Gracias por avisar. Lo estamos revisando con prioridad Crítica.' },
-      { after: 50, role: 'resp-tecnico', text: 'El CNAME quedó bien, pero GitHub está re-emitiendo el certificado. Se pidió soporte.', internal: true },
-      { after: 82, role: 'dueno', text: 'Informado. Si pasa de 2 h avisamos a UVG y AECID.', internal: true },
-      { after: 135, role: 'resp-tecnico', text: 'Certificado emitido y "Enforce HTTPS" activo. Sitio accesible.' },
+      {
+        after: 22,
+        role: 'service-desk',
+        text: 'Gracias por avisar. Lo estamos revisando con prioridad Crítica.',
+      },
+      {
+        after: 50,
+        role: 'resp-tecnico',
+        text: 'El CNAME quedó bien, pero GitHub está re-emitiendo el certificado. Se pidió soporte.',
+        internal: true,
+      },
+      {
+        after: 82,
+        role: 'dueno',
+        text: 'Informado. Si pasa de 2 h avisamos a UVG y AECID.',
+        internal: true,
+      },
+      {
+        after: 135,
+        role: 'resp-tecnico',
+        text: 'Certificado emitido y "Enforce HTTPS" activo. Sitio accesible.',
+      },
     ],
     slaBreachCause:
       'Respuesta tardía: el aviso llegó por correo y no por UptimeRobot. La re-emisión del certificado de GitHub Pages superó los 90 min del objetivo P1.',
@@ -164,16 +219,33 @@ const SPECS: SeedSpec[] = [
     day: 4,
     at: [8, 40],
     status: 'Cerrado',
-    details: { url: 'https://centralamerica.games/', desde: '', error: '404 — There isn\'t a GitHub Pages site here.' },
+    details: {
+      url: 'https://centralamerica.games/',
+      desde: '',
+      error: "404 — There isn't a GitHub Pages site here.",
+    },
     respondAfter: 3,
     resolveAfter: 55,
     closeAfter: 300,
     escalations: [
-      { after: 7, route: 'funcional', to: 'resp-tecnico', reason: 'Requiere cambio en el build, el script de validación o el despliegue' },
+      {
+        after: 7,
+        route: 'funcional',
+        to: 'resp-tecnico',
+        reason: 'Requiere cambio en el build, el script de validación o el despliegue',
+      },
     ],
     comments: [
-      { after: 3, role: 'service-desk', text: 'Recibido. El último commit tocó .github/workflows/deploy.yml.' },
-      { after: 55, role: 'resp-tecnico', text: 'Revertido el cambio en upload-pages-artifact (path: dist). Publicado de nuevo.' },
+      {
+        after: 3,
+        role: 'service-desk',
+        text: 'Recibido. El último commit tocó .github/workflows/deploy.yml.',
+      },
+      {
+        after: 55,
+        role: 'resp-tecnico',
+        text: 'Revertido el cambio en upload-pages-artifact (path: dist). Publicado de nuevo.',
+      },
     ],
   },
   {
@@ -206,15 +278,37 @@ const SPECS: SeedSpec[] = [
     day: 2,
     at: [11, 15],
     status: 'En progreso',
-    details: { url: 'https://centralamerica.games/', desde: '', error: 'DNS_PROBE_FINISHED_NXDOMAIN' },
+    details: {
+      url: 'https://centralamerica.games/',
+      desde: '',
+      error: 'DNS_PROBE_FINISHED_NXDOMAIN',
+    },
     respondAfter: 25,
     escalations: [
-      { after: 40, route: 'funcional', to: 'resp-tecnico', reason: 'Incidente Alto que Nivel 1 no resolvió en ≤ 30 min' },
+      {
+        after: 40,
+        route: 'funcional',
+        to: 'resp-tecnico',
+        reason: 'Incidente Alto que Nivel 1 no resolvió en ≤ 30 min',
+      },
     ],
     comments: [
-      { after: 25, role: 'service-desk', text: 'Gracias. ¿Nos podés compartir una captura y el proveedor de internet?' },
-      { after: 30, role: 'usuario', text: 'Tigo en Tegucigalpa y Claro en San Salvador. Adjunto captura.' },
-      { after: 60, role: 'resp-tecnico', text: 'Los registros A apuntan bien; parece caché de DNS de los proveedores. Monitoreando propagación.', internal: true },
+      {
+        after: 25,
+        role: 'service-desk',
+        text: 'Gracias. ¿Nos podés compartir una captura y el proveedor de internet?',
+      },
+      {
+        after: 30,
+        role: 'usuario',
+        text: 'Tigo en Tegucigalpa y Claro en San Salvador. Adjunto captura.',
+      },
+      {
+        after: 60,
+        role: 'resp-tecnico',
+        text: 'Los registros A apuntan bien; parece caché de DNS de los proveedores. Monitoreando propagación.',
+        internal: true,
+      },
     ],
   },
   // ───────────── Incidentes: Búsqueda / filtros ─────────────
@@ -222,7 +316,8 @@ const SPECS: SeedSpec[] = [
     key: 'filter-ni',
     category: 'busqueda-lenta',
     title: 'El filtro por país no devuelve estudios de Nicaragua',
-    description: 'Al marcar Nicaragua en el catálogo no aparece ningún estudio, aunque Danny Garay está listado.',
+    description:
+      'Al marcar Nicaragua en el catálogo no aparece ningún estudio, aunque Danny Garay está listado.',
     impact: 'Medio',
     urgency: 'Media',
     channel: 'Portal/Correo',
@@ -236,10 +331,21 @@ const SPECS: SeedSpec[] = [
     respondAfter: 50,
     resolveAfter: 600,
     closeAfter: 1300,
-    escalations: [{ after: 60, route: 'funcional', to: 'resp-tecnico', reason: 'Requiere cambio en el build, el script de validación o el despliegue' }],
+    escalations: [
+      {
+        after: 60,
+        route: 'funcional',
+        to: 'resp-tecnico',
+        reason: 'Requiere cambio en el build, el script de validación o el despliegue',
+      },
+    ],
     comments: [
       { after: 50, role: 'service-desk', text: 'Reproducido. Lo pasamos al responsable técnico.' },
-      { after: 600, role: 'resp-tecnico', text: 'El código de país estaba como "NIC" en un YAML; corregido a "NI" y el validador ahora lo rechaza.' },
+      {
+        after: 600,
+        role: 'resp-tecnico',
+        text: 'El código de país estaba como "NIC" en un YAML; corregido a "NI" y el validador ahora lo rechaza.',
+      },
       { after: 700, role: 'usuario', text: 'Confirmo, ya aparece. ¡Gracias!' },
     ],
   },
@@ -256,12 +362,32 @@ const SPECS: SeedSpec[] = [
     day: 6,
     at: [10, 30],
     status: 'En progreso',
-    details: { funcion: 'Búsqueda libre del catálogo', dispositivo: 'Teléfono', navegador: 'Chrome' },
+    details: {
+      funcion: 'Búsqueda libre del catálogo',
+      dispositivo: 'Teléfono',
+      navegador: 'Chrome',
+    },
     respondAfter: 20,
-    escalations: [{ after: 35, route: 'funcional', to: 'resp-tecnico', reason: 'Incidente Alto que Nivel 1 no resolvió en ≤ 30 min' }],
+    escalations: [
+      {
+        after: 35,
+        route: 'funcional',
+        to: 'resp-tecnico',
+        reason: 'Incidente Alto que Nivel 1 no resolvió en ≤ 30 min',
+      },
+    ],
     comments: [
-      { after: 20, role: 'service-desk', text: 'Mientras tanto podés usar el mapa por país (/es/mapa/), que no se traba.' },
-      { after: 300, role: 'resp-tecnico', text: 'Mismo patrón que el problema de rendimiento de búsqueda. Se asocia.', internal: true },
+      {
+        after: 20,
+        role: 'service-desk',
+        text: 'Mientras tanto podés usar el mapa por país (/es/mapa/), que no se traba.',
+      },
+      {
+        after: 300,
+        role: 'resp-tecnico',
+        text: 'Mismo patrón que el problema de rendimiento de búsqueda. Se asocia.',
+        internal: true,
+      },
     ],
   },
   {
@@ -277,7 +403,11 @@ const SPECS: SeedSpec[] = [
     day: 3,
     at: [9, 45],
     status: 'Abierto',
-    details: { funcion: 'Vista de juegos (orden aleatorio)', dispositivo: 'Tablet', navegador: 'Safari' },
+    details: {
+      funcion: 'Vista de juegos (orden aleatorio)',
+      dispositivo: 'Tablet',
+      navegador: 'Safari',
+    },
   },
   {
     key: 'prob-search',
@@ -306,7 +436,12 @@ const SPECS: SeedSpec[] = [
         'Usar el mapa por país (/es/mapa/) o filtrar desde escritorio; en la vista de juegos ordenar A–Z en lugar de aleatorio.',
     },
     comments: [
-      { after: 10, role: 'resp-tecnico', text: 'Abrimos el problema y documentamos el workaround para Nivel 1.', internal: true },
+      {
+        after: 10,
+        role: 'resp-tecnico',
+        text: 'Abrimos el problema y documentamos el workaround para Nivel 1.',
+        internal: true,
+      },
     ],
   },
   {
@@ -327,7 +462,11 @@ const SPECS: SeedSpec[] = [
     resolveAfter: 900,
     comments: [
       { after: 90, role: 'service-desk', text: 'Gracias, lo reproducimos en Firefox.' },
-      { after: 900, role: 'resp-tecnico', text: 'Había valores "Gamemaker" y "GameMaker Studio". Se normalizaron (ver cambio estándar).' },
+      {
+        after: 900,
+        role: 'resp-tecnico',
+        text: 'Había valores "Gamemaker" y "GameMaker Studio". Se normalizaron (ver cambio estándar).',
+      },
     ],
   },
   // ───────────── Incidentes: Ficha corrupta / imagen ─────────────
@@ -350,10 +489,25 @@ const SPECS: SeedSpec[] = [
     respondAfter: 300,
     resolveAfter: 2400,
     closeAfter: 3000,
-    escalations: [{ after: 320, route: 'funcional', to: 'resp-tecnico', reason: 'Datos corruptos o imágenes a restaurar' }],
+    escalations: [
+      {
+        after: 320,
+        route: 'funcional',
+        to: 'resp-tecnico',
+        reason: 'Datos corruptos o imágenes a restaurar',
+      },
+    ],
     comments: [
-      { after: 300, role: 'service-desk', text: 'Registrado. Prioridad Planificada: lo resolvemos en esta semana.' },
-      { after: 2400, role: 'resp-tecnico', text: 'El archivo era capsule.PNG (mayúsculas). Renombrado y publicado.' },
+      {
+        after: 300,
+        role: 'service-desk',
+        text: 'Registrado. Prioridad Planificada: lo resolvemos en esta semana.',
+      },
+      {
+        after: 2400,
+        role: 'resp-tecnico',
+        text: 'El archivo era capsule.PNG (mayúsculas). Renombrado y publicado.',
+      },
     ],
   },
   {
@@ -374,9 +528,20 @@ const SPECS: SeedSpec[] = [
     details: { campo: 'Descripción' },
     respondAfter: 120,
     resolveAfter: 1500,
-    escalations: [{ after: 130, route: 'funcional', to: 'resp-tecnico', reason: 'Datos corruptos o imágenes a restaurar' }],
+    escalations: [
+      {
+        after: 130,
+        route: 'funcional',
+        to: 'resp-tecnico',
+        reason: 'Datos corruptos o imágenes a restaurar',
+      },
+    ],
     comments: [
-      { after: 1500, role: 'resp-tecnico', text: 'game.yaml guardado en Latin-1; convertido a UTF-8.' },
+      {
+        after: 1500,
+        role: 'resp-tecnico',
+        text: 'game.yaml guardado en Latin-1; convertido a UTF-8.',
+      },
     ],
   },
   {
@@ -402,7 +567,12 @@ const SPECS: SeedSpec[] = [
       links: ['capsule-bugfables', 'capsule-oscuro'],
     },
     comments: [
-      { after: 60, role: 'resp-tecnico', text: 'Se crea el problema. Afecta ~7 de 34 juegos (≈20%).', internal: true },
+      {
+        after: 60,
+        role: 'resp-tecnico',
+        text: 'Se crea el problema. Afecta ~7 de 34 juegos (≈20%).',
+        internal: true,
+      },
     ],
   },
   {
@@ -423,9 +593,20 @@ const SPECS: SeedSpec[] = [
     details: { campo: 'Capsule' },
     respondAfter: 40,
     resolveAfter: 1200,
-    escalations: [{ after: 45, route: 'funcional', to: 'resp-tecnico', reason: 'Datos corruptos o imágenes a restaurar' }],
+    escalations: [
+      {
+        after: 45,
+        route: 'funcional',
+        to: 'resp-tecnico',
+        reason: 'Datos corruptos o imágenes a restaurar',
+      },
+    ],
     comments: [
-      { after: 1200, role: 'resp-tecnico', text: 'Se restauró la capsule desde el historial de git.' },
+      {
+        after: 1200,
+        role: 'resp-tecnico',
+        text: 'Se restauró la capsule desde el historial de git.',
+      },
     ],
   },
   {
@@ -463,9 +644,20 @@ const SPECS: SeedSpec[] = [
     game: 'erandique',
     details: { campo: 'Banner' },
     respondAfter: 60,
-    escalations: [{ after: 70, route: 'funcional', to: 'resp-tecnico', reason: 'Datos corruptos o imágenes a restaurar' }],
+    escalations: [
+      {
+        after: 70,
+        route: 'funcional',
+        to: 'resp-tecnico',
+        reason: 'Datos corruptos o imágenes a restaurar',
+      },
+    ],
     comments: [
-      { after: 60, role: 'service-desk', text: 'Urgencia Alta por la publicación programada. Ya está con técnico.' },
+      {
+        after: 60,
+        role: 'service-desk',
+        text: 'Urgencia Alta por la publicación programada. Ya está con técnico.',
+      },
     ],
   },
   {
@@ -486,10 +678,25 @@ const SPECS: SeedSpec[] = [
     respondAfter: 5,
     resolveAfter: 85,
     closeAfter: 500,
-    escalations: [{ after: 6, route: 'funcional', to: 'resp-tecnico', reason: 'Datos corruptos o imágenes a restaurar' }],
+    escalations: [
+      {
+        after: 6,
+        route: 'funcional',
+        to: 'resp-tecnico',
+        reason: 'Datos corruptos o imágenes a restaurar',
+      },
+    ],
     comments: [
-      { after: 5, role: 'service-desk', text: 'Impacto Alto (> 50% de fichas). Escalado a técnico.' },
-      { after: 85, role: 'resp-tecnico', text: 'Revertido el merge y regenerado catalog.json. Validado en 10 fichas al azar.' },
+      {
+        after: 5,
+        role: 'service-desk',
+        text: 'Impacto Alto (> 50% de fichas). Escalado a técnico.',
+      },
+      {
+        after: 85,
+        role: 'resp-tecnico',
+        text: 'Revertido el merge y regenerado catalog.json. Validado en 10 fichas al azar.',
+      },
     ],
   },
   // ───────────── Solicitudes: Registro ─────────────
@@ -497,7 +704,8 @@ const SPECS: SeedSpec[] = [
     key: 'alta-quetzal',
     category: 'registro',
     title: 'Alta de estudio: Quetzal Pixel Works (estudio nuevo)',
-    description: 'Envío del formulario de alta de estudios en KoboToolbox. Estudio ficticio de demostración.',
+    description:
+      'Envío del formulario de alta de estudios en KoboToolbox. Estudio ficticio de demostración.',
     impact: 'Bajo',
     urgency: 'Baja',
     channel: 'Formulario Kobo',
@@ -521,17 +729,34 @@ const SPECS: SeedSpec[] = [
     respondAfter: 200,
     resolveAfter: 1350,
     closeAfter: 2000,
-    escalations: [{ after: 210, route: 'funcional', to: 'resp-contenido', reason: 'Validar criterios de inclusión de una ficha' }],
+    escalations: [
+      {
+        after: 210,
+        route: 'funcional',
+        to: 'resp-contenido',
+        reason: 'Validar criterios de inclusión de una ficha',
+      },
+    ],
     comments: [
-      { after: 600, role: 'resp-contenido', text: 'Cumple criterios: estudio en GT, juego publicado y enlace verificable.' },
-      { after: 1350, role: 'service-desk', text: 'Ficha publicada. Recordatorio: agregar el estudio a la lista del formulario de juegos adicionales.', internal: true },
+      {
+        after: 600,
+        role: 'resp-contenido',
+        text: 'Cumple criterios: estudio en GT, juego publicado y enlace verificable.',
+      },
+      {
+        after: 1350,
+        role: 'service-desk',
+        text: 'Ficha publicada. Recordatorio: agregar el estudio a la lista del formulario de juegos adicionales.',
+        internal: true,
+      },
     ],
   },
   {
     key: 'alta-502',
     category: 'registro',
     title: 'Juego adicional de 502 Studios',
-    description: 'Formulario de juegos adicionales: un juego nuevo de 502 Studios (nombre ficticio de demostración).',
+    description:
+      'Formulario de juegos adicionales: un juego nuevo de 502 Studios (nombre ficticio de demostración).',
     impact: 'Bajo',
     urgency: 'Baja',
     channel: 'Formulario Kobo',
@@ -554,16 +779,28 @@ const SPECS: SeedSpec[] = [
       imagen: 'capsule-volcano-run.jpg',
     },
     respondAfter: 300,
-    escalations: [{ after: 310, route: 'funcional', to: 'resp-contenido', reason: 'Validar criterios de inclusión de una ficha' }],
+    escalations: [
+      {
+        after: 310,
+        route: 'funcional',
+        to: 'resp-contenido',
+        reason: 'Validar criterios de inclusión de una ficha',
+      },
+    ],
     comments: [
-      { after: 400, role: 'resp-contenido', text: 'Falta confirmar la fecha de publicación. Se pidió al estudio.' },
+      {
+        after: 400,
+        role: 'resp-contenido',
+        text: 'Falta confirmar la fecha de publicación. Se pidió al estudio.',
+      },
     ],
   },
   {
     key: 'alta-tecolote',
     category: 'registro',
     title: 'Alta de estudio: Tecolote Games (Nicaragua)',
-    description: 'Envío nocturno del formulario de alta (fuera de la ventana de servicio). Estudio ficticio.',
+    description:
+      'Envío nocturno del formulario de alta (fuera de la ventana de servicio). Estudio ficticio.',
     impact: 'Bajo',
     urgency: 'Baja',
     channel: 'Formulario Kobo',
@@ -611,8 +848,17 @@ const SPECS: SeedSpec[] = [
     respondAfter: 120,
     resolveAfter: 810,
     closeAfter: 1300,
-    escalations: [{ after: 130, route: 'funcional', to: 'resp-contenido', reason: 'Verificar la fuente de una actualización' }],
-    comments: [{ after: 810, role: 'resp-contenido', text: 'Verificado en la tienda y publicado.' }],
+    escalations: [
+      {
+        after: 130,
+        route: 'funcional',
+        to: 'resp-contenido',
+        reason: 'Verificar la fuente de una actualización',
+      },
+    ],
+    comments: [
+      { after: 810, role: 'resp-contenido', text: 'Verificado en la tienda y publicado.' },
+    ],
   },
   {
     key: 'upd-lez',
@@ -638,11 +884,23 @@ const SPECS: SeedSpec[] = [
     },
     respondAfter: 400,
     resolveAfter: 2160,
-    escalations: [{ after: 420, route: 'funcional', to: 'resp-contenido', reason: 'Verificar la fuente de una actualización' }],
-    comments: [
-      { after: 2160, role: 'resp-contenido', text: 'Actualizado. Se demoró por esperar confirmación del estudio.' },
+    escalations: [
+      {
+        after: 420,
+        route: 'funcional',
+        to: 'resp-contenido',
+        reason: 'Verificar la fuente de una actualización',
+      },
     ],
-    slaBreachCause: 'Superó el objetivo de 3 días hábiles: se esperó confirmación del estudio sin pausar el caso.',
+    comments: [
+      {
+        after: 2160,
+        role: 'resp-contenido',
+        text: 'Actualizado. Se demoró por esperar confirmación del estudio.',
+      },
+    ],
+    slaBreachCause:
+      'Superó el objetivo de 3 días hábiles: se esperó confirmación del estudio sin pausar el caso.',
   },
   {
     key: 'retiro-chaotic',
@@ -668,12 +926,31 @@ const SPECS: SeedSpec[] = [
     },
     respondAfter: 200,
     escalations: [
-      { after: 210, route: 'funcional', to: 'resp-contenido', reason: 'Verificar la fuente de una actualización' },
-      { after: 700, route: 'jerarquica', to: 'dueno', reason: 'Disputa por el retiro de una ficha' },
+      {
+        after: 210,
+        route: 'funcional',
+        to: 'resp-contenido',
+        reason: 'Verificar la fuente de una actualización',
+      },
+      {
+        after: 700,
+        route: 'jerarquica',
+        to: 'dueno',
+        reason: 'Disputa por el retiro de una ficha',
+      },
     ],
     comments: [
-      { after: 650, role: 'resp-contenido', text: 'El estudio dice que el juego sigue activo. Hay disputa.', internal: true },
-      { after: 720, role: 'dueno', text: 'Mantenemos la ficha hasta tener confirmación escrita del estudio.' },
+      {
+        after: 650,
+        role: 'resp-contenido',
+        text: 'El estudio dice que el juego sigue activo. Hay disputa.',
+        internal: true,
+      },
+      {
+        after: 720,
+        role: 'dueno',
+        text: 'Mantenemos la ficha hasta tener confirmación escrita del estudio.',
+      },
     ],
   },
   {
@@ -719,7 +996,13 @@ const SPECS: SeedSpec[] = [
     respondAfter: 30,
     resolveAfter: 600,
     closeAfter: 900,
-    comments: [{ after: 600, role: 'resp-tecnico', text: 'Normalizados 68 registros; npm run check en verde.' }],
+    comments: [
+      {
+        after: 600,
+        role: 'resp-tecnico',
+        text: 'Normalizados 68 registros; npm run check en verde.',
+      },
+    ],
   },
   {
     key: 'chg-validate',
@@ -736,10 +1019,18 @@ const SPECS: SeedSpec[] = [
     at: [11, 30],
     status: 'Abierto',
     assignee: 'dueno',
-    details: { alcance: '34', motivo: 'Solución definitiva del problema de portadas tras update-steam.' },
+    details: {
+      alcance: '34',
+      motivo: 'Solución definitiva del problema de portadas tras update-steam.',
+    },
     change: { type: 'Cambio normal', parent: 'prob-steam' },
     comments: [
-      { after: 30, role: 'resp-tecnico', text: 'Cambio normal: toca el pipeline de publicación. Pendiente de aprobación del Dueño.', internal: true },
+      {
+        after: 30,
+        role: 'resp-tecnico',
+        text: 'Cambio normal: toca el pipeline de publicación. Pendiente de aprobación del Dueño.',
+        internal: true,
+      },
     ],
   },
   // ───────────── Solicitudes: Extracción ─────────────
@@ -747,7 +1038,8 @@ const SPECS: SeedSpec[] = [
     key: 'csv-aecid',
     category: 'extraccion',
     title: 'CSV de estudios de Guatemala para informe de AECID',
-    description: 'Se necesita para el informe trimestral, que se entrega mañana (tarea programada).',
+    description:
+      'Se necesita para el informe trimestral, que se entrega mañana (tarea programada).',
     impact: 'Bajo',
     urgency: 'Alta',
     channel: 'Portal/Correo',
@@ -778,7 +1070,12 @@ const SPECS: SeedSpec[] = [
     day: 1,
     at: [10, 15],
     status: 'Abierto',
-    details: { formato: 'Excel', filtroPais: [], filtroEstado: ['released'], motivo: 'Publicación' },
+    details: {
+      formato: 'Excel',
+      filtroPais: [],
+      filtroEstado: ['released'],
+      motivo: 'Publicación',
+    },
   },
 ];
 
@@ -844,7 +1141,14 @@ export function buildSeed(now: Date): Ticket[] {
       const when = at(esc.after);
       const actor = holder();
       const route = esc.route === 'funcional' ? 'Funcional' : 'Jerárquica';
-      push({ at: when, kind: 'escalation', actor, from: assigneeName(assignee), to: esc.to, note: `${route}: ${esc.reason}` });
+      push({
+        at: when,
+        kind: 'escalation',
+        actor,
+        from: assigneeName(assignee),
+        to: esc.to,
+        note: `${route}: ${esc.reason}`,
+      });
       const nextLevel = levelForAssignee(esc.to, level);
       if (nextLevel !== level) push({ at: when, kind: 'level', actor, from: level, to: nextLevel });
       assignee = esc.to;
@@ -853,7 +1157,13 @@ export function buildSeed(now: Date): Ticket[] {
     }
     if (spec.assignee && spec.assignee !== assignee) {
       const when = at(spec.respondAfter ?? 1);
-      push({ at: when, kind: 'assignee', actor: sd, from: assigneeName(assignee), to: assigneeName(spec.assignee) });
+      push({
+        at: when,
+        kind: 'assignee',
+        actor: sd,
+        from: assigneeName(assignee),
+        to: assigneeName(spec.assignee),
+      });
       assignee = spec.assignee;
       level = levelForAssignee(assignee, level);
     }
@@ -866,7 +1176,9 @@ export function buildSeed(now: Date): Ticket[] {
     if (closedAt) setStatus('Cerrado', closedAt, sd);
 
     const id = idByKey.get(spec.key) ?? formatTicketId(0);
-    const linkedTicketIds = (spec.problem?.links ?? []).map((k) => idByKey.get(k) ?? '').filter(Boolean);
+    const linkedTicketIds = (spec.problem?.links ?? [])
+      .map((k) => idByKey.get(k) ?? '')
+      .filter(Boolean);
     if (spec.problem) {
       push({
         at: at(spec.respondAfter ?? 5),
@@ -876,7 +1188,12 @@ export function buildSeed(now: Date): Ticket[] {
       });
     }
     if (spec.knownError) {
-      push({ at: at((spec.respondAfter ?? 5) + 30), kind: 'known-error', actor: holder(), note: `Workaround: ${spec.knownError.workaround}` });
+      push({
+        at: at((spec.respondAfter ?? 5) + 30),
+        kind: 'known-error',
+        actor: holder(),
+        note: `Workaround: ${spec.knownError.workaround}`,
+      });
     }
     if (spec.slaBreachCause) {
       push({ at: resolvedAt ?? at(1), kind: 'sla-cause', actor: sd, note: spec.slaBreachCause });
@@ -884,11 +1201,22 @@ export function buildSeed(now: Date): Ticket[] {
 
     const comments: TicketComment[] = (spec.comments ?? []).map((c) => {
       const actor = actorFor(c.role, spec.requester);
-      return { id: hid(), author: actor.name, role: c.role, text: c.text, createdAt: at(c.after), internal: c.internal ?? false };
+      return {
+        id: hid(),
+        author: actor.name,
+        role: c.role,
+        text: c.text,
+        createdAt: at(c.after),
+        internal: c.internal ?? false,
+      };
     });
 
     history.sort((a, b) => a.at.localeCompare(b.at));
-    const events = [createdAt.toISOString(), ...history.map((h) => h.at), ...comments.map((c) => c.createdAt)];
+    const events = [
+      createdAt.toISOString(),
+      ...history.map((h) => h.at),
+      ...comments.map((c) => c.createdAt),
+    ];
     const tags = [...spec.tags];
     if (spec.problem && !tags.includes('problema')) tags.push('problema');
     if (spec.knownError && !tags.includes('error conocido')) tags.push('error conocido');
@@ -916,9 +1244,16 @@ export function buildSeed(now: Date): Ticket[] {
       parentTicketId: spec.change ? idByKey.get(spec.change.parent) : undefined,
       changeType: spec.change?.type,
       slaBreachCause: spec.slaBreachCause,
-      relatedStudioId: spec.studio ?? (typeof spec.details.estudio === 'string' && spec.details.estudio !== '__nuevo__' ? spec.details.estudio : undefined),
+      relatedStudioId:
+        spec.studio ??
+        (typeof spec.details.estudio === 'string' && spec.details.estudio !== '__nuevo__'
+          ? spec.details.estudio
+          : undefined),
       relatedGameSlug: spec.game,
-      details: { ...spec.details, ...(spec.category === 'sitio-no-disponible' ? { desde: createdAt.toISOString() } : {}) },
+      details: {
+        ...spec.details,
+        ...(spec.category === 'sitio-no-disponible' ? { desde: createdAt.toISOString() } : {}),
+      },
       comments,
       history,
       createdAt: createdAt.toISOString(),
@@ -937,7 +1272,9 @@ export function buildSeed(now: Date): Ticket[] {
         id: hid(),
         at: when,
         kind: 'problem',
-        actor: problem.history.find((h) => h.kind === 'problem')?.actor ?? actorFor('resp-tecnico', linked.requester),
+        actor:
+          problem.history.find((h) => h.kind === 'problem')?.actor ??
+          actorFor('resp-tecnico', linked.requester),
         note: `Asociado al problema ${problem.id}.`,
       });
       linked.history.sort((a, b) => a.at.localeCompare(b.at));

@@ -2,7 +2,14 @@ import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined';
 import { Alert, Chip, Tab, Tabs } from '@mui/material';
 import { useMemo, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
-import { CardListSkeleton, EmptyState, HardCard, PageHeader, PriorityChip, StatusChip } from '@/components';
+import {
+  CardListSkeleton,
+  EmptyState,
+  HardCard,
+  PageHeader,
+  PriorityChip,
+  StatusChip,
+} from '@/components';
 import { assigneeName } from '@/config/roles';
 import { categoryName } from '@/config/services';
 import { useTickets } from '@/hooks';
@@ -23,7 +30,11 @@ function ProblemCard({ problem, all }: { problem: Ticket; all: Ticket[] }) {
         </RouterLink>
         <div className={styles.chips}>
           {problem.knownError ? (
-            <Chip size="small" label="Error conocido" sx={{ bgcolor: '#F4A261', color: '#0A1A2E', fontWeight: 800 }} />
+            <Chip
+              size="small"
+              label="Error conocido"
+              sx={{ bgcolor: '#F4A261', color: '#0A1A2E', fontWeight: 800 }}
+            />
           ) : (
             <Chip size="small" color="error" label="Problema" />
           )}
@@ -33,7 +44,8 @@ function ProblemCard({ problem, all }: { problem: Ticket; all: Ticket[] }) {
       </div>
       <h3 className={styles.title}>{problem.title}</h3>
       <p className={styles.meta}>
-        {categoryName(problem.category)} · {assigneeName(problem.assignee)} · desde {formatDate(problem.createdAt)}
+        {categoryName(problem.category)} · {assigneeName(problem.assignee)} · desde{' '}
+        {formatDate(problem.createdAt)}
       </p>
       {problem.rootCause && (
         <p className={styles.block}>
@@ -58,7 +70,8 @@ function ProblemCard({ problem, all }: { problem: Ticket; all: Ticket[] }) {
           <ul>
             {incidents.map((i) => (
               <li key={i.id}>
-                <RouterLink to={`/tickets/${i.id}`}>{i.id}</RouterLink> {i.title} · <em>{i.status}</em>
+                <RouterLink to={`/tickets/${i.id}`}>{i.id}</RouterLink> {i.title} ·{' '}
+                <em>{i.status}</em>
               </li>
             ))}
           </ul>
@@ -70,7 +83,8 @@ function ProblemCard({ problem, all }: { problem: Ticket; all: Ticket[] }) {
           <ul>
             {changes.map((c) => (
               <li key={c.id}>
-                <RouterLink to={`/tickets/${c.id}`}>{c.id}</RouterLink> {c.changeType} · <em>{c.status}</em>
+                <RouterLink to={`/tickets/${c.id}`}>{c.id}</RouterLink> {c.changeType} ·{' '}
+                <em>{c.status}</em>
               </li>
             ))}
           </ul>

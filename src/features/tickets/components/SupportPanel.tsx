@@ -21,7 +21,15 @@ import { ASSIGNEES, assigneeName, LEVELS } from '@/config/roles';
 import { useRole } from '@/features/auth';
 import { useToast } from '@/hooks';
 import { ticketService } from '@/services';
-import type { AssigneeId, Impact, Status, SupportLevel, Ticket, TicketPatch, Urgency } from '@/types';
+import type {
+  AssigneeId,
+  Impact,
+  Status,
+  SupportLevel,
+  Ticket,
+  TicketPatch,
+  Urgency,
+} from '@/types';
 import { calculatePriority } from '@/utils/priority';
 import { STATUSES, canTransition } from '@/utils/workflow';
 import type { EscalationHint } from '@/utils/escalationHints';
@@ -111,7 +119,8 @@ export function SupportPanel({ ticket, breached, hints }: Props) {
     }
   };
 
-  const set = <K extends keyof Draft>(key: K, value: Draft[K]) => setDraft((d) => ({ ...d, [key]: value }));
+  const set = <K extends keyof Draft>(key: K, value: Draft[K]) =>
+    setDraft((d) => ({ ...d, [key]: value }));
 
   return (
     <HardCard title="Gestión (soporte)" tone="accent">
@@ -134,7 +143,10 @@ export function SupportPanel({ ticket, breached, hints }: Props) {
               </Button>
             }
           >
-            <strong>Escalamiento {h.route === 'funcional' ? 'funcional' : 'jerárquico'} sugerido.</strong> {h.reason}
+            <strong>
+              Escalamiento {h.route === 'funcional' ? 'funcional' : 'jerárquico'} sugerido.
+            </strong>{' '}
+            {h.reason}
           </Alert>
         ))}
 
@@ -247,7 +259,12 @@ export function SupportPanel({ ticket, breached, hints }: Props) {
 
         <Divider />
         <Stack gap={1}>
-          <Button variant="outlined" startIcon={<CallMadeIcon />} onClick={() => setDialog('escalate')} disabled={closed}>
+          <Button
+            variant="outlined"
+            startIcon={<CallMadeIcon />}
+            onClick={() => setDialog('escalate')}
+            disabled={closed}
+          >
             Escalar
           </Button>
           {ticket.type === 'Incidente' && (
@@ -314,9 +331,15 @@ export function SupportPanel({ ticket, breached, hints }: Props) {
           }}
         />
       )}
-      {dialog === 'problem' && <ProblemDialog open ticket={ticket} onClose={() => setDialog(null)} />}
-      {dialog === 'known-error' && <KnownErrorDialog open ticket={ticket} onClose={() => setDialog(null)} />}
-      {dialog === 'change' && <ChangeRequestDialog open ticket={ticket} onClose={() => setDialog(null)} />}
+      {dialog === 'problem' && (
+        <ProblemDialog open ticket={ticket} onClose={() => setDialog(null)} />
+      )}
+      {dialog === 'known-error' && (
+        <KnownErrorDialog open ticket={ticket} onClose={() => setDialog(null)} />
+      )}
+      {dialog === 'change' && (
+        <ChangeRequestDialog open ticket={ticket} onClose={() => setDialog(null)} />
+      )}
     </HardCard>
   );
 }

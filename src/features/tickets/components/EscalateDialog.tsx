@@ -54,7 +54,11 @@ export function EscalateDialog({ ticket, open, onClose, hint }: Props) {
     }
     setSaving(true);
     try {
-      await ticketService.escalate(ticket.id, { route, to, reason, note: note.trim() || undefined }, actor);
+      await ticketService.escalate(
+        ticket.id,
+        { route, to, reason, note: note.trim() || undefined },
+        actor,
+      );
       notify(`Escalado a ${assigneeName(to)}`);
       onClose();
     } catch (e) {
@@ -69,13 +73,18 @@ export function EscalateDialog({ ticket, open, onClose, hint }: Props) {
       <DialogTitle>Escalar {ticket.id}</DialogTitle>
       <DialogContent>
         <Stack gap={2}>
-          <Tabs value={route} onChange={(_, v: EscalationRoute) => changeRoute(v)} variant="fullWidth">
+          <Tabs
+            value={route}
+            onChange={(_, v: EscalationRoute) => changeRoute(v)}
+            variant="fullWidth"
+          >
             {ESCALATION_ROUTES.map((r) => (
               <Tab key={r.route} value={r.route} label={r.name} />
             ))}
           </Tabs>
           <Alert severity="info" variant="outlined">
-            {routeDef.description} Actualmente lo tiene: <strong>{assigneeName(ticket.assignee)}</strong>.
+            {routeDef.description} Actualmente lo tiene:{' '}
+            <strong>{assigneeName(ticket.assignee)}</strong>.
           </Alert>
           {hint && hint.route === route && <Alert severity="warning">{hint.reason}</Alert>}
           <TextField

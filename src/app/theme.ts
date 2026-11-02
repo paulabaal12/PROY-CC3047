@@ -41,7 +41,11 @@ export function createAppTheme(mode: ThemeMode): Theme {
   return createTheme({
     palette: {
       mode,
-      primary: { main: dark ? COLORS.blue : COLORS.primary, dark: COLORS.primaryHover, contrastText: '#fff' },
+      primary: {
+        main: dark ? COLORS.blue : COLORS.primary,
+        dark: COLORS.primaryHover,
+        contrastText: '#fff',
+      },
       secondary: { main: COLORS.sky, contrastText: COLORS.navy },
       success: { main: dark ? COLORS.success : '#14876F', contrastText: '#fff' },
       error: { main: '#C8371F' },

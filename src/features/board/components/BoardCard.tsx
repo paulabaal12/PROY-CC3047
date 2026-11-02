@@ -23,7 +23,13 @@ interface Props {
 export function BoardCardContent({ ticket, now, overlay }: Props) {
   const hints = getEscalationHints(ticket, now);
   return (
-    <div className={clsx(styles.card, ticket.priority === 'Crítica' && styles.critical, overlay && styles.overlay)}>
+    <div
+      className={clsx(
+        styles.card,
+        ticket.priority === 'Crítica' && styles.critical,
+        overlay && styles.overlay,
+      )}
+    >
       <div className={styles.cardTop}>
         <span className={styles.cardId}>{ticket.id}</span>
         <span className={styles.cardIcons}>
@@ -37,7 +43,11 @@ export function BoardCardContent({ ticket, now, overlay }: Props) {
               <PriorityHighIcon className={styles.hintIcon} aria-label="Escalamiento sugerido" />
             </Tooltip>
           )}
-          <PriorityChip priority={ticket.priority} impact={ticket.impact} urgency={ticket.urgency} />
+          <PriorityChip
+            priority={ticket.priority}
+            impact={ticket.impact}
+            urgency={ticket.urgency}
+          />
         </span>
       </div>
       <p className={styles.cardTitle}>{ticket.title}</p>

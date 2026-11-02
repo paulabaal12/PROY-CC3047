@@ -57,7 +57,10 @@ export function TicketDetailPage() {
   const service = serviceById(ticket.category);
   const breached = isSlaBreached(ticket, now);
   const hints = isInternal ? getEscalationHints(ticket, now) : [];
-  const elapsed = businessMinutesBetween(new Date(ticket.createdAt), new Date(ticket.resolvedAt ?? now));
+  const elapsed = businessMinutesBetween(
+    new Date(ticket.createdAt),
+    new Date(ticket.resolvedAt ?? now),
+  );
   const linked = all.filter((x) => ticket.linkedTicketIds.includes(x.id));
   const problems = all.filter((x) => x.isProblem && x.linkedTicketIds.includes(ticket.id));
   const changes = all.filter((x) => x.parentTicketId === ticket.id);
@@ -73,9 +76,18 @@ export function TicketDetailPage() {
           <span className={styles.id}>{ticket.id}</span>
           <TypeChip type={ticket.type} />
           <StatusChip status={ticket.status} />
-          <PriorityChip priority={ticket.priority} impact={ticket.impact} urgency={ticket.urgency} size="medium" />
-          {ticket.isProblem && <Chip size="small" color="error" icon={<BugReportOutlinedIcon />} label="Problema" />}
-          {ticket.knownError && <Chip size="small" color="error" variant="outlined" label="Error conocido" />}
+          <PriorityChip
+            priority={ticket.priority}
+            impact={ticket.impact}
+            urgency={ticket.urgency}
+            size="medium"
+          />
+          {ticket.isProblem && (
+            <Chip size="small" color="error" icon={<BugReportOutlinedIcon />} label="Problema" />
+          )}
+          {ticket.knownError && (
+            <Chip size="small" color="error" variant="outlined" label="Error conocido" />
+          )}
           {ticket.changeType && <Chip size="small" color="success" label={ticket.changeType} />}
         </div>
         <h1 className={styles.title}>{ticket.title}</h1>
@@ -86,7 +98,9 @@ export function TicketDetailPage() {
 
       <div className={styles.grid}>
         <div className={styles.mainCol}>
-          {ticket.priority === 'Crítica' && ticket.type === 'Incidente' && <P1ChainCard elapsed={elapsed} />}
+          {ticket.priority === 'Crítica' && ticket.type === 'Incidente' && (
+            <P1ChainCard elapsed={elapsed} />
+          )}
 
           <HardCard title="Descripción">
             <p className={styles.description}>{ticket.description}</p>
@@ -94,7 +108,10 @@ export function TicketDetailPage() {
           </HardCard>
 
           {(ticket.isProblem || ticket.knownError) && (
-            <HardCard title={ticket.knownError ? 'Error conocido' : 'Registro de problema'} tone="danger">
+            <HardCard
+              title={ticket.knownError ? 'Error conocido' : 'Registro de problema'}
+              tone="danger"
+            >
               {ticket.rootCause && (
                 <p>
                   <strong>Causa raíz:</strong> {ticket.rootCause}
@@ -118,7 +135,8 @@ export function TicketDetailPage() {
                   <LinkList tickets={problems} />
                   {problems.find((p) => p.workaround) && (
                     <Alert severity="success" variant="outlined" sx={{ mt: 1 }}>
-                      <strong>Workaround disponible:</strong> {problems.find((p) => p.workaround)?.workaround}
+                      <strong>Workaround disponible:</strong>{' '}
+                      {problems.find((p) => p.workaround)?.workaround}
                     </Alert>
                   )}
                 </>
@@ -126,7 +144,10 @@ export function TicketDetailPage() {
               {ticket.parentTicketId && (
                 <p>
                   Solicitud de cambio generada desde{' '}
-                  <RouterLink to={`/tickets/${ticket.parentTicketId}`}>{ticket.parentTicketId}</RouterLink>.
+                  <RouterLink to={`/tickets/${ticket.parentTicketId}`}>
+                    {ticket.parentTicketId}
+                  </RouterLink>
+                  .
                 </p>
               )}
               {changes.length > 0 && (
@@ -138,7 +159,9 @@ export function TicketDetailPage() {
             </HardCard>
           )}
 
-          <HardCard title={`Comentarios (${ticket.comments.filter((c) => isInternal || !c.internal).length})`}>
+          <HardCard
+            title={`Comentarios (${ticket.comments.filter((c) => isInternal || !c.internal).length})`}
+          >
             <CommentsSection ticket={ticket} />
           </HardCard>
 
@@ -159,15 +182,24 @@ export function TicketDetailPage() {
 
           <HardCard title="Información">
             <dl className={styles.info}>
-              <Info label={t.fields.requester} value={`${ticket.requester.name} · ${ticket.requester.email}`} />
+              <Info
+                label={t.fields.requester}
+                value={`${ticket.requester.name} · ${ticket.requester.email}`}
+              />
               <Info label={t.fields.channel} value={ticket.channel} />
               <Info label={t.fields.assignee} value={assigneeName(ticket.assignee)} />
               <Info label={t.fields.level} value={ticket.level} />
               <Info label={t.fields.impact} value={ticket.impact} />
               <Info label={t.fields.urgency} value={ticket.urgency} />
               <Info label={t.fields.createdAt} value={formatDateTime(ticket.createdAt)} />
-              <Info label={t.fields.respondedAt} value={ticket.respondedAt ? formatDateTime(ticket.respondedAt) : '—'} />
-              <Info label={t.fields.resolvedAt} value={ticket.resolvedAt ? formatDateTime(ticket.resolvedAt) : '—'} />
+              <Info
+                label={t.fields.respondedAt}
+                value={ticket.respondedAt ? formatDateTime(ticket.respondedAt) : '—'}
+              />
+              <Info
+                label={t.fields.resolvedAt}
+                value={ticket.resolvedAt ? formatDateTime(ticket.resolvedAt) : '—'}
+              />
             </dl>
             {ticket.tags.length > 0 && (
               <div className={styles.tags}>
@@ -194,7 +226,13 @@ function Info({ label, value }: { label: string; value: string }) {
   );
 }
 
-function LinkList({ tickets, empty }: { tickets: { id: string; title: string; status: string }[]; empty?: string }) {
+function LinkList({
+  tickets,
+  empty,
+}: {
+  tickets: { id: string; title: string; status: string }[];
+  empty?: string;
+}) {
   if (tickets.length === 0) return empty ? <p className={styles.muted}>{empty}</p> : null;
   return (
     <ul className={styles.links}>

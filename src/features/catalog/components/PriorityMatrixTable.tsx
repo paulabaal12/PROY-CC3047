@@ -1,5 +1,11 @@
 import { PriorityChip } from '@/components';
-import { IMPACT_CRITERIA, IMPACTS, PRIORITY_MATRIX, URGENCIES, URGENCY_CRITERIA } from '@/config/priorityMatrix';
+import {
+  IMPACT_CRITERIA,
+  IMPACTS,
+  PRIORITY_MATRIX,
+  URGENCIES,
+  URGENCY_CRITERIA,
+} from '@/config/priorityMatrix';
 import styles from './Catalog.module.scss';
 
 export function PriorityMatrixTable() {

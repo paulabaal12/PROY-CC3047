@@ -15,7 +15,16 @@ interface Props {
 }
 
 /** Large radio-like card used across the form steps. */
-export function ChoiceCard({ selected, onSelect, title, description, icon, meta, name, value }: Props) {
+export function ChoiceCard({
+  selected,
+  onSelect,
+  title,
+  description,
+  icon,
+  meta,
+  name,
+  value,
+}: Props) {
   return (
     <label className={clsx(styles.card, selected && styles.selected)}>
       <input

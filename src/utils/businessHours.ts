@@ -96,7 +96,11 @@ export function nextWindowOpening(date: Date, cfg: WindowConfig = DEFAULT_WINDOW
 }
 
 /** Moves back `days` work days from `date`'s local day (0 = today if it is a work day). */
-export function businessDaysBefore(date: Date, days: number, cfg: WindowConfig = DEFAULT_WINDOW): number {
+export function businessDaysBefore(
+  date: Date,
+  days: number,
+  cfg: WindowConfig = DEFAULT_WINDOW,
+): number {
   let day = localDayIndex(date.getTime(), cfg);
   let left = days;
   while (!isWorkDay(day, cfg)) day--;

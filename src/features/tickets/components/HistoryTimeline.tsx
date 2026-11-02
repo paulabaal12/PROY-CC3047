@@ -72,11 +72,7 @@ export function HistoryTimeline({ history }: { history: HistoryEntry[] }) {
   return (
     <ol className={styles.timeline}>
       {entries.map((entry) => (
-        <li
-          key={entry.id}
-          className={styles.entry}
-          data-kind={entry.kind}
-        >
+        <li key={entry.id} className={styles.entry} data-kind={entry.kind}>
           <span className={styles.dot} aria-hidden>
             {ICONS[entry.kind]}
           </span>

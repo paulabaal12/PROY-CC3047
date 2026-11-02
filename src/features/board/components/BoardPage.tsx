@@ -32,10 +32,12 @@ function P1Banner({ tickets }: { tickets: Ticket[] }) {
       <ReportProblemIcon className={styles.p1Icon} />
       <div className={styles.p1Text}>
         <strong>
-          {tickets.length} incidente{tickets.length > 1 ? 's' : ''} Crítico{tickets.length > 1 ? 's' : ''} (P1)
-          abierto{tickets.length > 1 ? 's' : ''}
+          {tickets.length} incidente{tickets.length > 1 ? 's' : ''} Crítico
+          {tickets.length > 1 ? 's' : ''} (P1) abierto{tickets.length > 1 ? 's' : ''}
         </strong>
-        <span>Objetivo: restaurar en ≤ 90 min (interno 75). Están fijados arriba de su columna.</span>
+        <span>
+          Objetivo: restaurar en ≤ 90 min (interno 75). Están fijados arriba de su columna.
+        </span>
       </div>
       <div className={styles.p1Links}>
         {tickets.map((t) => (
@@ -65,7 +67,8 @@ export function BoardPage() {
   );
 
   const p1Open = useMemo(
-    () => data.filter((t) => t.type === 'Incidente' && t.priority === 'Crítica' && isActive(t.status)),
+    () =>
+      data.filter((t) => t.type === 'Incidente' && t.priority === 'Crítica' && isActive(t.status)),
     [data],
   );
   const counts = useMemo(
@@ -78,21 +81,28 @@ export function BoardPage() {
 
   const view = useMemo(() => {
     if (Object.keys(pending).length === 0) return columns;
-    const moved = Object.fromEntries(STATUSES.map((s) => [s, [] as Ticket[]])) as Record<Status, Ticket[]>;
+    const moved = Object.fromEntries(STATUSES.map((s) => [s, [] as Ticket[]])) as Record<
+      Status,
+      Ticket[]
+    >;
     for (const s of STATUSES)
-      for (const t of columns[s]) moved[pending[t.id] ?? s].push({ ...t, status: pending[t.id] ?? s });
+      for (const t of columns[s])
+        moved[pending[t.id] ?? s].push({ ...t, status: pending[t.id] ?? s });
     return moved;
   }, [columns, pending]);
 
   // Drop optimistic entries once the reloaded data reflects them.
   useEffect(() => {
     setPending((p) => {
-      const left = Object.entries(p).filter(([id, st]) => data.find((t) => t.id === id)?.status !== st);
+      const left = Object.entries(p).filter(
+        ([id, st]) => data.find((t) => t.id === id)?.status !== st,
+      );
       return left.length === Object.keys(p).length ? p : Object.fromEntries(left);
     });
   }, [data]);
 
-  const onDragStart = (e: DragStartEvent) => setDragging(data.find((t) => t.id === e.active.id) ?? null);
+  const onDragStart = (e: DragStartEvent) =>
+    setDragging(data.find((t) => t.id === e.active.id) ?? null);
 
   const onDragEnd = async (e: DragEndEvent) => {
     markDragEnd();
@@ -124,7 +134,12 @@ export function BoardPage() {
       />
       <P1Banner tickets={p1Open} />
 
-      <Tabs value={type} onChange={(_, v: TicketType) => setType(v)} sx={{ mb: 2 }} aria-label="Colas">
+      <Tabs
+        value={type}
+        onChange={(_, v: TicketType) => setType(v)}
+        sx={{ mb: 2 }}
+        aria-label="Colas"
+      >
         <Tab value="Incidente" label={`Incidentes (${counts.Incidente} activos)`} />
         <Tab value="Solicitud" label={`Solicitudes (${counts.Solicitud} activas)`} />
       </Tabs>
@@ -146,8 +161,15 @@ export function BoardPage() {
         </div>
       ) : (
         <>
-          {active && <p className={styles.resultCount}>{total} tickets coinciden con los filtros.</p>}
-          <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={(e) => void onDragEnd(e)} onDragCancel={() => setDragging(null)}>
+          {active && (
+            <p className={styles.resultCount}>{total} tickets coinciden con los filtros.</p>
+          )}
+          <DndContext
+            sensors={sensors}
+            onDragStart={onDragStart}
+            onDragEnd={(e) => void onDragEnd(e)}
+            onDragCancel={() => setDragging(null)}
+          >
             <div className={styles.board}>
               {STATUSES.map((s) => (
                 <BoardColumn

@@ -25,7 +25,10 @@ export const settingsService = {
     storage.setItem(STORAGE_KEYS.role, role);
   },
   getSettings(): AppSettings {
-    return { ...DEFAULT_SETTINGS, ...readJson<Partial<AppSettings>>(storage, STORAGE_KEYS.settings, {}) };
+    return {
+      ...DEFAULT_SETTINGS,
+      ...readJson<Partial<AppSettings>>(storage, STORAGE_KEYS.settings, {}),
+    };
   },
   saveSettings(settings: AppSettings): void {
     writeJson(storage, STORAGE_KEYS.settings, settings);

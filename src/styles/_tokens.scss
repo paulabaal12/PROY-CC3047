@@ -26,7 +26,12 @@ $border-w: 2px;
 
 $font-display: 'Archivo Black', 'Arial Black', system-ui, sans-serif;
 $font-accent: 'DM Serif Display', Georgia, serif;
-$font-body: 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+$font-body:
+  'DM Sans',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  sans-serif;
 
 $bp-sm: 600px;
 $bp-md: 900px;

@@ -142,7 +142,9 @@ export function DetailsStep({
           value={state.description}
           onChange={(e) => onDescription(e.target.value)}
           error={Boolean(errors.description)}
-          helperText={errors.description ?? 'Qué pasa o qué necesitás, con el mayor detalle posible.'}
+          helperText={
+            errors.description ?? 'Qué pasa o qué necesitás, con el mayor detalle posible.'
+          }
           multiline
           minRows={3}
         />
@@ -164,7 +166,8 @@ export function DetailsStep({
       </div>
       {service.id === 'registro' && (
         <Alert severity="info" variant="outlined">
-          Son los campos obligatorios de una ficha (Fase 1): la solicitud no se envía con alguno vacío.
+          Son los campos obligatorios de una ficha (Fase 1): la solicitud no se envía con alguno
+          vacío.
         </Alert>
       )}
     </div>

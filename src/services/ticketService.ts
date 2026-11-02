@@ -142,7 +142,8 @@ export function createTicketService(options: TicketServiceOptions): TicketServic
       linkedTicketIds: [],
       parentTicketId: input.parentTicketId,
       changeType: input.changeType,
-      relatedStudioId: input.relatedStudioId ?? (studio && studio !== '__nuevo__' ? studio : undefined),
+      relatedStudioId:
+        input.relatedStudioId ?? (studio && studio !== '__nuevo__' ? studio : undefined),
       relatedGameSlug: input.relatedGameSlug ?? (game || undefined),
       details: clone(input.details),
       comments: [],
@@ -192,7 +193,8 @@ export function createTicketService(options: TicketServiceOptions): TicketServic
           t.status = patch.status;
           if (patch.status !== 'Abierto' && !t.respondedAt) t.respondedAt = at;
           if (patch.status === 'Resuelto') t.resolvedAt = at;
-          if (patch.status === 'En progreso' || patch.status === 'Abierto') t.resolvedAt = undefined;
+          if (patch.status === 'En progreso' || patch.status === 'Abierto')
+            t.resolvedAt = undefined;
           if (patch.status === 'Cerrado') t.closedAt = at;
         }
         const previousPriority = t.priority;
@@ -299,7 +301,9 @@ export function createTicketService(options: TicketServiceOptions): TicketServic
           }),
         );
         for (const linked of all.filter((x) => t.linkedTicketIds.includes(x.id))) {
-          linked.history.push(history('problem', actor, at, { note: `Asociado al problema ${t.id}.` }));
+          linked.history.push(
+            history('problem', actor, at, { note: `Asociado al problema ${t.id}.` }),
+          );
           linked.updatedAt = at;
         }
       });
@@ -313,7 +317,8 @@ export function createTicketService(options: TicketServiceOptions): TicketServic
         t.isProblem = true;
         t.rootCause = input.rootCause.trim();
         t.workaround = input.workaround.trim();
-        for (const tag of ['problema', 'error conocido']) if (!t.tags.includes(tag)) t.tags.push(tag);
+        for (const tag of ['problema', 'error conocido'])
+          if (!t.tags.includes(tag)) t.tags.push(tag);
         t.history.push(history('known-error', actor, at, { note: `Workaround: ${t.workaround}` }));
       });
     },

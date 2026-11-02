@@ -41,7 +41,10 @@ export const ESCALATION_ROUTES: EscalationRouteDef[] = [
       {
         to: 'proveedor-github',
         label: 'GitHub Pages (Nivel 3)',
-        reasons: ['Caída o degradación de GitHub Pages / Actions', 'Problema de dominio o certificado HTTPS'],
+        reasons: [
+          'Caída o degradación de GitHub Pages / Actions',
+          'Problema de dominio o certificado HTTPS',
+        ],
       },
       {
         to: 'proveedor-kobo',

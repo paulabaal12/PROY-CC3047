@@ -56,11 +56,15 @@ export function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
               to={item.to}
               end={item.to === '/tickets'}
               onClick={onNavigate}
-              className={({ isActive }) => clsx(styles.link, isActive && styles.active, locked && styles.locked)}
+              className={({ isActive }) =>
+                clsx(styles.link, isActive && styles.active, locked && styles.locked)
+              }
             >
               {item.icon}
               <span>{item.label}</span>
-              {locked && <LockOutlinedIcon className={styles.lock} aria-label={t.nav.internalOnly} />}
+              {locked && (
+                <LockOutlinedIcon className={styles.lock} aria-label={t.nav.internalOnly} />
+              )}
             </NavLink>
           );
           return locked ? (

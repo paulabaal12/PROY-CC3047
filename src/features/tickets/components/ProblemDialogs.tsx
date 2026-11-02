@@ -54,7 +54,8 @@ export function ProblemDialog({ ticket, open, onClose }: DialogProps) {
   const options = useMemo(() => data.filter((x) => x.id !== ticket.id), [data, ticket.id]);
 
   const submit = () => {
-    if (rootCause.trim().length < 10) return setError('Describí la causa raíz (o la hipótesis) en al menos 10 caracteres.');
+    if (rootCause.trim().length < 10)
+      return setError('Describí la causa raíz (o la hipótesis) en al menos 10 caracteres.');
     void run(
       () => ticketService.createProblem(ticket.id, { rootCause, linkedTicketIds: linked }, actor),
       `Problema registrado en ${ticket.id}`,
@@ -112,7 +113,8 @@ export function KnownErrorDialog({ ticket, open, onClose }: DialogProps) {
 
   const submit = () => {
     if (!rootCause.trim()) return setError('Indicá la causa raíz identificada.');
-    if (workaround.trim().length < 10) return setError('Documentá el workaround (mínimo 10 caracteres).');
+    if (workaround.trim().length < 10)
+      return setError('Documentá el workaround (mínimo 10 caracteres).');
     void run(
       () => ticketService.markKnownError(ticket.id, { rootCause, workaround }, actor),
       `${ticket.id} marcado como error conocido`,
@@ -176,7 +178,12 @@ export function ChangeRequestDialog({ ticket, open, onClose }: DialogProps) {
     if (title.trim().length < 12) return setError('Escribí un título para el cambio.');
     if (description.trim().length < 10) return setError('Describí qué se modifica del servicio.');
     void run(
-      () => ticketService.createChangeRequest(ticket.id, { changeType, category, title, description }, actor),
+      () =>
+        ticketService.createChangeRequest(
+          ticket.id,
+          { changeType, category, title, description },
+          actor,
+        ),
       `${changeType} generado`,
     );
   };
@@ -186,7 +193,12 @@ export function ChangeRequestDialog({ ticket, open, onClose }: DialogProps) {
       <DialogTitle>Generar solicitud de cambio</DialogTitle>
       <DialogContent>
         <Stack gap={2} sx={{ pt: 1 }}>
-          <TextField select label="Tipo de cambio" value={changeType} onChange={(e) => setChangeType(e.target.value as ChangeType)}>
+          <TextField
+            select
+            label="Tipo de cambio"
+            value={changeType}
+            onChange={(e) => setChangeType(e.target.value as ChangeType)}
+          >
             <MenuItem value="Cambio estándar">Cambio estándar</MenuItem>
             <MenuItem value="Cambio normal">Cambio normal</MenuItem>
           </TextField>

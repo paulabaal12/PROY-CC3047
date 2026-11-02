@@ -89,7 +89,11 @@ export function toNewTicketInput(state: TicketFormState): NewTicketInput {
   };
 }
 
-const initialState = (requester: Person, channel: Channel, category?: CategoryId): TicketFormState => {
+const initialState = (
+  requester: Person,
+  channel: Channel,
+  category?: CategoryId,
+): TicketFormState => {
   const svc = category ? serviceById(category) : undefined;
   return {
     type: svc?.type,
@@ -147,13 +151,16 @@ export function useTicketForm(requester: Person, channel: Channel, presetCategor
     });
   }, []);
 
-  const update = useCallback(<K extends keyof TicketFormState>(key: K, value: TicketFormState[K]) => {
-    setState((s) => ({ ...s, [key]: value }));
-    setErrors((e) => {
-      const { [key as string]: _removed, ...rest } = e;
-      return rest;
-    });
-  }, []);
+  const update = useCallback(
+    <K extends keyof TicketFormState>(key: K, value: TicketFormState[K]) => {
+      setState((s) => ({ ...s, [key]: value }));
+      setErrors((e) => {
+        const { [key as string]: _removed, ...rest } = e;
+        return rest;
+      });
+    },
+    [],
+  );
 
   const next = useCallback(() => {
     const stepErrors = validateStep(step, state);
@@ -184,7 +191,20 @@ export function useTicketForm(requester: Person, channel: Channel, presetCategor
   }, [requester, channel]);
 
   return useMemo(
-    () => ({ state, step, errors, setStep, setType, setCategory, setDetail, update, next, back, validateAll, reset }),
+    () => ({
+      state,
+      step,
+      errors,
+      setStep,
+      setType,
+      setCategory,
+      setDetail,
+      update,
+      next,
+      back,
+      validateAll,
+      reset,
+    }),
     [state, step, errors, setType, setCategory, setDetail, update, next, back, validateAll, reset],
   );
 }

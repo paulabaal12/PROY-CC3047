@@ -10,7 +10,11 @@ export function P1ChainCard({ elapsed }: { elapsed: number }) {
   const marker = Math.min(100, (elapsed / TOTAL) * 100);
   return (
     <HardCard title="Cadena del P1 (OLA · 90 min)" tone="danger">
-      <div className={styles.bar} role="img" aria-label={`Transcurridos ${Math.round(elapsed)} de ${TOTAL} minutos`}>
+      <div
+        className={styles.bar}
+        role="img"
+        aria-label={`Transcurridos ${Math.round(elapsed)} de ${TOTAL} minutos`}
+      >
         {P1_CHAIN.map((s, i) => (
           <span
             key={s.step}

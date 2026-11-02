@@ -24,7 +24,8 @@ export function TicketListPage() {
   });
 
   const tickets = useMemo(() => {
-    const list = isInternal && scope === 'mine' && !search ? data.filter((x) => x.assignee === role) : data;
+    const list =
+      isInternal && scope === 'mine' && !search ? data.filter((x) => x.assignee === role) : data;
     return [...list].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   }, [data, isInternal, scope, search, role]);
 
@@ -39,7 +40,12 @@ export function TicketListPage() {
             : `Tickets registrados con ${roleDef.persona.email}.`
         }
         actions={
-          <Button component={RouterLink} to="/tickets/new" variant="contained" startIcon={<AddIcon />}>
+          <Button
+            component={RouterLink}
+            to="/tickets/new"
+            variant="contained"
+            startIcon={<AddIcon />}
+          >
             {t.nav.newTicket}
           </Button>
         }
@@ -66,7 +72,9 @@ export function TicketListPage() {
         <CardListSkeleton />
       ) : tickets.length === 0 ? (
         <EmptyState
-          icon={search ? <SearchOffIcon fontSize="large" /> : <InboxOutlinedIcon fontSize="large" />}
+          icon={
+            search ? <SearchOffIcon fontSize="large" /> : <InboxOutlinedIcon fontSize="large" />
+          }
           title={search ? t.empty.noResults : t.empty.noTickets}
           description={search ? t.empty.noResultsHint : t.empty.noTicketsHint}
           action={

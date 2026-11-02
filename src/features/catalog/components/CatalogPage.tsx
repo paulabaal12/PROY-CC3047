@@ -22,7 +22,8 @@ function ServiceCard({ svc, index }: { svc: ServiceDef; index: number }) {
       </div>
       <h3 className={styles.serviceName}>{svc.name}</h3>
       <p className={styles.why}>
-        <span>¿Por qué es {svc.type === 'Incidente' ? 'un incidente' : 'una solicitud'}?</span> {svc.justification}
+        <span>¿Por qué es {svc.type === 'Incidente' ? 'un incidente' : 'una solicitud'}?</span>{' '}
+        {svc.justification}
       </p>
       <dl className={styles.facts}>
         <div>
@@ -37,14 +38,20 @@ function ServiceCard({ svc, index }: { svc: ServiceDef; index: number }) {
           <dt>Prioridad sugerida</dt>
           <dd className={styles.inline}>
             <PriorityChip priority={priority} /> {svc.defaultImpact}/{svc.defaultUrgency} · resp.{' '}
-            {formatBusinessMinutes(targets.responseMinutes)} · resol. {formatBusinessMinutes(targets.resolutionMinutes)}
+            {formatBusinessMinutes(targets.responseMinutes)} · resol.{' '}
+            {formatBusinessMinutes(targets.resolutionMinutes)}
           </dd>
         </div>
         <div>
           <dt>Datos que pide</dt>
           <dd className={styles.fieldChips}>
             {svc.fields.map((f) => (
-              <Chip key={f.id} size="small" label={f.label} variant={f.required ? 'filled' : 'outlined'} />
+              <Chip
+                key={f.id}
+                size="small"
+                label={f.label}
+                variant={f.required ? 'filled' : 'outlined'}
+              />
             ))}
           </dd>
         </div>
@@ -119,8 +126,8 @@ export function CatalogPage() {
           </div>
         </div>
         <p className={styles.window}>
-          Ventana de servicio: <strong>{SERVICE_WINDOW.label}</strong>. Los canales reciben casos fuera de
-          ventana, pero el reloj del SLA no corre.
+          Ventana de servicio: <strong>{SERVICE_WINDOW.label}</strong>. Los canales reciben casos
+          fuera de ventana, pero el reloj del SLA no corre.
         </p>
       </HardCard>
 
@@ -142,7 +149,8 @@ export function CatalogPage() {
               </li>
             ))}
             <li>
-              <strong>Nivel 3 (proveedores):</strong> {PROVIDERS.map((p) => `${p.name} (${p.scope})`).join('; ')}.
+              <strong>Nivel 3 (proveedores):</strong>{' '}
+              {PROVIDERS.map((p) => `${p.name} (${p.scope})`).join('; ')}.
             </li>
           </ul>
         </HardCard>

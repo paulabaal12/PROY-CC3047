@@ -14,14 +14,17 @@ interface Props {
 }
 
 export function ImpactUrgencyPicker({ service, impact, urgency, onImpact, onUrgency }: Props) {
-  const changed = service && (service.defaultImpact !== impact || service.defaultUrgency !== urgency);
+  const changed =
+    service && (service.defaultImpact !== impact || service.defaultUrgency !== urgency);
   return (
     <div className={styles.stack}>
       {service && (
         <Alert severity={changed ? 'warning' : 'info'} variant="outlined">
-          Sugerido para <strong>{service.shortName}</strong>: impacto {service.defaultImpact} y urgencia{' '}
-          {service.defaultUrgency}.{' '}
-          {changed ? 'Lo cambiaste: Service Desk lo revisará al clasificar.' : 'Podés ajustarlo según los criterios.'}
+          Sugerido para <strong>{service.shortName}</strong>: impacto {service.defaultImpact} y
+          urgencia {service.defaultUrgency}.{' '}
+          {changed
+            ? 'Lo cambiaste: Service Desk lo revisará al clasificar.'
+            : 'Podés ajustarlo según los criterios.'}
         </Alert>
       )}
       <fieldset className={styles.fieldset}>

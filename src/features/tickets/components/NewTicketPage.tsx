@@ -24,7 +24,12 @@ export function NewTicketPage() {
   const [params] = useSearchParams();
   const preset = params.get('category');
   const { role } = useRole();
-  return <NewTicketForm key={`${preset ?? ''}-${role}`} preset={isCategory(preset) ? preset : undefined} />;
+  return (
+    <NewTicketForm
+      key={`${preset ?? ''}-${role}`}
+      preset={isCategory(preset) ? preset : undefined}
+    />
+  );
 }
 
 function NewTicketForm({ preset }: { preset?: CategoryId }) {
@@ -37,7 +42,10 @@ function NewTicketForm({ preset }: { preset?: CategoryId }) {
   const [submitting, setSubmitting] = useState(false);
   const [created, setCreated] = useState<Ticket | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const service = useMemo(() => (state.category ? serviceById(state.category) : undefined), [state.category]);
+  const service = useMemo(
+    () => (state.category ? serviceById(state.category) : undefined),
+    [state.category],
+  );
   const last = step === STEPS.length - 1;
 
   const submit = async () => {
@@ -101,9 +109,16 @@ function NewTicketForm({ preset }: { preset?: CategoryId }) {
               else form.next();
             }}
           >
-            {step === 0 && <TypeStep value={state.type} error={errors.type} onChange={form.setType} />}
+            {step === 0 && (
+              <TypeStep value={state.type} error={errors.type} onChange={form.setType} />
+            )}
             {step === 1 && state.type && (
-              <CategoryStep type={state.type} value={state.category} error={errors.category} onChange={form.setCategory} />
+              <CategoryStep
+                type={state.type}
+                value={state.category}
+                error={errors.category}
+                onChange={form.setCategory}
+              />
             )}
             {step === 2 && service && (
               <DetailsStep
@@ -147,11 +162,20 @@ function NewTicketForm({ preset }: { preset?: CategoryId }) {
             )}
 
             <div className={styles.actions}>
-              <Button startIcon={<ArrowBackIcon />} onClick={form.back} disabled={step === 0 || submitting}>
+              <Button
+                startIcon={<ArrowBackIcon />}
+                onClick={form.back}
+                disabled={step === 0 || submitting}
+              >
                 Atrás
               </Button>
               {last ? (
-                <Button type="submit" variant="contained" endIcon={<SendIcon />} disabled={submitting}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  endIcon={<SendIcon />}
+                  disabled={submitting}
+                >
                   {submitting ? 'Enviando…' : 'Enviar ticket'}
                 </Button>
               ) : (

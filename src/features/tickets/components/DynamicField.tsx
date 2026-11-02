@@ -31,7 +31,9 @@ interface Option {
 }
 
 const studioOptions = (allowNew: boolean): Option[] => [
-  ...(allowNew ? [{ value: NEW_STUDIO, label: 'Nuevo estudio (no está en el catálogo)', group: 'Nuevo' }] : []),
+  ...(allowNew
+    ? [{ value: NEW_STUDIO, label: 'Nuevo estudio (no está en el catálogo)', group: 'Nuevo' }]
+    : []),
   ...STUDIOS.map((s) => ({ value: s.id, label: s.name, group: countryName(s.country) })),
 ];
 
@@ -108,7 +110,9 @@ export function DynamicField({ field, value, details, error, onChange }: Props) 
                   <Checkbox
                     checked={arr.includes(o.value)}
                     onChange={(e) =>
-                      onChange(e.target.checked ? [...arr, o.value] : arr.filter((v) => v !== o.value))
+                      onChange(
+                        e.target.checked ? [...arr, o.value] : arr.filter((v) => v !== o.value),
+                      )
                     }
                   />
                 }
@@ -181,7 +185,15 @@ export function DynamicField({ field, value, details, error, onChange }: Props) 
       placeholder={field.placeholder}
       multiline={field.kind === 'textarea'}
       minRows={field.kind === 'textarea' ? 3 : undefined}
-      type={field.kind === 'number' ? 'number' : field.kind === 'datetime' ? 'datetime-local' : field.kind === 'url' ? 'url' : 'text'}
+      type={
+        field.kind === 'number'
+          ? 'number'
+          : field.kind === 'datetime'
+            ? 'datetime-local'
+            : field.kind === 'url'
+              ? 'url'
+              : 'text'
+      }
       slotProps={field.kind === 'datetime' ? { inputLabel: { shrink: true } } : undefined}
     />
   );

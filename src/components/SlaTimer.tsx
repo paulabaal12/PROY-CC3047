@@ -40,7 +40,9 @@ function Clock({ label, clock, paused }: { label: string; clock: SlaClock; pause
         <div className={styles.row}>
           <span className={styles.label}>{label}</span>
           <span className={styles.value}>
-            {running && paused && <PauseCircleOutlineIcon className={styles.pause} aria-label={t.sla.paused} />}
+            {running && paused && (
+              <PauseCircleOutlineIcon className={styles.pause} aria-label={t.sla.paused} />
+            )}
             {describe(clock)}
           </span>
         </div>
@@ -61,7 +63,11 @@ interface Props {
 /** Response and resolution clocks: green, yellow (< 25% left) and red (overdue). */
 export function SlaTimer({ ticket, now, compact = false }: Props) {
   if (isSlaExempt(ticket)) {
-    return <p className={styles.exempt}>Registro de problema: se gestiona por causa raíz, sin SLA de incidente.</p>;
+    return (
+      <p className={styles.exempt}>
+        Registro de problema: se gestiona por causa raíz, sin SLA de incidente.
+      </p>
+    );
   }
   const sla = getTicketSla(ticket, now);
   if (compact) {

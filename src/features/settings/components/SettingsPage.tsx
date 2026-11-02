@@ -57,7 +57,8 @@ export function SettingsPage() {
 
         <HardCard title="Rol simulado">
           <p className={styles.text}>
-            Activo: <strong>{roleDef.name}</strong> ({roleDef.persona.name}). Cambialo desde el selector de la barra lateral.
+            Activo: <strong>{roleDef.name}</strong> ({roleDef.persona.name}). Cambialo desde el
+            selector de la barra lateral.
           </p>
           <ul className={styles.roles}>
             {ROLES.map((r) => (
@@ -70,8 +71,8 @@ export function SettingsPage() {
 
         <HardCard title="Disponibilidad de referencia (UptimeRobot)">
           <p className={styles.text}>
-            El objetivo de disponibilidad (≥ 99% mensual) lo mide UptimeRobot. Registrá aquí el valor del mes
-            para el Dashboard.
+            El objetivo de disponibilidad (≥ 99% mensual) lo mide UptimeRobot. Registrá aquí el
+            valor del mes para el Dashboard.
           </p>
           <Stack direction="row" gap={1} alignItems="flex-start">
             <TextField
@@ -83,7 +84,10 @@ export function SettingsPage() {
               error={!validAvailability}
               helperText={validAvailability ? ' ' : 'Entre 0 y 100'}
               disabled={!isInternal}
-              slotProps={{ input: { endAdornment: <InputAdornment position="end">%</InputAdornment> }, htmlInput: { step: 0.01, min: 0, max: 100 } }}
+              slotProps={{
+                input: { endAdornment: <InputAdornment position="end">%</InputAdornment> },
+                htmlInput: { step: 0.01, min: 0, max: 100 },
+              }}
             />
             <Button
               variant="contained"
@@ -99,15 +103,22 @@ export function SettingsPage() {
         </HardCard>
 
         <HardCard title="Ventana de servicio">
-          <p className={styles.text}>{SERVICE_WINDOW.label}. Los feriados de Guatemala no cuentan para el SLA.</p>
+          <p className={styles.text}>
+            {SERVICE_WINDOW.label}. Los feriados de Guatemala no cuentan para el SLA.
+          </p>
         </HardCard>
 
         <HardCard title="Datos de demostración" tone="danger">
           <p className={styles.text}>
-            Borra los tickets guardados en este navegador y vuelve a cargar los ~28 tickets de ejemplo (fechas de
-            las últimas 3 semanas).
+            Borra los tickets guardados en este navegador y vuelve a cargar los ~28 tickets de
+            ejemplo (fechas de las últimas 3 semanas).
           </p>
-          <Button variant="outlined" color="error" startIcon={<RestartAltIcon />} onClick={() => setConfirm(true)}>
+          <Button
+            variant="outlined"
+            color="error"
+            startIcon={<RestartAltIcon />}
+            onClick={() => setConfirm(true)}
+          >
             Restablecer datos de demostración
           </Button>
         </HardCard>
@@ -117,12 +128,18 @@ export function SettingsPage() {
         <DialogTitle>¿Restablecer los datos?</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Se perderán los tickets, comentarios y cambios hechos en este navegador. No se puede deshacer.
+            Se perderán los tickets, comentarios y cambios hechos en este navegador. No se puede
+            deshacer.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setConfirm(false)}>Cancelar</Button>
-          <Button color="error" variant="contained" onClick={() => void reset()} disabled={resetting}>
+          <Button
+            color="error"
+            variant="contained"
+            onClick={() => void reset()}
+            disabled={resetting}
+          >
             Restablecer
           </Button>
         </DialogActions>

@@ -43,7 +43,12 @@ export const ROLES: RoleDef[] = [
     short: 'Resp. técnico',
     level: 'Nivel 2',
     description: 'Incidentes, publicación en GitHub Pages, build y restauración de datos.',
-    permissions: ['Diagnostica y corrige', 'Despliega', 'Restaura datos e imágenes', 'Escala a Nivel 3'],
+    permissions: [
+      'Diagnostica y corrige',
+      'Despliega',
+      'Restaura datos e imágenes',
+      'Escala a Nivel 3',
+    ],
     persona: { name: 'Diego Castillo', email: 'diego.castillo@example.com' },
   },
   {
@@ -65,7 +70,12 @@ export const ROLES: RoleDef[] = [
   },
 ];
 
-export const INTERNAL_ROLES: InternalRoleId[] = ['service-desk', 'resp-tecnico', 'resp-contenido', 'dueno'];
+export const INTERNAL_ROLES: InternalRoleId[] = [
+  'service-desk',
+  'resp-tecnico',
+  'resp-contenido',
+  'dueno',
+];
 
 export const isInternalRole = (role: RoleId): role is InternalRoleId => role !== 'usuario';
 
@@ -83,8 +93,16 @@ export interface ProviderDef {
 
 /** Level 3: external providers. */
 export const PROVIDERS: ProviderDef[] = [
-  { id: 'proveedor-github', name: 'GitHub Pages', scope: 'Hosting, dominio, HTTPS y GitHub Actions' },
-  { id: 'proveedor-kobo', name: 'KoboToolbox', scope: 'Formularios de alta y de juegos adicionales' },
+  {
+    id: 'proveedor-github',
+    name: 'GitHub Pages',
+    scope: 'Hosting, dominio, HTTPS y GitHub Actions',
+  },
+  {
+    id: 'proveedor-kobo',
+    name: 'KoboToolbox',
+    scope: 'Formularios de alta y de juegos adicionales',
+  },
   { id: 'proveedor-uptimerobot', name: 'UptimeRobot', scope: 'Monitoreo cada 5 min y alertas' },
 ];
 

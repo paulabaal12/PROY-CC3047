@@ -15,7 +15,10 @@ export default defineConfig(({ mode }) => {
     },
     css: {
       preprocessorOptions: {
-        scss: { api: 'modern-compiler', loadPaths: [fileURLToPath(new URL('./src', import.meta.url))] },
+        scss: {
+          api: 'modern-compiler',
+          loadPaths: [fileURLToPath(new URL('./src', import.meta.url))],
+        },
       },
     },
     build: {

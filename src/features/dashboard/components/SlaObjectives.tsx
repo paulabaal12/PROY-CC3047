@@ -44,7 +44,11 @@ function Meter({ label, value, target }: { label: string; value: number | null; 
           className={clsx(styles.meterFill, value !== null && value < target && styles.meterLow)}
           style={{ width: `${value ?? 0}%` }}
         />
-        <span className={styles.meterTarget} style={{ left: `${target}%` }} title={`Meta ${target}%`} />
+        <span
+          className={styles.meterTarget}
+          style={{ left: `${target}%` }}
+          title={`Meta ${target}%`}
+        />
       </div>
     </div>
   );
@@ -90,14 +94,22 @@ function ObjectiveCard({
   );
 }
 
-export function SlaObjectives({ data, availability }: { data: DashboardData; availability: number }) {
+export function SlaObjectives({
+  data,
+  availability,
+}: {
+  data: DashboardData;
+  availability: number;
+}) {
   const [avail, p1, upd] = SLA_OBJECTIVES;
   return (
     <HardCard title="Objetivos del SLA (Fase 1)">
       <div className={styles.objectives}>
         {avail && <ObjectiveCard objective={avail} value={availability} />}
         {p1 && <ObjectiveCard objective={p1} value={data.p1.percent} result={data.p1} />}
-        {upd && <ObjectiveCard objective={upd} value={data.updates.percent} result={data.updates} />}
+        {upd && (
+          <ObjectiveCard objective={upd} value={data.updates.percent} result={data.updates} />
+        )}
       </div>
       <div className={styles.months}>
         <p className={styles.monthsTitle}>Objetivo P1 por mes (últimos 6)</p>
@@ -105,7 +117,10 @@ export function SlaObjectives({ data, availability }: { data: DashboardData; ava
           {data.months.map((m) => (
             <li
               key={m.key}
-              className={clsx(m.total === 0 && styles.monthEmpty, m.breached && styles.monthBreached)}
+              className={clsx(
+                m.total === 0 && styles.monthEmpty,
+                m.breached && styles.monthBreached,
+              )}
               title={m.total === 0 ? 'Sin P1 resueltos' : m.breached ? 'Incumplido' : 'Cumplido'}
             >
               <span>{m.label}</span>
@@ -115,13 +130,13 @@ export function SlaObjectives({ data, availability }: { data: DashboardData; ava
         </ol>
         {data.recurrent ? (
           <Alert severity="error" sx={{ mt: 1.5 }}>
-            Incumplimiento recurrente (2 meses seguidos o 3 en 6): pasa al flujo de problema y se escala al Dueño
-            del servicio.
+            Incumplimiento recurrente (2 meses seguidos o 3 en 6): pasa al flujo de problema y se
+            escala al Dueño del servicio.
           </Alert>
         ) : (
           <p className={styles.objectiveFoot}>
-            Un incumplimiento aislado se registra con su causa; si se repite 2 meses seguidos o 3 en 6 es
-            recurrente y pasa a flujo de problema.
+            Un incumplimiento aislado se registra con su causa; si se repite 2 meses seguidos o 3 en
+            6 es recurrente y pasa a flujo de problema.
           </p>
         )}
       </div>

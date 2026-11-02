@@ -63,7 +63,11 @@ export function DonutChart({ data, theme }: { data: Datum[]; theme: ChartTheme }
       <ul className={styles.legend}>
         {data.map((d, i) => (
           <li key={d.key}>
-            <span className={styles.swatch} style={{ background: theme.categorical[i] }} aria-hidden />
+            <span
+              className={styles.swatch}
+              style={{ background: theme.categorical[i] }}
+              aria-hidden
+            />
             <span className={styles.legendName}>{d.name}</span>
             <span className={styles.legendValue}>{d.value}</span>
           </li>
@@ -85,9 +89,20 @@ export function HorizontalBars({ data, theme, colorFor, height }: BarsProps) {
   const h = height ?? Math.max(160, data.length * 38 + 20);
   return (
     <ResponsiveContainer width="100%" height={h}>
-      <BarChart data={data} layout="vertical" margin={{ top: 4, right: 36, bottom: 4, left: 4 }} barCategoryGap={8}>
+      <BarChart
+        data={data}
+        layout="vertical"
+        margin={{ top: 4, right: 36, bottom: 4, left: 4 }}
+        barCategoryGap={8}
+      >
         <CartesianGrid horizontal={false} stroke={theme.grid} />
-        <XAxis type="number" allowDecimals={false} tick={{ fill: theme.axis, fontSize: 12 }} axisLine={false} tickLine={false} />
+        <XAxis
+          type="number"
+          allowDecimals={false}
+          tick={{ fill: theme.axis, fontSize: 12 }}
+          axisLine={false}
+          tickLine={false}
+        />
         <YAxis
           type="category"
           dataKey="name"
@@ -101,7 +116,13 @@ export function HorizontalBars({ data, theme, colorFor, height }: BarsProps) {
           {data.map((d) => (
             <Cell key={d.key} fill={colorFor ? colorFor(d) : theme.single} />
           ))}
-          <LabelList dataKey="value" position="right" fill={theme.axis} fontSize={12} fontWeight={700} />
+          <LabelList
+            dataKey="value"
+            position="right"
+            fill={theme.axis}
+            fontSize={12}
+            fontWeight={700}
+          />
         </Bar>
       </BarChart>
     </ResponsiveContainer>

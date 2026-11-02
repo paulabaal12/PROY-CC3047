@@ -54,7 +54,11 @@ export interface TicketSla {
 
 const toDate = (iso?: string): Date | undefined => (iso ? new Date(iso) : undefined);
 
-export function getTicketSla(ticket: Ticket, now: Date, cfg: WindowConfig = DEFAULT_WINDOW): TicketSla {
+export function getTicketSla(
+  ticket: Ticket,
+  now: Date,
+  cfg: WindowConfig = DEFAULT_WINDOW,
+): TicketSla {
   const targets = getSlaTargets(ticket.impact, ticket.urgency);
   const created = new Date(ticket.createdAt);
   const resolved = toDate(ticket.resolvedAt) ?? toDate(ticket.closedAt);
@@ -72,7 +76,11 @@ export const isSlaExempt = (ticket: Ticket): boolean => ticket.isProblem;
 const isBad = (c: SlaClock) => c.state === 'breached' || c.state === 'missed';
 
 /** True if either the response or the resolution target was (or is being) missed. */
-export function isSlaBreached(ticket: Ticket, now: Date, cfg: WindowConfig = DEFAULT_WINDOW): boolean {
+export function isSlaBreached(
+  ticket: Ticket,
+  now: Date,
+  cfg: WindowConfig = DEFAULT_WINDOW,
+): boolean {
   if (isSlaExempt(ticket)) return false;
   const sla = getTicketSla(ticket, now, cfg);
   return isBad(sla.response) || isBad(sla.resolution);

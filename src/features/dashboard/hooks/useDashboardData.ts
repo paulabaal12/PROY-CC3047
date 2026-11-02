@@ -29,20 +29,31 @@ export function computeDashboard(all: Ticket[], now: Date, type: TypeFilter, ran
   );
   const count = (fn: (t: Ticket) => boolean) => tickets.filter(fn).length;
 
-  const byCategory: Datum[] = SERVICES.filter((s) => type === 'all' || s.type === type).map((s) => ({
-    key: s.id,
-    name: s.shortName,
-    value: count((t) => t.category === s.id),
+  const byCategory: Datum[] = SERVICES.filter((s) => type === 'all' || s.type === type).map(
+    (s) => ({
+      key: s.id,
+      name: s.shortName,
+      value: count((t) => t.category === s.id),
+    }),
+  );
+  const byPriority: Datum[] = PRIORITIES.map((p) => ({
+    key: p,
+    name: p,
+    value: count((t) => t.priority === p),
   }));
-  const byPriority: Datum[] = PRIORITIES.map((p) => ({ key: p, name: p, value: count((t) => t.priority === p) }));
-  const byStatus: Datum[] = STATUSES.map((s) => ({ key: s, name: s, value: count((t) => t.status === s) }));
+  const byStatus: Datum[] = STATUSES.map((s) => ({
+    key: s,
+    name: s,
+    value: count((t) => t.status === s),
+  }));
   const byType: Datum[] = (['Incidente', 'Solicitud'] as const).map((k) => ({
     key: k,
     name: k === 'Incidente' ? 'Incidentes' : 'Solicitudes',
     value: count((t) => t.type === k),
   }));
   const tagCounts = new Map<string, number>();
-  for (const t of tickets) for (const tag of t.tags) tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+  for (const t of tickets)
+    for (const tag of t.tags) tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
   const byTag: Datum[] = [...tagCounts.entries()]
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
     .slice(0, 10)

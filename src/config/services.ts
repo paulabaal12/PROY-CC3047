@@ -58,7 +58,10 @@ const opts = (values: string[]): FieldOption[] => values.map((v) => ({ value: v,
 export const NEW_STUDIO = '__nuevo__';
 
 const countryOptions = COUNTRIES.map((c) => ({ value: c.code, label: c.name }));
-const statusOptions = Object.entries(GAME_STATUS_LABELS).map(([value, label]) => ({ value, label }));
+const statusOptions = Object.entries(GAME_STATUS_LABELS).map(([value, label]) => ({
+  value,
+  label,
+}));
 
 export const SERVICES: ServiceDef[] = [
   {
@@ -68,9 +71,13 @@ export const SERVICES: ServiceDef[] = [
     shortName: 'Registro de ficha',
     justification:
       'Es una petición planificada para agregar contenido: nada está roto. Sigue un flujo estándar y repetible (formulario de Kobo → validación de criterios → YAML en content/ → build).',
-    requestedBy: 'Estudios de la región (formulario de alta o de juegos adicionales en KoboToolbox).',
+    requestedBy:
+      'Estudios de la región (formulario de alta o de juegos adicionales en KoboToolbox).',
     handledBy: 'Responsable de contenido (valida criterios) y Service Desk (publica).',
-    examples: ['Alta de un estudio nuevo con su juego destacado', 'Juego adicional de un estudio ya listado'],
+    examples: [
+      'Alta de un estudio nuevo con su juego destacado',
+      'Juego adicional de un estudio ya listado',
+    ],
     defaultImpact: 'Bajo',
     defaultUrgency: 'Baja',
     fields: [
@@ -106,7 +113,13 @@ export const SERVICES: ServiceDef[] = [
         required: true,
         options: opts(PLATFORMS),
       },
-      { id: 'genero', label: 'Género', kind: 'text', required: true, placeholder: 'p. ej. Metroidvania' },
+      {
+        id: 'genero',
+        label: 'Género',
+        kind: 'text',
+        required: true,
+        placeholder: 'p. ej. Metroidvania',
+      },
       {
         id: 'enlace',
         label: 'Enlace (tienda o sitio oficial)',
@@ -130,7 +143,8 @@ export const SERVICES: ServiceDef[] = [
     shortName: 'Actualización / retiro',
     justification:
       'El servicio funciona: el estudio pide cambiar o retirar información propia. Es un cambio de contenido previsto, con fuente verificable, no una interrupción.',
-    requestedBy: 'Estudios listados (o su representante) y el equipo del catálogo al detectar datos desactualizados.',
+    requestedBy:
+      'Estudios listados (o su representante) y el equipo del catálogo al detectar datos desactualizados.',
     handledBy: 'Responsable de contenido; un retiro en disputa escala al Dueño del servicio.',
     examples: ['Corregir las plataformas de un juego', 'Retirar un juego cancelado'],
     defaultImpact: 'Bajo',
@@ -168,7 +182,8 @@ export const SERVICES: ServiceDef[] = [
     shortName: 'Mantenimiento de BD',
     justification:
       'Trabajo programado sobre los YAML de content/ (depuración, normalización, nuevos campos). Se planifica y no responde a una falla.',
-    requestedBy: 'Dueño del servicio y equipo del catálogo (también surge de un problema o de un cambio).',
+    requestedBy:
+      'Dueño del servicio y equipo del catálogo (también surge de un problema o de un cambio).',
     handledBy: 'Responsable técnico y Responsable de contenido.',
     examples: ['Normalizar nombres de plataformas', 'Agregar un campo nuevo a game.yaml'],
     defaultImpact: 'Bajo',
@@ -196,9 +211,20 @@ export const SERVICES: ServiceDef[] = [
     defaultImpact: 'Bajo',
     defaultUrgency: 'Baja',
     fields: [
-      { id: 'formato', label: 'Formato', kind: 'select', required: true, options: opts(['CSV', 'Excel']) },
+      {
+        id: 'formato',
+        label: 'Formato',
+        kind: 'select',
+        required: true,
+        options: opts(['CSV', 'Excel']),
+      },
       { id: 'filtroPais', label: 'Filtro: país', kind: 'multiselect', options: countryOptions },
-      { id: 'filtroEstado', label: 'Filtro: estado del juego', kind: 'multiselect', options: statusOptions },
+      {
+        id: 'filtroEstado',
+        label: 'Filtro: estado del juego',
+        kind: 'multiselect',
+        options: statusOptions,
+      },
       {
         id: 'motivo',
         label: 'Motivo',
@@ -241,7 +267,10 @@ export const SERVICES: ServiceDef[] = [
       'Degradación no planificada de una función clave: la búsqueda y los filtros corren en el navegador y dejan de responder o tardan, aunque el sitio esté arriba.',
     requestedBy: 'Usuarios del catálogo (portal, correo o mensajería).',
     handledBy: 'Responsable técnico (Nivel 2).',
-    examples: ['El filtro por país no devuelve resultados', 'La vista de juegos tarda más de 10 s en móvil'],
+    examples: [
+      'El filtro por país no devuelve resultados',
+      'La vista de juegos tarda más de 10 s en móvil',
+    ],
     defaultImpact: 'Medio',
     defaultUrgency: 'Media',
     fields: [

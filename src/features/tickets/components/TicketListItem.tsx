@@ -24,7 +24,11 @@ export function TicketListItem({ ticket, now }: { ticket: Ticket; now: Date }) {
       </div>
       <div className={styles.side}>
         <div className={styles.chips}>
-          <PriorityChip priority={ticket.priority} impact={ticket.impact} urgency={ticket.urgency} />
+          <PriorityChip
+            priority={ticket.priority}
+            impact={ticket.impact}
+            urgency={ticket.urgency}
+          />
           <StatusChip status={ticket.status} />
         </div>
         {isActive(ticket.status) && (

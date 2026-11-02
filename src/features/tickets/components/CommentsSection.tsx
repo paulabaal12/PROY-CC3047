@@ -68,7 +68,9 @@ export function CommentsSection({ ticket }: { ticket: Ticket }) {
       )}
 
       {closed ? (
-        <Alert severity="info">El ticket está cerrado; para un caso nuevo registrá otro ticket.</Alert>
+        <Alert severity="info">
+          El ticket está cerrado; para un caso nuevo registrá otro ticket.
+        </Alert>
       ) : (
         <form
           className={styles.composer}
@@ -84,19 +86,30 @@ export function CommentsSection({ ticket }: { ticket: Ticket }) {
             label={internal ? 'Nota interna (solo soporte)' : 'Escribí un comentario'}
             value={text}
             onChange={(e) => setText(e.target.value)}
-            sx={internal ? { '& .MuiInputBase-root': { bgcolor: '#FFF7EC', color: '#0F172A' } } : undefined}
+            sx={
+              internal
+                ? { '& .MuiInputBase-root': { bgcolor: '#FFF7EC', color: '#0F172A' } }
+                : undefined
+            }
           />
           {error && <Alert severity="error">{error}</Alert>}
           <div className={styles.composerActions}>
             {isInternal ? (
               <FormControlLabel
-                control={<Switch checked={internal} onChange={(e) => setInternal(e.target.checked)} />}
+                control={
+                  <Switch checked={internal} onChange={(e) => setInternal(e.target.checked)} />
+                }
                 label="Nota interna"
               />
             ) : (
               <span />
             )}
-            <Button type="submit" variant="contained" endIcon={<SendIcon />} disabled={!text.trim() || sending}>
+            <Button
+              type="submit"
+              variant="contained"
+              endIcon={<SendIcon />}
+              disabled={!text.trim() || sending}
+            >
               {internal ? 'Guardar nota' : 'Comentar'}
             </Button>
           </div>
