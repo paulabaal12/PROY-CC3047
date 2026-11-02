@@ -1,0 +1,39 @@
+@use 'styles/mixins' as *;
+@use 'styles/tokens' as *;
+
+.list {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+
+  @include up($bp-sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.item {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--accent-soft);
+  border: 2px solid var(--border);
+  min-width: 0;
+
+  dt {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  dd {
+    margin: 4px 0 0;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+}
+
+.catalog {
+  margin: 14px 0 0;
+  font-size: 0.88rem;
+}

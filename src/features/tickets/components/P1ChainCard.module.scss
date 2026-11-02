@@ -1,0 +1,69 @@
+.bar {
+  position: relative;
+  display: flex;
+  height: 30px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.segment {
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: #0a1a2e;
+  border-right: 2px solid var(--ink);
+
+  &:nth-child(2),
+  &:nth-child(3) {
+    color: #fff;
+  }
+
+  &:last-of-type {
+    border-right: 0;
+  }
+}
+
+.marker {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 4px;
+  margin-left: -2px;
+  background: #e94f37;
+  box-shadow: 0 0 0 2px #fff;
+}
+
+.steps {
+  list-style: none;
+  margin: 14px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+  font-size: 0.85rem;
+
+  em {
+    color: var(--text-muted);
+  }
+}
+
+.swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border-radius: 3px;
+  border: 1px solid var(--ink);
+}
+
+.elapsed {
+  margin: 12px 0 0;
+  font-size: 0.9rem;
+}
+
+.rule {
+  margin: 8px 0 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}

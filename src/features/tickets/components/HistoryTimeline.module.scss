@@ -1,0 +1,81 @@
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 17px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--border);
+  }
+}
+
+.entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 12px;
+  padding-bottom: 16px;
+}
+
+.dot {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--ink);
+  color: var(--primary);
+
+  svg {
+    font-size: 1.1rem;
+  }
+}
+
+.entry[data-kind='escalation'] .dot {
+  background: #fde8c8;
+  color: #7a3d00;
+}
+
+.entry[data-kind='problem'] .dot,
+.entry[data-kind='known-error'] .dot {
+  background: #fde2dd;
+  color: #a12a17;
+}
+
+.entry[data-kind='change'] .dot {
+  background: #d7f5ef;
+  color: #0b5d4c;
+}
+
+.body {
+  min-width: 0;
+  padding-top: 6px;
+}
+
+.head {
+  margin: 0;
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+.note {
+  margin: 4px 0 0;
+  font-size: 0.85rem;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.meta {
+  margin: 4px 0 0;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}

@@ -1,0 +1,73 @@
+@use 'styles/mixins' as *;
+
+.preview {
+  @include hard-card(var(--shadow-strong));
+  padding: 18px;
+  display: grid;
+  gap: 10px;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.priority {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  span {
+    @include display(1.05rem);
+    color: var(--ink);
+  }
+}
+
+.formula {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.targets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 0;
+
+  div {
+    padding: 10px;
+    border-radius: 10px;
+    background: var(--accent-soft);
+    border: 2px solid var(--border);
+  }
+
+  dt {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+
+  dd {
+    @include display(1.1rem);
+    margin: 4px 0 0;
+    color: var(--ink);
+  }
+}
+
+.note {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+
+  em {
+    font-family: 'DM Serif Display', Georgia, serif;
+    font-size: 0.95rem;
+  }
+}

@@ -1,0 +1,65 @@
+@use 'styles/mixins' as *;
+@use 'styles/tokens' as *;
+
+.stack {
+  display: grid;
+  gap: 20px;
+}
+
+.fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.legend {
+  @include display(1rem);
+  margin-bottom: 12px;
+  padding: 0;
+  color: var(--ink);
+}
+
+.grid2 {
+  display: grid;
+  gap: 14px;
+
+  @include up($bp-sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.grid3 {
+  display: grid;
+  gap: 14px;
+
+  @include up($bp-md) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.fields {
+  display: grid;
+  gap: 18px;
+
+  @include up($bp-md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.hint {
+  @include accent;
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1.02rem;
+}
+
+.sectionTitle {
+  @include display(0.95rem);
+  margin: 6px 0 0;
+  color: var(--ink);
+}

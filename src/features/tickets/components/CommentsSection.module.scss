@@ -1,0 +1,74 @@
+.section {
+  display: grid;
+  gap: 16px;
+}
+
+.empty {
+  margin: 0;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.comment {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr);
+  gap: 10px;
+}
+
+.bubble {
+  padding: 10px 14px;
+  border: 2px solid var(--border);
+  border-radius: 4px 12px 12px 12px;
+  background: var(--surface);
+  min-width: 0;
+}
+
+.internal .bubble {
+  background: #fff7ec;
+  border-color: #f4a261;
+  border-style: dashed;
+  color: #0f172a;
+
+  .meta span {
+    color: #5b4630;
+  }
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+
+  span {
+    color: var(--text-muted);
+  }
+}
+
+.text {
+  margin: 6px 0 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
+}
+
+.composer {
+  display: grid;
+  gap: 10px;
+}
+
+.composerActions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}

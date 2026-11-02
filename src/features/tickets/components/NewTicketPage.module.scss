@@ -1,0 +1,66 @@
+@use 'styles/mixins' as *;
+@use 'styles/tokens' as *;
+
+.layout {
+  display: grid;
+  gap: 24px;
+  align-items: start;
+
+  @include up($bp-lg) {
+    grid-template-columns: minmax(0, 1fr) 320px;
+  }
+}
+
+.formCard {
+  padding: 20px 16px;
+
+  @include up($bp-sm) {
+    padding: 24px;
+  }
+}
+
+.stepper {
+  margin-bottom: 28px;
+
+  :global(.MuiStepIcon-root.Mui-active),
+  :global(.MuiStepIcon-root.Mui-completed) {
+    color: var(--primary);
+  }
+}
+
+.body {
+  display: grid;
+  gap: 8px;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 18px;
+  border-top: 2px solid var(--border);
+}
+
+.side {
+  display: grid;
+  gap: 20px;
+
+  @include up($bp-lg) {
+    position: sticky;
+    top: 96px;
+  }
+}
+
+.sideTitle {
+  margin: 0 0 8px;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.sideText {
+  margin: 0 0 8px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--text);
+}

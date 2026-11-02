@@ -1,0 +1,57 @@
+@use 'styles/mixins' as *;
+
+.card {
+  @include hard-card(var(--border));
+  @include lift;
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  cursor: pointer;
+  border-color: var(--border);
+
+  &:focus-within {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+}
+
+.selected {
+  border-color: var(--ink);
+  background: var(--accent-soft);
+  box-shadow: 4px 4px 0 var(--shadow-strong);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  color: var(--primary);
+}
+
+.title {
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.25;
+}
+
+.check {
+  margin-left: auto;
+  color: var(--primary);
+}
+
+.description {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}

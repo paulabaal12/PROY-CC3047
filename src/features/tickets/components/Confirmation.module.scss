@@ -1,0 +1,110 @@
+@use 'styles/mixins' as *;
+@use 'styles/tokens' as *;
+
+.wrap {
+  display: grid;
+  place-items: center;
+  padding: 24px 0;
+}
+
+.card {
+  width: min(640px, 100%);
+  text-align: center;
+  padding: 32px 20px;
+  box-shadow: 6px 6px 0 var(--success);
+}
+
+.badge {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: var(--success);
+  color: $navy;
+  border: 2px solid $navy;
+  box-shadow: 4px 4px 0 $navy;
+  animation: pop 420ms cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.4);
+    opacity: 0;
+  }
+}
+
+.eyebrow {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: var(--primary);
+}
+
+.id {
+  @include display(clamp(2.4rem, 8vw, 3.4rem));
+  margin: 4px 0;
+  color: var(--ink);
+}
+
+.title {
+  @include accent;
+  margin: 0 0 20px;
+  font-size: 1.2rem;
+}
+
+.facts {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 20px;
+  text-align: left;
+
+  @include up($bp-sm) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  div {
+    padding: 12px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: var(--accent-soft);
+  }
+
+  dt {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+  }
+
+  dd {
+    margin: 4px 0 0;
+    font-weight: 700;
+  }
+
+  small {
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+}
+
+.note {
+  margin: 0 0 20px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
