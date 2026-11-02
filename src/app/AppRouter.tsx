@@ -1,5 +1,5 @@
 import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { RequireInternal, useRole } from '@/features/auth';
+import { LoginPage, RequireInternal, RequireSession, useRole } from '@/features/auth';
 import { BoardPage } from '@/features/board';
 import { CatalogPage } from '@/features/catalog';
 import { DashboardPage } from '@/features/dashboard';
@@ -20,7 +20,8 @@ export function AppRouter() {
   return (
     <HashRouter>
       <Routes>
-        <Route element={<AppLayout />}>
+        <Route path="login" element={<LoginPage />} />
+        <Route element={<RequireSession><AppLayout /></RequireSession>}>
           <Route index element={<Home />} />
           <Route path="tickets" element={<TicketListPage />} />
           <Route path="tickets/new" element={<NewTicketPage />} />

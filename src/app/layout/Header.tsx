@@ -2,12 +2,13 @@ import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import { IconButton, InputAdornment, TextField, Tooltip } from '@mui/material';
+import { Button, IconButton, InputAdornment, TextField, Tooltip } from '@mui/material';
 import { useState, type FormEvent } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { PersonAvatar } from '@/components';
 import { t } from '@/config/texts';
 import { useRole } from '@/features/auth';
+import { useSupabaseSession } from '@/features/auth';
 import { useSettings } from '@/hooks';
 import styles from './Header.module.scss';
 
@@ -26,6 +27,7 @@ export function Header({ onMenu }: { onMenu: () => void }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { roleDef } = useRole();
+  const { configured, session, signOut } = useSupabaseSession();
   const { settings, updateSettings } = useSettings();
   const [query, setQuery] = useState('');
   const dark = settings.themeMode === 'dark';
@@ -85,6 +87,11 @@ export function Header({ onMenu }: { onMenu: () => void }) {
           <PersonAvatar name={roleDef.persona.name} role={roleDef.id} size={32} />
         </span>
       </Tooltip>
+      {configured && session && (
+        <Button size="small" color="inherit" onClick={signOut} aria-label="Cerrar sesión">
+          Cerrar sesión
+        </Button>
+      )}
     </header>
   );
 }

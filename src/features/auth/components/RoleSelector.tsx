@@ -4,11 +4,15 @@ import { ROLES } from '@/config/roles';
 import { t } from '@/config/texts';
 import type { RoleId } from '@/types';
 import { useRole } from '../hooks/useRole';
+import { isAuthRequired } from '@/services/supabaseAuth';
 import styles from './RoleSelector.module.scss';
 
 /** Simulated login: one compact row with the session and the role switcher. */
 export function RoleSelector({ compact = false }: { compact?: boolean }) {
   const { role, roleDef, setRole } = useRole();
+
+  // In connected mode, account access is managed in Supabase, not by this demo switcher.
+  if (isAuthRequired) return null;
 
   if (compact) {
     return (

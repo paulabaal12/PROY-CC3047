@@ -22,6 +22,7 @@ import { SERVICE_WINDOW } from '@/config/sla';
 import { useRole } from '@/features/auth';
 import { useSettings, useToast } from '@/hooks';
 import { ticketService } from '@/services';
+import { isAuthRequired } from '@/services/supabaseAuth';
 import type { RoleId } from '@/types';
 import styles from './Settings.module.scss';
 
@@ -92,12 +93,12 @@ export function SettingsPage() {
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Rol simulado</h2>
+        <h2 className={styles.sectionTitle}>{isAuthRequired ? 'Acceso del equipo' : 'Rol simulado'}</h2>
         <Row
           title={roleDef.name}
           description={`Sesión de ${roleDef.persona.name}. Cámbialo desde el selector de la barra lateral.`}
         />
-        <ul className={styles.roles}>
+        {!isAuthRequired && <ul className={styles.roles}>
           {ROLES.map((r) => (
             <li key={r.id} className={r.id === roleDef.id ? styles.current : undefined}>
               <span className={styles.roleIcon} aria-hidden>
@@ -109,7 +110,7 @@ export function SettingsPage() {
               </div>
             </li>
           ))}
-        </ul>
+        </ul>}
       </section>
 
       <section className={styles.section}>
@@ -154,7 +155,7 @@ export function SettingsPage() {
         />
       </section>
 
-      <section className={styles.section}>
+      {!isAuthRequired && <section className={styles.section}>
         <h2 className={styles.sectionTitle}>Datos de demostración</h2>
         <Row
           title="Restablecer datos"
@@ -169,7 +170,7 @@ export function SettingsPage() {
             Restablecer
           </Button>
         </Row>
-      </section>
+      </section>}
 
       <Dialog open={confirm} onClose={() => setConfirm(false)}>
         <DialogTitle>¿Restablecer los datos?</DialogTitle>

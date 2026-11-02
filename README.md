@@ -21,6 +21,23 @@ Al primer arranque se cargan **28 tickets** de las últimas 3 semanas. Se pueden
 
 **Publicar en GitHub Pages:** el workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) corre lint, tests y build en cada push, y publica `dist/` en cada push a `main`. En el repo hay que activar *Settings → Pages → Source: GitHub Actions*. La app usa `HashRouter` y `base: './'`, así que funciona bajo cualquier nombre de repo (por ejemplo `/centralamerica-games-service-desk/`) sin configuración extra. Si se necesita una base absoluta, se define `VITE_BASE`.
 
+## Supabase y acceso del equipo
+
+La aplicación usa Supabase como fuente compartida de tickets cuando se definen `VITE_SUPABASE_URL` y `VITE_SUPABASE_PUBLISHABLE_KEY`. Para desarrollo local, copia `.env.example` a `.env.local` y coloca la URL y la clave publicable del proyecto; nunca uses `service_role`, `secret` ni las credenciales privadas del webhook en el frontend. En GitHub, crea las variables de Actions `SUPABASE_URL` y `SUPABASE_PUBLISHABLE_KEY` para que el sitio publicado las reciba durante el build.
+
+Antes de habilitar el sitio conectado, ejecuta [`supabase/migrations/202611020001_service_desk_access.sql`](supabase/migrations/202611020001_service_desk_access.sql) en Supabase SQL Editor. En **Authentication → Providers → Email**, desactiva los registros públicos. Crea las cuentas del personal desde **Authentication → Users**. Para cada cuenta, asigna el claim `app_metadata.service_desk_role` desde SQL Editor (reemplaza el correo y rol):
+
+```sql
+update auth.users
+set raw_app_meta_data = coalesce(raw_app_meta_data, '{}'::jsonb)
+  || '{"service_desk_role":"service-desk"}'::jsonb
+where email = 'correo-del-equipo@example.com';
+```
+
+Los roles permitidos son `service-desk`, `resp-tecnico`, `resp-contenido` y `dueno`. Esta asignación se hace desde administración de Supabase, nunca desde el navegador. Luego de asignar el rol, el integrante inicia sesión en `/login`. La tabla `kobo_submissions` queda reservada para el webhook; el equipo consulta y actualiza únicamente `service_desk_tickets`.
+
+La clave publicable del frontend no es secreta: la protección de los datos depende de RLS y del claim de rol. La función `kobo-ingest` conserva su autenticación Basic propia y usa la clave `service_role` solo dentro del entorno privado de Edge Functions.
+
 ## Trazabilidad Fase 1 → Fase 2
 
 | Elemento de la Fase 1 | Dónde está en la Fase 2 |

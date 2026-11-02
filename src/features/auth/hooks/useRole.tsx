@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useMemo, useState, type ReactNo
 import { isInternalRole, roleById, type RoleDef } from '@/config/roles';
 import { settingsService } from '@/services';
 import type { Actor, RoleId } from '@/types';
+import { useSupabaseSession } from './useSupabaseSession';
 
 interface RoleContextValue {
   role: RoleId;
@@ -15,23 +16,32 @@ const RoleContext = createContext<RoleContextValue | null>(null);
 
 /** Simulated login: the active role is persisted in localStorage. */
 export function RoleProvider({ children }: { children: ReactNode }) {
+  const { configured, session } = useSupabaseSession();
   const [role, setRoleState] = useState<RoleId>(() => settingsService.getRole());
 
+  const claim = session?.user.app_metadata?.service_desk_role;
+  const authenticatedRole: RoleId =
+    claim === 'service-desk' || claim === 'resp-tecnico' || claim === 'resp-contenido' || claim === 'dueno'
+      ? claim
+      : 'service-desk';
+  const activeRole = configured ? authenticatedRole : role;
+
   const setRole = useCallback((next: RoleId) => {
+    if (configured) return;
     settingsService.setRole(next);
     setRoleState(next);
-  }, []);
+  }, [configured]);
 
   const value = useMemo<RoleContextValue>(() => {
-    const roleDef = roleById(role);
+    const roleDef = roleById(activeRole);
     return {
-      role,
+      role: activeRole,
       roleDef,
-      actor: { role, name: roleDef.persona.name },
-      isInternal: isInternalRole(role),
+      actor: { role: activeRole, name: configured ? session?.user.email ?? roleDef.persona.name : roleDef.persona.name },
+      isInternal: isInternalRole(activeRole),
       setRole,
     };
-  }, [role, setRole]);
+  }, [activeRole, configured, session?.user.email, setRole]);
 
   return <RoleContext.Provider value={value}>{children}</RoleContext.Provider>;
 }
