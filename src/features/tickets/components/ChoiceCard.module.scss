@@ -1,57 +1,80 @@
 @use 'styles/mixins' as *;
+@use 'styles/tokens' as *;
 
 .card {
-  @include hard-card(var(--border));
-  @include lift;
+  @include card;
   display: grid;
-  gap: 8px;
-  padding: 16px;
+  align-content: start;
+  gap: $s-2;
+  padding: $s-4 $s-5;
   cursor: pointer;
-  border-color: var(--border);
+  box-shadow: none;
+  transition:
+    border-color 140ms ease,
+    background 140ms ease,
+    box-shadow 140ms ease;
+
+  &:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-md);
+  }
 
   &:focus-within {
-    outline: 3px solid var(--focus);
+    outline: 2px solid var(--focus);
     outline-offset: 2px;
   }
 }
 
 .selected {
-  border-color: var(--ink);
-  background: var(--accent-soft);
-  box-shadow: 4px 4px 0 var(--shadow-strong);
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+
+  &:hover {
+    border-color: var(--primary);
+  }
 }
 
 .top {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: $s-3;
 }
 
 .icon {
   display: grid;
   place-items: center;
+  width: 36px;
+  height: 36px;
+  flex: none;
+  border-radius: $radius-control;
+  background: var(--accent-soft);
   color: var(--primary);
 }
 
 .title {
-  font-weight: 800;
+  font-family: $font-heading;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
   color: var(--heading);
-  line-height: 1.25;
 }
 
 .check {
   margin-left: auto;
+  flex: none;
   color: var(--primary);
 }
 
 .description {
-  font-size: 0.9rem;
+  font-size: 0.8125rem;
+  line-height: 1.55;
   color: var(--text-muted);
-  line-height: 1.45;
 }
 
 .meta {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  margin-top: $s-1;
 }

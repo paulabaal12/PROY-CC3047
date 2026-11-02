@@ -1,12 +1,15 @@
+@use 'styles/mixins' as *;
+@use 'styles/tokens' as *;
+
 .section {
   display: grid;
-  gap: 16px;
+  gap: $s-5;
 }
 
 .empty {
   margin: 0;
+  font-size: 0.875rem;
   color: var(--text-muted);
-  font-style: italic;
 }
 
 .list {
@@ -14,32 +17,37 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 14px;
+  gap: $s-4;
 }
 
 .comment {
   display: grid;
   grid-template-columns: 36px minmax(0, 1fr);
-  gap: 10px;
+  gap: $s-3;
 }
 
 .bubble {
-  padding: 10px 14px;
-  border: 2px solid var(--border);
-  border-radius: 4px 12px 12px 12px;
-  background: var(--surface);
+  padding: $s-3 $s-4;
+  border-radius: 4px $radius $radius $radius;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
   min-width: 0;
 }
 
 .internal .bubble {
-  background: #fff7ec;
-  border-color: #f4a261;
-  border-style: dashed;
+  background: #fffbeb;
+  border-color: #fde68a;
   color: #0f172a;
 
   .meta span {
-    color: #5b4630;
+    color: #78716c;
   }
+}
+
+:global([data-theme='dark']) .internal .bubble {
+  background: rgba(245, 158, 11, 0.08);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: var(--text);
 }
 
 .meta {
@@ -47,7 +55,12 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+
+  strong {
+    font-weight: 600;
+    font-size: 0.8125rem;
+  }
 
   span {
     color: var(--text-muted);
@@ -55,20 +68,23 @@
 }
 
 .text {
-  margin: 6px 0 0;
+  margin: $s-1 0 0;
+  font-size: 0.875rem;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .composer {
   display: grid;
-  gap: 10px;
+  gap: $s-3;
+  padding-top: $s-4;
+  border-top: 1px solid var(--border);
 }
 
 .composerActions {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: $s-3;
 }

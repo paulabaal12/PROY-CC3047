@@ -163,7 +163,7 @@ export function DynamicField({ field, value, details, error, onChange }: Props) 
           <TextField
             fullWidth
             size="small"
-            label={`${label} — o pegá un enlace`}
+            label={`${label} — o pega un enlace`}
             value={str}
             onChange={(e) => onChange(e.target.value)}
             error={Boolean(error)}

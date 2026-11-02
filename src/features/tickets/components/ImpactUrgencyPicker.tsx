@@ -24,7 +24,7 @@ export function ImpactUrgencyPicker({ service, impact, urgency, onImpact, onUrge
           urgencia {service.defaultUrgency}.{' '}
           {changed
             ? 'Lo cambiaste: Service Desk lo revisará al clasificar.'
-            : 'Podés ajustarlo según los criterios.'}
+            : 'Puedes ajustarlo según los criterios.'}
         </Alert>
       )}
       <fieldset className={styles.fieldset}>

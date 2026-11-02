@@ -2,10 +2,11 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined';
 import SearchOffIcon from '@mui/icons-material/SearchOff';
 import { Alert, Button, Chip } from '@mui/material';
+import { PRIORITY_COLORS, STATUS_COLORS, toneSx } from '@/app/theme';
 import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import {
   EmptyState,
-  HardCard,
+  Panel,
   PageSkeleton,
   PriorityChip,
   SlaTimer,
@@ -80,15 +81,21 @@ export function TicketDetailPage() {
             priority={ticket.priority}
             impact={ticket.impact}
             urgency={ticket.urgency}
-            size="medium"
           />
           {ticket.isProblem && (
-            <Chip size="small" color="error" icon={<BugReportOutlinedIcon />} label="Problema" />
+            <Chip
+              size="small"
+              icon={<BugReportOutlinedIcon />}
+              label="Problema"
+              sx={{ ...toneSx(PRIORITY_COLORS.Crítica), '& .MuiChip-icon': { color: 'inherit' } }}
+            />
           )}
           {ticket.knownError && (
-            <Chip size="small" color="error" variant="outlined" label="Error conocido" />
+            <Chip size="small" label="Error conocido" sx={toneSx(PRIORITY_COLORS.Alta)} />
           )}
-          {ticket.changeType && <Chip size="small" color="success" label={ticket.changeType} />}
+          {ticket.changeType && (
+            <Chip size="small" label={ticket.changeType} sx={toneSx(STATUS_COLORS.Resuelto)} />
+          )}
         </div>
         <h1 className={styles.title}>{ticket.title}</h1>
         <p className={styles.subtitle}>
@@ -102,13 +109,13 @@ export function TicketDetailPage() {
             <P1ChainCard elapsed={elapsed} />
           )}
 
-          <HardCard title="Descripción">
+          <Panel title="Descripción">
             <p className={styles.description}>{ticket.description}</p>
             <DetailsList ticket={ticket} />
-          </HardCard>
+          </Panel>
 
           {(ticket.isProblem || ticket.knownError) && (
-            <HardCard
+            <Panel
               title={ticket.knownError ? 'Error conocido' : 'Registro de problema'}
               tone="danger"
             >
@@ -124,11 +131,11 @@ export function TicketDetailPage() {
               )}
               <p className={styles.label}>Incidentes asociados</p>
               <LinkList tickets={linked} empty="Sin incidentes asociados." />
-            </HardCard>
+            </Panel>
           )}
 
           {(problems.length > 0 || changes.length > 0 || ticket.parentTicketId) && (
-            <HardCard title="Trazabilidad">
+            <Panel title="Trazabilidad">
               {problems.length > 0 && (
                 <>
                   <p className={styles.label}>Asociado al problema</p>
@@ -156,31 +163,31 @@ export function TicketDetailPage() {
                   <LinkList tickets={changes} />
                 </>
               )}
-            </HardCard>
+            </Panel>
           )}
 
-          <HardCard
+          <Panel
             title={`Comentarios (${ticket.comments.filter((c) => isInternal || !c.internal).length})`}
           >
             <CommentsSection ticket={ticket} />
-          </HardCard>
+          </Panel>
 
-          <HardCard title="Historial">
+          <Panel title="Historial">
             <HistoryTimeline history={ticket.history} />
-          </HardCard>
+          </Panel>
         </div>
 
         <aside className={styles.sideCol}>
-          <HardCard title="SLA" tone={breached ? 'danger' : 'default'}>
+          <Panel title="SLA" tone={breached ? 'danger' : 'default'}>
             <SlaTimer ticket={ticket} now={now} />
             {ticket.slaBreachCause && (
               <Alert severity="warning" sx={{ mt: 2 }}>
                 <strong>Causa registrada:</strong> {ticket.slaBreachCause}
               </Alert>
             )}
-          </HardCard>
+          </Panel>
 
-          <HardCard title="Información">
+          <Panel title="Información">
             <dl className={styles.info}>
               <Info
                 label={t.fields.requester}
@@ -208,7 +215,7 @@ export function TicketDetailPage() {
                 ))}
               </div>
             )}
-          </HardCard>
+          </Panel>
 
           {isInternal && <SupportPanel ticket={ticket} breached={breached} hints={hints} />}
         </aside>

@@ -1,73 +1,67 @@
 @use 'styles/mixins' as *;
+@use 'styles/tokens' as *;
 
 .preview {
-  @include hard-card(var(--shadow-strong));
-  padding: 18px;
+  @include card;
+  padding: $s-6;
   display: grid;
-  gap: 10px;
+  gap: $s-4;
 }
 
 .eyebrow {
+  @include label;
   margin: 0;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--primary);
 }
 
 .priority {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: $s-3;
 
-  span {
-    @include display(1.05rem);
+  > span:first-child {
+    @include heading(1.125rem);
     color: var(--heading);
   }
 }
 
 .formula {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.8125rem;
   color: var(--text-muted);
+
+  strong {
+    font-weight: 600;
+    color: var(--text);
+  }
 }
 
 .targets {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: $s-3;
   margin: 0;
 
   div {
-    padding: 10px;
-    border-radius: 10px;
-    background: var(--accent-soft);
-    border: 2px solid var(--border);
+    padding: $s-3;
+    border-radius: $radius-control;
+    background: var(--primary-soft);
   }
 
   dt {
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--text-muted);
+    @include label;
   }
 
   dd {
-    @include display(1.1rem);
-    margin: 4px 0 0;
+    @include heading(1.25rem);
+    margin: 2px 0 0;
     color: var(--heading);
   }
 }
 
 .note {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
   color: var(--text-muted);
-
-  em {
-    font-family: 'DM Serif Display', Georgia, serif;
-    font-size: 0.95rem;
-  }
 }

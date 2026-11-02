@@ -15,7 +15,7 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect, useMemo, useState } from 'react';
-import { HardCard, PriorityChip } from '@/components';
+import { Panel, PriorityChip } from '@/components';
 import { IMPACTS, URGENCIES } from '@/config/priorityMatrix';
 import { ASSIGNEES, assigneeName, LEVELS } from '@/config/roles';
 import { useRole } from '@/features/auth';
@@ -123,7 +123,7 @@ export function SupportPanel({ ticket, breached, hints }: Props) {
     setDraft((d) => ({ ...d, [key]: value }));
 
   return (
-    <HardCard title="Gestión (soporte)" tone="accent">
+    <Panel title="Gestión" subtitle="Solo equipo de soporte">
       <Stack gap={2}>
         {hints.map((h) => (
           <Alert
@@ -209,7 +209,7 @@ export function SupportPanel({ ticket, breached, hints }: Props) {
           value={draft.assignee}
           onChange={(e) => set('assignee', e.target.value as AssigneeId)}
           disabled={closed}
-          helperText="Para escalar con motivo, usá el botón Escalar."
+          helperText="Para escalar con motivo, usa el botón Escalar."
         >
           {ASSIGNEES.map((a) => (
             <MenuItem key={a} value={a}>
@@ -340,6 +340,6 @@ export function SupportPanel({ ticket, breached, hints }: Props) {
       {dialog === 'change' && (
         <ChangeRequestDialog open ticket={ticket} onClose={() => setDialog(null)} />
       )}
-    </HardCard>
+    </Panel>
   );
 }

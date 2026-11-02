@@ -49,7 +49,7 @@ export function EscalateDialog({ ticket, open, onClose, hint }: Props) {
 
   const submit = async () => {
     if (!to || !reason) {
-      setError('Elegí a quién se escala y el motivo.');
+      setError('Elige a quién se escala y el motivo.');
       return;
     }
     setSaving(true);

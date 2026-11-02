@@ -3,47 +3,49 @@
 
 .page {
   display: grid;
-  gap: 16px;
+  gap: $s-5;
 }
 
 .back {
   justify-self: start;
+  margin-left: -$s-3 !important;
 }
 
 .header {
   display: grid;
-  gap: 8px;
+  gap: $s-2;
 }
 
 .chips {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: $s-2;
 }
 
 .id {
-  @include display(1rem);
+  font-family: $font-heading;
+  font-size: 0.875rem;
+  font-weight: 600;
   color: var(--primary);
 }
 
 .title {
-  @include display(clamp(1.4rem, 3vw, 2rem));
+  @include heading(clamp(1.375rem, 2.6vw, 1.75rem));
   margin: 0;
   color: var(--heading);
   overflow-wrap: anywhere;
 }
 
 .subtitle {
-  @include accent;
   margin: 0;
+  font-size: 0.875rem;
   color: var(--text-muted);
-  font-size: 1.05rem;
 }
 
 .grid {
   display: grid;
-  gap: 20px;
+  gap: $s-6;
   align-items: start;
 
   @include up($bp-lg) {
@@ -54,28 +56,26 @@
 .mainCol,
 .sideCol {
   display: grid;
-  gap: 20px;
+  gap: $s-6;
   min-width: 0;
 }
 
 .description {
-  margin: 0 0 16px;
-  line-height: 1.6;
+  margin: 0 0 $s-5;
+  font-size: 0.9375rem;
+  line-height: 1.65;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 
 .label {
-  margin: 8px 0 6px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-muted);
+  @include label;
+  margin: $s-3 0 $s-2;
 }
 
 .muted {
   margin: 0;
+  font-size: 0.875rem;
   color: var(--text-muted);
 }
 
@@ -83,33 +83,34 @@
   margin: 0;
   padding-left: 18px;
   display: grid;
-  gap: 4px;
+  gap: $s-1;
+  font-size: 0.875rem;
 
   em {
+    font-style: normal;
     color: var(--text-muted);
   }
 }
 
 .info {
   display: grid;
-  gap: 10px;
+  gap: $s-3;
   margin: 0;
 
   div {
     display: grid;
-    grid-template-columns: 120px minmax(0, 1fr);
-    gap: 8px;
-    font-size: 0.88rem;
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: $s-3;
+    font-size: 0.8125rem;
   }
 
   dt {
     color: var(--text-muted);
-    font-weight: 600;
   }
 
   dd {
     margin: 0;
-    font-weight: 600;
+    font-weight: 500;
     overflow-wrap: anywhere;
   }
 }
@@ -118,5 +119,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 14px;
+  margin-top: $s-4;
+  padding-top: $s-4;
+  border-top: 1px solid var(--border);
 }

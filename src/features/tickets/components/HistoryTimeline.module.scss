@@ -1,3 +1,5 @@
+@use 'styles/tokens' as *;
+
 .timeline {
   list-style: none;
   margin: 0;
@@ -7,10 +9,11 @@
   &::before {
     content: '';
     position: absolute;
-    left: 17px;
+    left: 5px;
     top: 8px;
     bottom: 8px;
     width: 2px;
+    border-radius: 2px;
     background: var(--border);
   }
 }
@@ -18,64 +21,77 @@
 .entry {
   position: relative;
   display: grid;
-  grid-template-columns: 36px minmax(0, 1fr);
-  gap: 12px;
-  padding-bottom: 16px;
-}
+  grid-template-columns: 12px minmax(0, 1fr);
+  gap: $s-4;
+  padding-bottom: $s-5;
 
-.dot {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  background: var(--surface);
-  border: 2px solid var(--ink);
-  color: var(--primary);
-
-  svg {
-    font-size: 1.1rem;
+  &:last-child {
+    padding-bottom: 0;
   }
 }
 
-.entry[data-kind='escalation'] .dot {
-  background: #fde8c8;
-  color: #7a3d00;
+// Vertical timeline with small dots, color-coded by event kind.
+.dot {
+  --dot: #94a3b8;
+  position: relative;
+  z-index: 1;
+  width: 12px;
+  height: 12px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--dot);
+
+  svg {
+    display: none;
+  }
+}
+
+.entry[data-kind='created'] .dot,
+.entry[data-kind='status'] .dot {
+  --dot: #{$primary};
+}
+
+.entry[data-kind='escalation'] .dot,
+.entry[data-kind='assignee'] .dot,
+.entry[data-kind='level'] .dot {
+  --dot: #f97316;
 }
 
 .entry[data-kind='problem'] .dot,
-.entry[data-kind='known-error'] .dot {
-  background: #fde2dd;
-  color: #a12a17;
+.entry[data-kind='known-error'] .dot,
+.entry[data-kind='sla-cause'] .dot {
+  --dot: #ef4444;
 }
 
 .entry[data-kind='change'] .dot {
-  background: #d7f5ef;
-  color: #0b5d4c;
+  --dot: #{$success};
 }
 
 .body {
   min-width: 0;
-  padding-top: 6px;
 }
 
 .head {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.8125rem;
   overflow-wrap: anywhere;
+
+  strong {
+    font-weight: 600;
+    color: var(--heading);
+  }
 }
 
 .note {
-  margin: 4px 0 0;
-  font-size: 0.85rem;
+  margin: 2px 0 0;
+  font-size: 0.8125rem;
   color: var(--text);
   overflow-wrap: anywhere;
 }
 
 .meta {
-  margin: 4px 0 0;
+  margin: 2px 0 0;
   font-size: 0.75rem;
   color: var(--text-muted);
 }

@@ -21,7 +21,7 @@ export function TypeStep({
 }) {
   return (
     <fieldset className={styles.fieldset}>
-      <legend className={styles.legend}>¿Qué necesitás reportar?</legend>
+      <legend className={styles.legend}>¿Qué necesitas reportar?</legend>
       <div className={styles.grid2}>
         <ChoiceCard
           name="type"
@@ -40,7 +40,7 @@ export function TypeStep({
           onSelect={() => onChange('Solicitud')}
           icon={<AssignmentOutlinedIcon />}
           title="Solicitud de servicio"
-          description="Nada está roto: pedís algo previsto, como registrar un juego, actualizar una ficha o extraer datos."
+          description="Nada está roto: pides algo previsto, como registrar un juego, actualizar una ficha o extraer datos."
           meta={<Chip size="small" label="4 solicitudes del catálogo" />}
         />
       </div>
@@ -67,7 +67,7 @@ export function CategoryStep({
   return (
     <fieldset className={styles.fieldset}>
       <legend className={styles.legend}>
-        {type === 'Incidente' ? 'Elegí el incidente tipificado' : 'Elegí la solicitud del catálogo'}
+        {type === 'Incidente' ? 'Elige el incidente tipificado' : 'Elige la solicitud del catálogo'}
       </legend>
       <div className={styles.grid2}>
         {servicesOfType(type).map((svc) => (
@@ -143,7 +143,7 @@ export function DetailsStep({
           onChange={(e) => onDescription(e.target.value)}
           error={Boolean(errors.description)}
           helperText={
-            errors.description ?? 'Qué pasa o qué necesitás, con el mayor detalle posible.'
+            errors.description ?? 'Qué pasa o qué necesitas, con el mayor detalle posible.'
           }
           multiline
           minRows={3}

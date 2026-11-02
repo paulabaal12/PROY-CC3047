@@ -3,7 +3,7 @@ import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
 import { Button } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import { HardCard, PriorityChip } from '@/components';
+import { Panel, PriorityChip } from '@/components';
 import { serviceById } from '@/config/services';
 import type { Ticket } from '@/types';
 import { formatBusinessMinutes } from '@/utils/businessHours';
@@ -17,7 +17,7 @@ export function Confirmation({ ticket, onAnother }: { ticket: Ticket; onAnother:
   const sla = getTicketSla(ticket, new Date(ticket.createdAt));
   return (
     <div className={styles.wrap}>
-      <HardCard className={styles.card}>
+      <Panel className={styles.card}>
         <div className={styles.badge} aria-hidden>
           <CheckRoundedIcon fontSize="large" />
         </div>
@@ -51,7 +51,7 @@ export function Confirmation({ ticket, onAnother }: { ticket: Ticket; onAnother:
           </div>
         </dl>
         <p className={styles.note}>
-          Guardá este número para dar seguimiento. Service Desk revisará la clasificación y te
+          Guarda este número para dar seguimiento. Service Desk revisará la clasificación y te
           responderá a <strong>{ticket.requester.email}</strong>.
         </p>
         <div className={styles.actions}>
@@ -67,7 +67,7 @@ export function Confirmation({ ticket, onAnother }: { ticket: Ticket; onAnother:
             Registrar otro
           </Button>
         </div>
-      </HardCard>
+      </Panel>
     </div>
   );
 }

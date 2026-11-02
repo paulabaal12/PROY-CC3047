@@ -55,7 +55,7 @@ export function ProblemDialog({ ticket, open, onClose }: DialogProps) {
 
   const submit = () => {
     if (rootCause.trim().length < 10)
-      return setError('Describí la causa raíz (o la hipótesis) en al menos 10 caracteres.');
+      return setError('Describe la causa raíz (o la hipótesis) en al menos 10 caracteres.');
     void run(
       () => ticketService.createProblem(ticket.id, { rootCause, linkedTicketIds: linked }, actor),
       `Problema registrado en ${ticket.id}`,
@@ -112,9 +112,9 @@ export function KnownErrorDialog({ ticket, open, onClose }: DialogProps) {
   }, [ticket.rootCause]);
 
   const submit = () => {
-    if (!rootCause.trim()) return setError('Indicá la causa raíz identificada.');
+    if (!rootCause.trim()) return setError('Indica la causa raíz identificada.');
     if (workaround.trim().length < 10)
-      return setError('Documentá el workaround (mínimo 10 caracteres).');
+      return setError('Documenta el workaround (mínimo 10 caracteres).');
     void run(
       () => ticketService.markKnownError(ticket.id, { rootCause, workaround }, actor),
       `${ticket.id} marcado como error conocido`,
@@ -175,8 +175,8 @@ export function ChangeRequestDialog({ ticket, open, onClose }: DialogProps) {
   const { saving, error, setError, run } = useSubmit(onClose);
 
   const submit = () => {
-    if (title.trim().length < 12) return setError('Escribí un título para el cambio.');
-    if (description.trim().length < 10) return setError('Describí qué se modifica del servicio.');
+    if (title.trim().length < 12) return setError('Escribe un título para el cambio.');
+    if (description.trim().length < 10) return setError('Describe qué se modifica del servicio.');
     void run(
       () =>
         ticketService.createChangeRequest(

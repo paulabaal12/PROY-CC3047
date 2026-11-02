@@ -56,7 +56,13 @@ export function CommentsSection({ ticket }: { ticket: Ticket }) {
                       size="small"
                       icon={<LockOutlinedIcon />}
                       label="Nota interna"
-                      sx={{ bgcolor: '#FDE8C8', color: '#7A3D00', height: 22 }}
+                      sx={{
+                        bgcolor: 'rgba(245,158,11,0.14)',
+                        color: '#92400E',
+                        height: 22,
+                        '& .MuiChip-icon': { color: 'inherit' },
+                        '[data-theme="dark"] &': { color: '#FCD34D' },
+                      }}
                     />
                   )}
                 </div>
@@ -69,7 +75,7 @@ export function CommentsSection({ ticket }: { ticket: Ticket }) {
 
       {closed ? (
         <Alert severity="info">
-          El ticket está cerrado; para un caso nuevo registrá otro ticket.
+          El ticket está cerrado; para un caso nuevo registra otro ticket.
         </Alert>
       ) : (
         <form
@@ -83,12 +89,12 @@ export function CommentsSection({ ticket }: { ticket: Ticket }) {
             multiline
             minRows={2}
             fullWidth
-            label={internal ? 'Nota interna (solo soporte)' : 'Escribí un comentario'}
+            label={internal ? 'Nota interna (solo soporte)' : 'Escribe un comentario'}
             value={text}
             onChange={(e) => setText(e.target.value)}
             sx={
               internal
-                ? { '& .MuiInputBase-root': { bgcolor: '#FFF7EC', color: '#0F172A' } }
+                ? { '& .MuiInputBase-root': { bgcolor: 'rgba(245,158,11,0.06)' } }
                 : undefined
             }
           />

@@ -36,7 +36,7 @@ export function TicketListPage() {
         title={search ? `Resultados para “${search}”` : t.nav.myTickets}
         subtitle={
           isInternal
-            ? 'Tickets asignados a tu rol. Cambiá a “Todos” para ver la cola completa.'
+            ? 'Tickets asignados a tu rol. Cambia a “Todos” para ver la cola completa.'
             : `Tickets registrados con ${roleDef.persona.email}.`
         }
         actions={

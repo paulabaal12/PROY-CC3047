@@ -3,7 +3,7 @@
 
 .stack {
   display: grid;
-  gap: 20px;
+  gap: $s-6;
 }
 
 .fieldset {
@@ -14,15 +14,15 @@
 }
 
 .legend {
-  @include display(1rem);
-  margin-bottom: 12px;
+  @include heading(0.9375rem);
+  margin-bottom: $s-3;
   padding: 0;
   color: var(--heading);
 }
 
 .grid2 {
   display: grid;
-  gap: 14px;
+  gap: $s-4;
 
   @include up($bp-sm) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -31,7 +31,7 @@
 
 .grid3 {
   display: grid;
-  gap: 14px;
+  gap: $s-4;
 
   @include up($bp-md) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -40,7 +40,7 @@
 
 .fields {
   display: grid;
-  gap: 18px;
+  gap: $s-5 $s-4;
 
   @include up($bp-md) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -52,14 +52,15 @@
 }
 
 .hint {
-  @include accent;
   margin: 0;
+  font-size: 0.875rem;
   color: var(--text-muted);
-  font-size: 1.02rem;
 }
 
 .sectionTitle {
-  @include display(0.95rem);
-  margin: 6px 0 0;
+  @include heading(0.9375rem);
+  margin: $s-2 0 0;
+  padding-top: $s-4;
+  border-top: 1px solid var(--border);
   color: var(--heading);
 }

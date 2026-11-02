@@ -11,7 +11,7 @@ export function PriorityPreview({ impact, urgency }: { impact: Impact; urgency: 
   const targets = getSlaTargets(impact, urgency);
   return (
     <div className={styles.preview} aria-live="polite">
-      <p className={styles.eyebrow}>Vista previa</p>
+      <p className={styles.eyebrow}>Resumen del ticket</p>
       <div className={styles.priority}>
         <span>Prioridad</span>
         <PriorityChip priority={priority} size="medium" />
@@ -30,7 +30,7 @@ export function PriorityPreview({ impact, urgency }: { impact: Impact; urgency: 
         </div>
       </dl>
       <p className={styles.note}>
-        <em>{targets.label}.</em> Tiempos hábiles: {SERVICE_WINDOW.label}.
+        {targets.label}. Tiempos hábiles: {SERVICE_WINDOW.label}.
       </p>
     </div>
   );

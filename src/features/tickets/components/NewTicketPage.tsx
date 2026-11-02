@@ -4,7 +4,7 @@ import SendIcon from '@mui/icons-material/Send';
 import { Alert, Button, Step, StepButton, Stepper, useMediaQuery, useTheme } from '@mui/material';
 import { useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { HardCard, PageHeader } from '@/components';
+import { Panel, PageHeader } from '@/components';
 import { SERVICES, serviceById } from '@/config/services';
 import { useRole } from '@/features/auth';
 import { useToast } from '@/hooks';
@@ -80,10 +80,10 @@ function NewTicketForm({ preset }: { preset?: CategoryId }) {
       <PageHeader
         eyebrow="Ingreso de ticket"
         title="Nuevo ticket"
-        subtitle="Contanos qué pasa en centralamerica.games. Lo clasificamos con el catálogo de servicios y la matriz de prioridad."
+        subtitle="Cuéntanos qué ocurre en centralamerica.games. Lo clasificamos con el catálogo de servicios y la matriz de prioridad."
       />
       <div className={styles.layout}>
-        <HardCard className={styles.formCard}>
+        <Panel className={styles.formCard}>
           <Stepper
             nonLinear
             activeStep={step}
@@ -99,6 +99,13 @@ function NewTicketForm({ preset }: { preset?: CategoryId }) {
               </Step>
             ))}
           </Stepper>
+
+          <div className={styles.stepHead}>
+            <span className={styles.stepCount}>
+              Paso {step + 1} de {STEPS.length}
+            </span>
+            <h2 className={styles.stepTitle}>{STEPS[step]}</h2>
+          </div>
 
           <form
             className={styles.body}
@@ -152,7 +159,7 @@ function NewTicketForm({ preset }: { preset?: CategoryId }) {
 
             {Object.keys(errors).length > 0 && step === 2 && (
               <Alert severity="error" sx={{ mt: 2 }}>
-                Revisá los campos marcados: faltan {Object.keys(errors).length} dato(s).
+                Revisa los campos marcados: faltan {Object.keys(errors).length} dato(s).
               </Alert>
             )}
             {submitError && (
@@ -163,6 +170,8 @@ function NewTicketForm({ preset }: { preset?: CategoryId }) {
 
             <div className={styles.actions}>
               <Button
+                variant="outlined"
+                className={styles.actionBtn}
                 startIcon={<ArrowBackIcon />}
                 onClick={form.back}
                 disabled={step === 0 || submitting}
@@ -173,24 +182,30 @@ function NewTicketForm({ preset }: { preset?: CategoryId }) {
                 <Button
                   type="submit"
                   variant="contained"
+                  className={styles.actionBtn}
                   endIcon={<SendIcon />}
                   disabled={submitting}
                 >
                   {submitting ? 'Enviando…' : 'Enviar ticket'}
                 </Button>
               ) : (
-                <Button type="submit" variant="contained" endIcon={<ArrowForwardIcon />}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  className={styles.actionBtn}
+                  endIcon={<ArrowForwardIcon />}
+                >
                   Siguiente
                 </Button>
               )}
             </div>
           </form>
-        </HardCard>
+        </Panel>
 
         <aside className={styles.side}>
           <PriorityPreview impact={state.impact} urgency={state.urgency} />
           {service && (
-            <HardCard title="Servicio elegido" tone="accent">
+            <Panel title="Servicio elegido">
               <p className={styles.sideTitle}>{service.name}</p>
               <p className={styles.sideText}>
                 <strong>{service.type}.</strong> {service.justification}
@@ -198,7 +213,7 @@ function NewTicketForm({ preset }: { preset?: CategoryId }) {
               <p className={styles.sideText}>
                 <strong>Atiende:</strong> {service.handledBy}
               </p>
-            </HardCard>
+            </Panel>
           )}
         </aside>
       </div>
