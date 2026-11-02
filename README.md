@@ -50,7 +50,7 @@ Detalle por práctica de ITIL en [`docs/itsm-mapping.md`](docs/itsm-mapping.md).
 src/
 ├── app/            # router (HashRouter), providers, tema MUI, layout (sidebar, header, pie)
 ├── assets/logos/   # UVG y AECID
-├── components/     # Panel, PriorityChip, StatusChip, SlaTimer, PageHeader, EmptyState, skeletons…
+├── components/     # Panel, PageHeader, DataTable, PriorityChip, StatusChip, SlaTimer, EmptyState, skeletons…
 ├── config/         # datos de la Fase 1: services, priorityMatrix, sla, roles, escalation, textos
 ├── features/
 │   ├── auth/       # rol simulado (contexto + selector + guard)
@@ -78,7 +78,7 @@ docs/                              # mapeo ITSM y notas de diseño
 - **Reglas del flujo.** Solo se cierra un ticket resuelto, y un ticket cerrado no se reabre (se crea uno nuevo y se vincula). El tablero rechaza los movimientos inválidos con un mensaje.
 - **Problemas.** El registro de problema es un ticket con `isProblem` que agrupa incidentes (`linkedTicketIds`). Se gestiona por causa raíz y no por el SLA de incidentes, así que su reloj no se mide.
 - **Servicio de datos intercambiable.** `ticketService` expone una interfaz async (`list`, `get`, `create`, `update`, `addComment`, `escalate`, `createProblem`, `markKnownError`, `createChangeRequest`, `resetDemoData`, `subscribe`) sobre `localStorage`, con una latencia simulada para que se vean los estados de carga. Para pasar a un backend basta reemplazar la instancia en `services/index.ts`.
-- **Soft UI minimalista en azules.** Tarjetas blancas con bordes de 1 px sobre fondo `#F4F8FD`, solo dos fuentes (Poppins para títulos e Inter para el cuerpo) y tokens de altura (36/40/48 px) para que botones, inputs y filtros de una misma fila midan igual. Hay modo noche, diseño responsive y la paleta de las gráficas está validada para daltonismo (ver [`docs/design-notes.md`](docs/design-notes.md)).
+- **Sobrio, denso y de producto real.** Fondo neutro `#F6F7F9`, superficies blancas con bordes de 1 px y sin sombras, un solo primario navy (`#182C61`) y un acento celeste (`#3BA7DC`) usado con mesura. Sidebar clara y colapsable, `PageHeader` único con breadcrumb, grilla de 12 columnas con cards de igual altura por fila y controles de 36 px. Poppins solo en títulos y KPIs; Inter en todo lo demás. Modo noche con los mismos tokens (ver [`docs/design-notes.md`](docs/design-notes.md)).
 - **Textos en español centralizados** en [`src/config/texts.ts`](src/config/texts.ts) para poder traducirlos.
 
 ## Guion de demo (5 minutos)
