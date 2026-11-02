@@ -1,0 +1,33 @@
+@use 'styles/mixins' as *;
+
+.card {
+  @include hard-card;
+  padding: 20px;
+  min-width: 0;
+}
+
+.interactive {
+  @include lift;
+}
+
+.accent {
+  background: var(--accent-soft);
+}
+
+.danger {
+  box-shadow: 4px 4px 0 var(--p-critica);
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.title {
+  @include display(1rem);
+  margin: 0;
+  color: var(--ink);
+}

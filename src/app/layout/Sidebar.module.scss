@@ -1,0 +1,115 @@
+@use 'styles/mixins' as *;
+@use 'styles/tokens' as *;
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  height: 100%;
+  padding: 22px 16px;
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  overflow-y: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  @include display(1.05rem);
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  flex: none;
+  border-radius: 12px;
+  background: $sky-light;
+  color: $navy;
+  border: 2px solid $sky;
+  box-shadow: 4px 4px 0 $sky;
+}
+
+.name {
+  @include display(1.15rem);
+  margin: 0;
+  color: #fff;
+}
+
+.service {
+  @include accent;
+  margin: 2px 0 0;
+  color: $sky;
+  font-size: 0.95rem;
+}
+
+.nav {
+  display: grid;
+  gap: 4px;
+}
+
+.link {
+  @include focus-ring;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  color: #d6e3f3;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    transform 140ms ease;
+
+  svg {
+    font-size: 1.3rem;
+    color: $sky;
+  }
+
+  &:hover {
+    background: rgba(58, 175, 211, 0.12);
+    transform: translateX(2px);
+  }
+}
+
+.active {
+  background: $sky-light;
+  border-color: $sky;
+  color: $navy;
+  box-shadow: 3px 3px 0 $sky;
+
+  svg {
+    color: $primary;
+  }
+
+  &:hover {
+    background: $sky-light;
+  }
+}
+
+.locked {
+  opacity: 0.7;
+}
+
+.lock {
+  margin-left: auto;
+  font-size: 1rem !important;
+}
+
+.footnote {
+  margin: auto 0 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: #8fa6c2;
+
+  em {
+    font-family: $font-accent;
+    font-size: 0.95rem;
+    color: #c4d6ea;
+  }
+}

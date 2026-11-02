@@ -1,0 +1,33 @@
+@use 'styles/tokens' as *;
+
+.wrapper {
+  display: grid;
+  gap: 6px;
+}
+
+// The selector lives on the navy sidebar: light text and borders.
+.field {
+  :global(.MuiInputBase-root) {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  :global(.MuiInputLabel-root),
+  :global(.MuiInputLabel-root.Mui-focused) {
+    color: $sky;
+  }
+
+  :global(.MuiOutlinedInput-notchedOutline) {
+    border-color: rgba(58, 175, 211, 0.6) !important;
+  }
+
+  :global(.MuiSelect-icon) {
+    color: $sky;
+  }
+}
+
+.persona {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #b9cce3;
+}

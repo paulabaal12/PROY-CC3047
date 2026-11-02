@@ -11,6 +11,13 @@
       href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap"
       rel="stylesheet"
     />
+    <script>
+      // Apply the saved theme before first paint (no flash).
+      try {
+        var s = JSON.parse(localStorage.getItem('cag-sd:settings:v1') || '{}');
+        if (s.themeMode === 'dark') document.documentElement.dataset.theme = 'dark';
+      } catch (e) {}
+    </script>
     <title>Service Desk · centralamerica.games</title>
   </head>
   <body>

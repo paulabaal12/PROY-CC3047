@@ -14,10 +14,22 @@ export default defineConfig(({ mode }) => {
       alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
     },
     css: {
-      preprocessorOptions: { scss: { api: 'modern-compiler' } },
+      preprocessorOptions: {
+        scss: { api: 'modern-compiler', loadPaths: [fileURLToPath(new URL('./src', import.meta.url))] },
+      },
     },
     build: {
-      chunkSizeWarningLimit: 1200,
+      chunkSizeWarningLimit: 700,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            react: ['react', 'react-dom', 'react-router-dom'],
+            mui: ['@mui/material', '@emotion/react', '@emotion/styled'],
+            charts: ['recharts'],
+            dnd: ['@dnd-kit/core', '@dnd-kit/utilities'],
+          },
+        },
+      },
     },
     test: {
       environment: 'node',

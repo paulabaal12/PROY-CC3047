@@ -1,0 +1,39 @@
+@use 'styles/mixins' as *;
+
+.empty {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--primary);
+  border: 2px solid var(--ink);
+  box-shadow: 3px 3px 0 var(--shadow-color);
+  margin-bottom: 6px;
+}
+
+.title {
+  @include display(1.05rem);
+  margin: 0;
+  color: var(--ink);
+}
+
+.description {
+  @include accent;
+  margin: 0 0 8px;
+  max-width: 46ch;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}

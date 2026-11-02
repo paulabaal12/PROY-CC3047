@@ -1,0 +1,82 @@
+@use 'tokens' as *;
+
+:root {
+  --bg: #{$bg};
+  --surface: #{$surface};
+  --surface-alt: #{$sky-light};
+  --ink: #{$navy};
+  --text: #{$text};
+  --text-muted: #{$text-muted};
+  --border: #{$border};
+  --primary: #{$primary};
+  --primary-hover: #{$primary-hover};
+  --accent: #{$sky};
+  --accent-soft: #{$sky-light};
+  --success: #{$success};
+  --shadow-color: #{$sky};
+  --shadow-strong: #{$primary};
+  --sidebar-bg: #{$navy};
+  --sidebar-text: #e2ecf8;
+  --focus: #{$primary};
+  --column-bg: #eaf1fa;
+
+  --p-critica: #{$p-critica};
+  --p-alta: #{$p-alta};
+  --p-media: #{$p-media};
+  --p-baja: #{$p-baja};
+  --p-planificada: #{$p-planificada};
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --bg: #{$navy};
+  --surface: #{$navy-panel};
+  --surface-alt: #{$navy-paper};
+  --ink: #6fb6e8;
+  --text: #e8eef7;
+  --text-muted: #9fb2c8;
+  --border: #29466a;
+  --accent-soft: #{$navy-paper};
+  --shadow-color: #{$primary};
+  --shadow-strong: #{$sky};
+  --sidebar-bg: #071322;
+  --focus: #{$sky};
+  --column-bg: #0b1b30;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: $font-body;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--primary);
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

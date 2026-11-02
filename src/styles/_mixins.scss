@@ -1,0 +1,54 @@
+@use 'tokens' as *;
+
+// Card with a thick ink border and a hard offset shadow (site's signature).
+@mixin hard-card($shadow: var(--shadow-color)) {
+  background: var(--surface);
+  border: $border-w solid var(--ink);
+  border-radius: $radius;
+  box-shadow: 4px 4px 0 $shadow;
+}
+
+@mixin lift {
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+
+  &:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0 var(--shadow-color);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+@mixin display($size: 1.5rem) {
+  font-family: $font-display;
+  font-size: $size;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+@mixin accent {
+  font-family: $font-accent;
+  font-style: italic;
+  font-weight: 400;
+}
+
+@mixin up($bp) {
+  @media (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+  }
+}
