@@ -1,22 +1,26 @@
 # Notas de diseño
 
-El Service Desk debe sentirse de la misma familia que **centralamerica.games** (sistema "Pacífico Tropical": modernismo gráfico latinoamericano, tipografía bold, bordes marcados y sombras duras), pero con una paleta en azules y celestes, más serena para trabajar varias horas.
+El Service Desk sigue un estilo **soft UI minimalista**: tarjetas blancas sobre un fondo claro azulado, bordes finos, mucho espacio en blanco y una identidad en azules y celestes. La jerarquía se consigue con el espacio, el tamaño y el peso tipográfico, no con bordes gruesos ni colores fuertes.
 
-## Referencias
+## Inspiración
 
-No había un MCP de Figma disponible, así que las referencias salen de una búsqueda en Dribbble y de una guía sobre neobrutalismo. Se revisaron los listados y las descripciones públicas de cada pieza.
-
-| # | Referencia | Qué tomamos |
+| # | Pieza | Qué tomamos |
 |---|---|---|
-| 1 | **"IT Support \| Ticket Dashboard"**, Dribbble ([thecodesalim](https://dribbble.com/thecodesalim)) | Primero una fila de KPIs grandes (abiertos, críticos, % SLA, tiempo promedio) y debajo las gráficas por dimensión. Lo aplicamos al Dashboard: 4 KPIs con número grande en Archivo Black y una línea editorial en DM Serif Display. |
-| 2 | **"Kanban Board View for Ticket Management System"**, Dribbble ([batuhankrskl](https://dribbble.com/batuhankrskl)) | Columnas con contador en la cabecera, tarjetas compactas (ID, título, prioridad, responsable) y una barra de filtros en una sola fila sobre el tablero. Le sumamos el contador de SLA y el banner de P1. |
-| 3 | **Bruddle — Neo Brutalism UI Kit** ([caso en Contra](https://contra.com/p/YOsAoBUr-bruddle-neo-brutalism-ui-kit-a-product-design-case-study)) y la guía de [NN/g sobre neobrutalismo](https://www.nngroup.com/articles/neobrutalism/) | Bordes gruesos, sombra dura desplazada y bloques de color plano: el mismo lenguaje del sitio. De la guía de NN/g tomamos los cuidados: contraste AA, usar las sombras duras solo en superficies interactivas o importantes y no sacrificar legibilidad por estilo. |
+| 1 | **Helpdesk Ticket Dashboard Redesign**, Dribbble ([wastiansal](https://dribbble.com/wastiansal/shots)) | **Layout y jerarquía del dashboard.** Arriba, una fila de KPIs en tarjetas limpias con el número grande y un ícono suave en una esquina; debajo, los objetivos y las gráficas en tarjetas del mismo ancho. Un solo color de acento por tarjeta y etiquetas pequeñas en gris. |
+| 2 | **KirriDesk — Ticket List / Ticket Preview**, Dribbble ([colección](https://dribbble.com/alibek_thedesigner/collections/6892790-)) | **Tratamiento de tickets y chips.** Filas de ticket con el ID en color primario, título en negrita y metadatos en gris. Chips de prioridad y estado con fondo tintado y un punto de color, en lugar de bloques saturados. Avatares con iniciales sobre fondos pastel. |
+| 3 | **Project tracker kanban**, Kombai Gallery ([proyecto](https://ww2.kombai.com/gallery/inspirations/project-tracker-web-55/)) | **Tratamiento del tablero.** Columnas con un fondo apenas más oscuro que la página, tarjetas blancas con la misma estructura y una navegación lateral delgada. De ahí salen las columnas gris azulado, el contador discreto junto al título y el punto de color por estado en vez de subrayados. |
+| 4 | **Linear — Board layout** ([documentación](https://linear.app/docs/board-layout)) | **Densidad e interacción.** Tarjetas compactas en las que cada dato ocupa siempre el mismo lugar, el arrastre con elevación suave y los filtros en una sola fila sobre el tablero. Este patrón ordena la tarjeta del Kanban: ID y prioridad arriba, título en dos líneas como máximo, categoría y, en el pie, el responsable y el SLA. |
 
-## Decisiones visuales
+## Sistema visual
 
-- **Paleta**: navy del sitio (`#0A1A2E`) para el sidebar y los títulos; primario `#2563EB`; celeste `#3AAFD3` (el teal del sitio) para acentos y sombras duras. Las prioridades usan los colores del sitio: rojo `#E94F37`, papaya, mostaza, celeste y gris.
-- **Tarjetas**: borde de 2 px, radio de 12 px y sombra `4px 4px 0` en celeste. Al pasar el cursor la tarjeta "se levanta" (`translate(-2px,-2px)` y sombra de 6 px). Se respeta `prefers-reduced-motion`.
-- **Tipografía**: Archivo Black (títulos y números), DM Serif Display itálica (subtítulos y detalles editoriales) y DM Sans (cuerpo), las mismas del sitio.
-- **Modo noche**: fondo `#0A1A2E` y paneles `#0D1F36`. Los títulos usan un token propio (`--heading`) para no quedar del color de los bordes.
-- **Gráficas**: la paleta categórica de las 7 categorías se validó con un verificador de paletas (banda de luminosidad, croma y separación para daltonismo y para visión normal) contra la superficie clara y contra el panel oscuro. Cada gráfica tiene una vista de tabla, así ningún valor depende solo del color o del hover.
-- **Accesibilidad**: enlace "Saltar al contenido", foco visible de 3 px, tarjetas del tablero operables con teclado (dnd-kit `KeyboardSensor`; Enter abre el ticket), chips de prioridad que siempre incluyen texto y estados SLA con texto además del color.
+- **Fondo y superficies.** Página `#F4F8FD`, tarjetas `#FFFFFF`, bordes de 1 px `#E2E8F0` y radio de 14 px. La única sombra es una difusa casi imperceptible (`0 1px 2px rgba(15,23,42,.04)`); al pasar el cursor por una tarjeta interactiva sube 1 px y su sombra se vuelve algo más visible.
+- **Paleta.** Sidebar y títulos en azul profundo `#0B2545`; primario `#2563EB` (hover `#1D4ED8`); acento celeste `#38BDF8` y fondos `#E0F2FE`; texto `#0F172A` y secundario `#64748B`; éxito `#10B981`.
+- **Prioridades.** Siempre como chip tintado (10–12% del color) con un punto y el texto en el tono oscuro correspondiente: Crítica `#EF4444`, Alta `#F97316`, Media `#F59E0B`, Baja `#38BDF8`, Planificada `#94A3B8`. Los estados siguen la misma regla.
+- **Tipografía.** Solo dos familias: **Poppins** para títulos, números grandes y botones, e **Inter** para cuerpo, tablas, formularios y etiquetas. Escala: título de página 28–30 px/600, título de tarjeta 16–18 px/600, cuerpo 14–15 px/400, etiquetas 12–13 px/500. Sin itálicas decorativas.
+- **Alturas de control.** Tres tokens (`36`, `40` y `48 px`). Los botones, inputs, selects, el buscador, los botones de ícono y los filtros de prioridad del tablero miden 40 px y se alinean al centro cuando comparten fila. Los botones primario y secundario comparten padding, radio (10 px) y peso; los dos botones del pie de un formulario van a la derecha y tienen el mismo ancho.
+- **Espaciado.** Sistema de 8 px (múltiplos de 4 en detalles). El padding interno de las tarjetas es de 20–24 px y los gutters entre tarjetas son iguales en cada grilla.
+- **Sidebar.** Azul profundo y plano, con la navegación agrupada (Portal, Soporte, Cuenta). El ítem activo lleva un fondo translúcido y una barrita lateral celeste de 3 px. El selector de rol es una tarjeta compacta al pie, con avatar y nombre.
+- **Detalles con identidad.** Estados vacíos con una ilustración ligera (ícono en una tarjeta flotante, halo celeste y dos puntos de acento), encabezados de página con un resumen en pastillas (activos, P1 abiertos, SLA vencido), KPIs con un ícono tintado, línea de tiempo vertical con puntos de color por tipo de evento y avatares pastel por rol.
+- **Gráficas.** Paleta categórica que arranca en azules y celestes, validada con un verificador de paletas (banda de luminosidad, croma y separación para daltonismo y visión normal) contra la tarjeta blanca y el panel oscuro. Tooltips blancos con borde fino, leyenda legible con valores y una vista de tabla en cada gráfica.
+- **Modo noche.** El mismo lenguaje sobre `#0A1628` y paneles `#111F35`: bordes finos, sin sombras de color y las mismas dos fuentes. Los chips usan tonos claros del mismo color para mantener el contraste AA.
+- **Accesibilidad.** Contraste AA, foco visible de 2 px, enlace "Saltar al contenido", tarjetas del tablero operables con teclado y prioridades que siempre llevan texto además del color.

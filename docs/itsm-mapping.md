@@ -12,7 +12,7 @@ Qué práctica de ITIL v4 cubre cada pantalla del Service Desk de centralamerica
 | **Problemas** (`#/problems`) | Gestión de problemas | Registros de problema con causa raíz, **incidentes asociados**, **errores conocidos** con workaround y cambios generados para la solución definitiva. |
 | **Catálogo de servicios** (`#/catalog`) | Gestión del catálogo de servicios | Las 4 solicitudes y los 3 incidentes con su justificación (por qué son una cosa u otra), quién los solicita o reporta, quién los atiende, la prioridad sugerida, los datos que piden y un botón para crear el ticket. También la matriz de prioridad, los criterios, los canales, los roles y los niveles. |
 | **Dashboard** (`#/dashboard`) | Gestión del nivel de servicio · Medición y reporte · Mejora continua | KPIs (abiertos, críticos abiertos, % dentro de SLA, tiempo promedio de resolución). Los **3 objetivos del SLA** con meta externa e interna (OLA): disponibilidad ≥ 99%, restauración de P1 (90% en ≤ 90 min; interno 95% en ≤ 75) y actualizaciones (90% en ≤ 3 días hábiles; interno 95% en 2). Historial mensual del objetivo P1 con la **regla de recurrencia** (2 meses seguidos o 3 en 6 pasan al flujo de problema). Gráficas por categoría, prioridad, estado, tipo y tag. |
-| **Configuración** (`#/settings`) | Gestión del nivel de servicio (dato de monitoreo) | Disponibilidad mensual de referencia (la mide UptimeRobot), rol simulado, modo noche y restablecimiento de los datos de demostración. |
+| **Configuración** (`#/settings`) | Gestión del nivel de servicio (dato de monitoreo) | Valor mensual de disponibilidad (lo mide UptimeRobot), rol simulado, modo noche y restablecimiento de los datos de demostración. |
 
 ## Flujos
 

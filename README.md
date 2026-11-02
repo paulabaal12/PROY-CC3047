@@ -50,7 +50,7 @@ Detalle por práctica de ITIL en [`docs/itsm-mapping.md`](docs/itsm-mapping.md).
 src/
 ├── app/            # router (HashRouter), providers, tema MUI, layout (sidebar, header, pie)
 ├── assets/logos/   # UVG y AECID
-├── components/     # PriorityChip, StatusChip, SlaTimer, HardCard, EmptyState, skeletons…
+├── components/     # Panel, PriorityChip, StatusChip, SlaTimer, PageHeader, EmptyState, skeletons…
 ├── config/         # datos de la Fase 1: services, priorityMatrix, sla, roles, escalation, textos
 ├── features/
 │   ├── auth/       # rol simulado (contexto + selector + guard)
@@ -62,7 +62,7 @@ src/
 │   └── settings/   # Configuración
 ├── hooks/          # useTickets, useNow, useSettings, useToast
 ├── services/       # ticketService (async), storage, seed, settings
-├── styles/         # tokens SCSS, mixins, globales (variables CSS para el modo noche)
+├── styles/         # tokens SCSS (colores, alturas, espaciado), mixins, globales y variables del modo noche
 ├── types/          # modelo de ticket y del catálogo
 └── utils/          # prioridad, horas hábiles, SLA, cumplimiento, escalamiento, fechas
 reference/catalog-reference.json   # estudios, juegos, países y plataformas reales
@@ -78,7 +78,7 @@ docs/                              # mapeo ITSM y notas de diseño
 - **Reglas del flujo.** Solo se cierra un ticket resuelto, y un ticket cerrado no se reabre (se crea uno nuevo y se vincula). El tablero rechaza los movimientos inválidos con un mensaje.
 - **Problemas.** El registro de problema es un ticket con `isProblem` que agrupa incidentes (`linkedTicketIds`). Se gestiona por causa raíz y no por el SLA de incidentes, así que su reloj no se mide.
 - **Servicio de datos intercambiable.** `ticketService` expone una interfaz async (`list`, `get`, `create`, `update`, `addComment`, `escalate`, `createProblem`, `markKnownError`, `createChangeRequest`, `resetDemoData`, `subscribe`) sobre `localStorage`, con una latencia simulada para que se vean los estados de carga. Para pasar a un backend basta reemplazar la instancia en `services/index.ts`.
-- **Visual "Pacífico Tropical" en azules.** Usa las fuentes del sitio y el navy y teal de su paleta, con bordes de 2 px y sombras duras. Hay modo noche, diseño responsive y la paleta de las gráficas está validada para daltonismo (ver [`docs/design-notes.md`](docs/design-notes.md)).
+- **Soft UI minimalista en azules.** Tarjetas blancas con bordes de 1 px sobre fondo `#F4F8FD`, solo dos fuentes (Poppins para títulos e Inter para el cuerpo) y tokens de altura (36/40/48 px) para que botones, inputs y filtros de una misma fila midan igual. Hay modo noche, diseño responsive y la paleta de las gráficas está validada para daltonismo (ver [`docs/design-notes.md`](docs/design-notes.md)).
 - **Textos en español centralizados** en [`src/config/texts.ts`](src/config/texts.ts) para poder traducirlos.
 
 ## Guion de demo (5 minutos)
