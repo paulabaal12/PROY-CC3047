@@ -311,7 +311,7 @@ export function createTicketService(options: TicketServiceOptions): TicketServic
 
     markKnownError(id, input, actor) {
       requireInternal(actor);
-      if (!input.workaround.trim()) return Promise.reject(new Error('Documentá el workaround.'));
+      if (!input.workaround.trim()) return Promise.reject(new Error('Documenta el workaround.'));
       return mutate(id, (t, at) => {
         t.knownError = true;
         t.isProblem = true;

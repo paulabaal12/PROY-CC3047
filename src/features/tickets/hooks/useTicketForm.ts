@@ -44,10 +44,10 @@ const isEmpty = (v: DetailValue | undefined) =>
 export function validateField(field: FieldDef, value: DetailValue | undefined): string | null {
   if (field.required && isEmpty(value)) return 'Campo obligatorio';
   if (isEmpty(value) || Array.isArray(value) || value === undefined) return null;
-  if (field.kind === 'url' && !URL_RE.test(value)) return 'Ingresá un enlace válido (https://…)';
+  if (field.kind === 'url' && !URL_RE.test(value)) return 'Ingresa un enlace válido (https://…)';
   if (field.kind === 'number') {
     const n = Number(value);
-    if (!Number.isFinite(n) || n < 0) return 'Ingresá un número válido';
+    if (!Number.isFinite(n) || n < 0) return 'Ingresa un número válido';
     if (field.id === 'fundacion' && (n < 1970 || n > new Date().getFullYear()))
       return `Año entre 1970 y ${new Date().getFullYear()}`;
   }
@@ -56,19 +56,19 @@ export function validateField(field: FieldDef, value: DetailValue | undefined): 
 
 export function validateStep(step: number, state: TicketFormState): FormErrors {
   const errors: FormErrors = {};
-  if (step === 0 && !state.type) errors.type = 'Elegí si es un incidente o una solicitud';
-  if (step === 1 && !state.category) errors.category = 'Elegí una categoría del catálogo';
+  if (step === 0 && !state.type) errors.type = 'Elige si es un incidente o una solicitud';
+  if (step === 1 && !state.category) errors.category = 'Elige una categoría del catálogo';
   if (step === 2 && state.category) {
-    if (state.title.trim().length < 6) errors.title = 'Escribí un título de al menos 6 caracteres';
+    if (state.title.trim().length < 6) errors.title = 'Escribe un título de al menos 6 caracteres';
     if (state.description.trim().length < 10)
-      errors.description = 'Contá qué pasa o qué necesitás (mínimo 10 caracteres)';
+      errors.description = 'Cuenta qué pasa o qué necesitas (mínimo 10 caracteres)';
     for (const field of serviceById(state.category).fields) {
       const error = validateField(field, state.details[field.id]);
       if (error) errors[`details.${field.id}`] = error;
     }
   }
   if (step === 4) {
-    if (state.requester.name.trim().length < 3) errors.requesterName = 'Ingresá el nombre';
+    if (state.requester.name.trim().length < 3) errors.requesterName = 'Ingresa el nombre';
     if (!EMAIL_RE.test(state.requester.email.trim())) errors.requesterEmail = 'Correo no válido';
   }
   return errors;

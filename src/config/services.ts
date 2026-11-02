@@ -95,7 +95,7 @@ export const SERVICES: ServiceDef[] = [
         kind: 'studio',
         required: true,
         allowNew: true,
-        helper: 'Elegí uno del catálogo o "Nuevo estudio".',
+        helper: 'Elige uno del catálogo o "Nuevo estudio".',
       },
       { id: 'pais', label: 'País', kind: 'select', required: true, options: countryOptions },
       {
@@ -132,7 +132,7 @@ export const SERVICES: ServiceDef[] = [
         label: 'Imagen (logo, banner o capsule)',
         kind: 'file',
         required: true,
-        helper: 'Adjuntá el archivo o pegá un enlace. Solo se guarda el nombre.',
+        helper: 'Adjunta el archivo o pega un enlace. Solo se guarda el nombre.',
       },
     ],
   },

@@ -15,7 +15,7 @@ export const canTransition = (from: Status, to: Status): boolean =>
 
 export const transitionError = (from: Status, to: Status): string | null => {
   if (canTransition(from, to)) return null;
-  if (from === 'Cerrado') return 'Un ticket cerrado no se reabre: creá uno nuevo y vinculalo.';
+  if (from === 'Cerrado') return 'Un ticket cerrado no se reabre: crea uno nuevo y vincúlalo.';
   if (to === 'Cerrado')
     return 'Solo se cierra un ticket resuelto (el solicitante confirma la solución).';
   return `No se puede pasar de ${from} a ${to}.`;

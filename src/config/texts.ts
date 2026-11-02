@@ -73,10 +73,10 @@ export const es = {
     noTickets: 'No hay tickets por aquí',
     noTicketsHint: 'Cuando registres uno aparecerá en esta lista.',
     noResults: 'Nada coincide con los filtros',
-    noResultsHint: 'Probá con otra búsqueda o limpiá los filtros.',
+    noResultsHint: 'Prueba con otra búsqueda o limpia los filtros.',
     restricted: 'Esta vista es del equipo de soporte',
     restrictedHint:
-      'Cambiá el rol activo (arriba a la izquierda) a Service Desk, un Responsable o el Dueño del servicio.',
+      'Cambia el rol activo en la barra lateral a Service Desk, un Responsable o el Dueño del servicio.',
     notFound: 'No encontramos ese ticket',
   },
 } as const;

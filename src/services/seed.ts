@@ -296,7 +296,7 @@ const SPECS: SeedSpec[] = [
       {
         after: 25,
         role: 'service-desk',
-        text: 'Gracias. ¿Nos podés compartir una captura y el proveedor de internet?',
+        text: 'Gracias. ¿Nos puedes compartir una captura y el proveedor de internet?',
       },
       {
         after: 30,
@@ -380,7 +380,7 @@ const SPECS: SeedSpec[] = [
       {
         after: 20,
         role: 'service-desk',
-        text: 'Mientras tanto podés usar el mapa por país (/es/mapa/), que no se traba.',
+        text: 'Mientras tanto puedes usar el mapa por país (/es/mapa/), que no se traba.',
       },
       {
         after: 300,
@@ -1053,7 +1053,7 @@ const SPECS: SeedSpec[] = [
     resolveAfter: 300,
     closeAfter: 900,
     comments: [
-      { after: 30, role: 'service-desk', text: 'Recibido. Lo tenés hoy antes de las 16:00.' },
+      { after: 30, role: 'service-desk', text: 'Recibido. Lo tienes hoy antes de las 16:00.' },
       { after: 300, role: 'service-desk', text: 'Adjuntamos estudios-GT.csv (11 estudios).' },
     ],
   },
