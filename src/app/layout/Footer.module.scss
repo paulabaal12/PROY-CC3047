@@ -7,7 +7,7 @@
   justify-content: space-between;
   gap: $s-4;
   margin-top: $s-8 * 1.5;
-  padding: $s-5 0 $s-2;
+  padding-top: $s-5;
   border-top: 1px solid var(--border);
 }
 
@@ -15,27 +15,26 @@
   margin: 0;
   max-width: 64ch;
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-3);
 
   em {
     font-style: normal;
-    font-weight: 500;
-    color: var(--text);
+    color: var(--text-2);
   }
 }
 
 .logos {
   display: flex;
   align-items: center;
-  gap: $s-4;
+  gap: $s-3;
 
   // Logos are dark on transparent: a light plate keeps them legible in dark mode.
   img {
-    height: 32px;
+    height: 28px;
     width: auto;
-    padding: 4px 8px;
-    border-radius: $radius-sm;
+    padding: 3px 6px;
+    border-radius: 6px;
     background: #fff;
-    opacity: 0.9;
+    border: 1px solid var(--border);
   }
 }

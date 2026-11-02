@@ -4,19 +4,32 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { IconButton, InputAdornment, TextField, Tooltip } from '@mui/material';
 import { useState, type FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { PersonAvatar } from '@/components';
 import { t } from '@/config/texts';
 import { useRole } from '@/features/auth';
 import { useSettings } from '@/hooks';
 import styles from './Header.module.scss';
 
+const SECTIONS: [RegExp, string][] = [
+  [/^\/tickets\/new/, t.nav.newTicket],
+  [/^\/tickets\/.+/, 'Ticket'],
+  [/^\/tickets/, t.nav.myTickets],
+  [/^\/catalog/, t.nav.catalog],
+  [/^\/board/, t.nav.board],
+  [/^\/problems/, t.nav.problems],
+  [/^\/dashboard/, t.nav.dashboard],
+  [/^\/settings/, t.nav.settings],
+];
+
 export function Header({ onMenu }: { onMenu: () => void }) {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   const { roleDef } = useRole();
   const { settings, updateSettings } = useSettings();
   const [query, setQuery] = useState('');
   const dark = settings.themeMode === 'dark';
+  const section = SECTIONS.find(([re]) => re.test(pathname))?.[1];
 
   const submit = (e: FormEvent) => {
     e.preventDefault();
@@ -26,15 +39,23 @@ export function Header({ onMenu }: { onMenu: () => void }) {
   return (
     <header className={styles.header}>
       <IconButton className={styles.menu} onClick={onMenu} aria-label={t.header.menu}>
-        <MenuIcon />
+        <MenuIcon fontSize="small" />
       </IconButton>
+      <p className={styles.context}>
+        <span>{t.app.service}</span>
+        {section && (
+          <>
+            <span className={styles.sep}>/</span>
+            <strong>{section}</strong>
+          </>
+        )}
+      </p>
       <form className={styles.search} onSubmit={submit} role="search">
         <TextField
-          size="small"
           fullWidth
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder={t.header.search}
+          placeholder="Buscar tickets…"
           slotProps={{
             htmlInput: { 'aria-label': t.header.search },
             input: {
@@ -49,7 +70,6 @@ export function Header({ onMenu }: { onMenu: () => void }) {
       </form>
       <Tooltip title={dark ? 'Modo día' : 'Modo noche'}>
         <IconButton
-          className={styles.iconBtn}
           onClick={() => updateSettings({ themeMode: dark ? 'light' : 'dark' })}
           aria-label={dark ? 'Activar modo día' : 'Activar modo noche'}
         >
@@ -61,13 +81,9 @@ export function Header({ onMenu }: { onMenu: () => void }) {
         </IconButton>
       </Tooltip>
       <Tooltip title={`${roleDef.persona.name} · ${roleDef.name}`}>
-        <div className={styles.user}>
-          <PersonAvatar name={roleDef.persona.name} role={roleDef.id} />
-          <div className={styles.userText}>
-            <strong>{roleDef.persona.name}</strong>
-            <span>{roleDef.short}</span>
-          </div>
-        </div>
+        <span className={styles.avatar}>
+          <PersonAvatar name={roleDef.persona.name} role={roleDef.id} size={32} />
+        </span>
       </Tooltip>
     </header>
   );

@@ -1,4 +1,4 @@
-import { MenuItem, TextField } from '@mui/material';
+import { MenuItem, TextField, Tooltip } from '@mui/material';
 import { PersonAvatar } from '@/components';
 import { ROLES } from '@/config/roles';
 import { t } from '@/config/texts';
@@ -6,18 +6,23 @@ import type { RoleId } from '@/types';
 import { useRole } from '../hooks/useRole';
 import styles from './RoleSelector.module.scss';
 
-/** Simulated login: compact profile card with a role switcher. */
-export function RoleSelector() {
+/** Simulated login: one compact row with the session and the role switcher. */
+export function RoleSelector({ compact = false }: { compact?: boolean }) {
   const { role, roleDef, setRole } = useRole();
+
+  if (compact) {
+    return (
+      <Tooltip title={`${roleDef.persona.name} · ${roleDef.name}`} placement="right">
+        <span className={styles.compact}>
+          <PersonAvatar name={roleDef.persona.name} role={role} size={28} />
+        </span>
+      </Tooltip>
+    );
+  }
+
   return (
-    <div className={styles.card}>
-      <div className={styles.who}>
-        <PersonAvatar name={roleDef.persona.name} role={role} size={32} />
-        <div className={styles.whoText}>
-          <strong>{roleDef.persona.name}</strong>
-          <span>Sesión simulada</span>
-        </div>
-      </div>
+    <div className={styles.row}>
+      <PersonAvatar name={roleDef.persona.name} role={role} size={28} />
       <TextField
         select
         fullWidth

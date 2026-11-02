@@ -6,7 +6,14 @@
   min-height: 100vh;
 
   @include up($bp-md) {
-    grid-template-columns: 256px minmax(0, 1fr);
+    grid-template-columns: 248px minmax(0, 1fr);
+    transition: grid-template-columns 160ms ease;
+  }
+}
+
+.collapsed {
+  @include up($bp-md) {
+    grid-template-columns: 72px minmax(0, 1fr);
   }
 }
 
@@ -27,16 +34,17 @@
   flex-direction: column;
 }
 
+// Same top padding on every page so titles start at the same height.
 .content {
   flex: 1;
   width: 100%;
-  max-width: 1440px;
+  max-width: 1280px + 2 * $s-6;
   margin: 0 auto;
   padding: $s-6 $s-4;
   outline: none;
 
-  @include up($bp-md) {
-    padding: $s-8;
+  @include up($bp-sm) {
+    padding: $s-8 $s-6;
   }
 }
 
@@ -48,7 +56,7 @@
   padding: 8px 12px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: $radius-sm;
+  border-radius: $radius-control;
 
   &:focus {
     left: 8px;

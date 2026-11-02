@@ -4,11 +4,12 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: $s-6;
+  gap: $s-5;
   height: 100%;
-  padding: $s-5 $s-4;
-  background: var(--sidebar-bg);
-  color: var(--sidebar-text);
+  padding: $s-4 $s-3;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-x: hidden;
   overflow-y: auto;
 }
 
@@ -16,89 +17,108 @@
   display: flex;
   align-items: center;
   gap: $s-3;
-  padding: 0 $s-2;
+  height: 40px;
+  padding: 0 $s-1;
 }
 
+// Navy square with a single sky dot: the only decorative use of the accent.
 .logo {
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
+  position: relative;
+  width: 32px;
+  height: 32px;
   flex: none;
-  border-radius: 12px;
-  background: linear-gradient(135deg, $primary, $sky);
-  color: #fff;
+  border-radius: $radius-control;
+  background: $primary;
+}
 
-  svg {
-    font-size: 1.3rem;
-  }
+.logoDot {
+  position: absolute;
+  right: 7px;
+  bottom: 7px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $accent;
 }
 
 .brandText {
   min-width: 0;
+  line-height: 1.25;
 }
 
 .name {
-  @include heading(1rem);
   margin: 0;
-  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--heading);
 }
 
 .service {
   margin: 0;
   font-size: 0.75rem;
-  color: #8fb3d9;
+  color: var(--text-2);
 }
 
 .nav {
   display: grid;
-  gap: 2px;
+  gap: $s-4;
 }
 
 .group {
-  margin: $s-4 0 $s-1;
+  display: grid;
+  gap: 2px;
+}
+
+.groupLabel {
+  margin: 0 0 $s-1;
   padding: 0 $s-3;
   font-size: 0.6875rem;
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #6f8db3;
+  color: var(--text-3);
+}
 
-  &:first-child {
-    margin-top: 0;
-  }
+.divider {
+  width: 24px;
+  margin: 0 auto $s-1;
+  border: 0;
+  border-top: 1px solid var(--border);
 }
 
 .link {
   @include focus-ring;
-  position: relative;
   display: flex;
   align-items: center;
   gap: $s-3;
-  height: $h-md;
+  height: $h;
   padding: 0 $s-3;
   border-radius: $radius-control;
-  color: var(--sidebar-text);
+  color: var(--text-2);
   font-size: 0.875rem;
   font-weight: 500;
-  text-decoration: none;
+  text-decoration: none !important;
   transition:
-    background 140ms ease,
-    color 140ms ease;
+    background 120ms ease,
+    color 120ms ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.06);
-    color: #fff;
+    background: var(--surface-2);
+    color: var(--text);
   }
+}
+
+.tipWrap {
+  display: block;
 }
 
 .icon {
   display: grid;
   place-items: center;
-  color: #7fa3cc;
+  flex: none;
 
   svg {
-    font-size: 1.15rem;
+    font-size: 18px;
   }
 }
 
@@ -108,25 +128,10 @@
   text-overflow: ellipsis;
 }
 
-// Active: translucent background and a thin accent bar on the left.
 .active {
-  background: rgba(56, 189, 248, 0.12);
-  color: #fff;
-
-  &::before {
-    content: '';
-    position: absolute;
-    left: -$s-4;
-    top: 8px;
-    bottom: 8px;
-    width: 3px;
-    border-radius: 0 3px 3px 0;
-    background: $sky;
-  }
-
-  .icon {
-    color: $sky;
-  }
+  background: var(--primary-tint) !important;
+  color: var(--primary) !important;
+  font-weight: 600;
 }
 
 .locked {
@@ -135,19 +140,42 @@
 
 .lock {
   margin-left: auto;
-  font-size: 0.9rem !important;
+  font-size: 0.875rem !important;
 }
 
 .footer {
   display: grid;
-  gap: $s-3;
+  gap: $s-2;
   margin-top: auto;
+  padding-top: $s-3;
+  border-top: 1px solid var(--border);
 }
 
-.footnote {
-  margin: 0;
-  padding: 0 $s-2;
-  font-size: 0.6875rem;
-  line-height: 1.5;
-  color: #6f8db3;
+.toggle {
+  justify-self: start;
+}
+
+// Collapsed: 72px, icons only.
+.collapsed {
+  align-items: center;
+
+  .brand {
+    padding: 0;
+    justify-content: center;
+  }
+
+  .link {
+    width: 40px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .toggle {
+    justify-self: center;
+  }
+
+  .footer {
+    width: 100%;
+    justify-items: center;
+  }
 }

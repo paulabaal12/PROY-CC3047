@@ -1,54 +1,35 @@
 @use 'styles/tokens' as *;
 
-.card {
-  display: grid;
-  gap: $s-3;
-  padding: $s-3;
-  border-radius: $radius;
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.who {
+.row {
   display: flex;
   align-items: center;
-  gap: $s-3;
+  gap: $s-2;
   min-width: 0;
 }
 
-.whoText {
-  display: grid;
-  min-width: 0;
-  line-height: 1.3;
-
-  strong {
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: #fff;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  span {
-    font-size: 0.6875rem;
-    color: #8fb3d9;
-  }
+.compact {
+  display: inline-flex;
 }
 
-// Sits on the navy sidebar: translucent field, light text.
+// Compact field: no border until hover, so it reads as part of the row.
 .field {
+  min-width: 0;
+
   :global(.MuiOutlinedInput-root) {
-    height: $h-sm !important;
-    background: rgba(255, 255, 255, 0.06);
-    color: #e2ecf8;
+    height: $h-compact !important;
     font-size: 0.8125rem;
+    font-weight: 500;
   }
 
   :global(.MuiOutlinedInput-notchedOutline) {
-    border-color: rgba(255, 255, 255, 0.12) !important;
+    border-color: transparent !important;
   }
 
-  :global(.MuiSelect-icon) {
-    color: #8fb3d9;
+  :global(.MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline) {
+    border-color: var(--border-strong) !important;
+  }
+
+  :global(.MuiSelect-select) {
+    padding-left: 6px !important;
   }
 }
