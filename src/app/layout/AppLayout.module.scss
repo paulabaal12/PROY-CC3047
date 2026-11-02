@@ -6,7 +6,7 @@
   min-height: 100vh;
 
   @include up($bp-md) {
-    grid-template-columns: 264px minmax(0, 1fr);
+    grid-template-columns: 256px minmax(0, 1fr);
   }
 }
 
@@ -32,11 +32,11 @@
   width: 100%;
   max-width: 1440px;
   margin: 0 auto;
-  padding: 20px 16px 24px;
+  padding: $s-6 $s-4;
   outline: none;
 
   @include up($bp-md) {
-    padding: 28px 32px 32px;
+    padding: $s-8;
   }
 }
 
@@ -47,8 +47,8 @@
   z-index: 100;
   padding: 8px 12px;
   background: var(--surface);
-  border: 2px solid var(--ink);
-  border-radius: 8px;
+  border: 1px solid var(--border);
+  border-radius: $radius-sm;
 
   &:focus {
     left: 8px;

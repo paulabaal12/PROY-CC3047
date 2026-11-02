@@ -40,7 +40,7 @@ export function Header({ onMenu }: { onMenu: () => void }) {
             input: {
               startAdornment: (
                 <InputAdornment position="start">
-                  <SearchIcon />
+                  <SearchIcon fontSize="small" />
                 </InputAdornment>
               ),
             },
@@ -49,10 +49,15 @@ export function Header({ onMenu }: { onMenu: () => void }) {
       </form>
       <Tooltip title={dark ? 'Modo día' : 'Modo noche'}>
         <IconButton
+          className={styles.iconBtn}
           onClick={() => updateSettings({ themeMode: dark ? 'light' : 'dark' })}
           aria-label={dark ? 'Activar modo día' : 'Activar modo noche'}
         >
-          {dark ? <LightModeOutlinedIcon /> : <DarkModeOutlinedIcon />}
+          {dark ? (
+            <LightModeOutlinedIcon fontSize="small" />
+          ) : (
+            <DarkModeOutlinedIcon fontSize="small" />
+          )}
         </IconButton>
       </Tooltip>
       <Tooltip title={`${roleDef.persona.name} · ${roleDef.name}`}>
