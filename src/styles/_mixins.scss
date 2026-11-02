@@ -1,21 +1,24 @@
 @use 'tokens' as *;
 
-// Card with a thick ink border and a hard offset shadow (site's signature).
-@mixin hard-card($shadow: var(--shadow-color)) {
+// White card, hairline border, near-invisible diffuse shadow.
+@mixin card {
   background: var(--surface);
-  border: $border-w solid var(--ink);
+  border: 1px solid var(--border);
   border-radius: $radius;
-  box-shadow: 4px 4px 0 $shadow;
+  box-shadow: var(--shadow-xs);
 }
 
-@mixin lift {
+// Interactive cards: a soft lift, never a colored offset shadow.
+@mixin hover-lift {
   transition:
     transform 160ms ease,
-    box-shadow 160ms ease;
+    box-shadow 160ms ease,
+    border-color 160ms ease;
 
   &:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0 var(--shadow-color);
+    transform: translateY(-1px);
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-md);
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -27,17 +30,26 @@
   }
 }
 
-@mixin display($size: 1.5rem) {
-  font-family: $font-display;
+@mixin heading($size: 1rem, $weight: 600) {
+  font-family: $font-heading;
   font-size: $size;
-  line-height: 1.1;
+  font-weight: $weight;
+  line-height: 1.3;
   letter-spacing: -0.01em;
 }
 
-@mixin accent {
-  font-family: $font-accent;
-  font-style: italic;
-  font-weight: 400;
+// Small uppercase-free label (12–13px / 500).
+@mixin label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+@mixin clamp($lines) {
+  display: -webkit-box;
+  -webkit-line-clamp: $lines;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 @mixin up($bp) {
@@ -48,7 +60,7 @@
 
 @mixin focus-ring {
   &:focus-visible {
-    outline: 3px solid var(--focus);
+    outline: 2px solid var(--focus);
     outline-offset: 2px;
   }
 }

@@ -1,33 +1,51 @@
-// "Pacífico Tropical" in blues: palette tokens shared by SCSS modules and the MUI theme.
-$navy: #0a1a2e;
-$navy-panel: #0d1f36;
-$navy-paper: #102740;
+// Soft UI tokens: blue identity, white cards on a light blue-tinted background.
+$navy: #0b2545;
+$navy-2: #13315c;
 $primary: #2563eb;
 $primary-hover: #1d4ed8;
-$blue: #3b82f6;
-$sky: #3aafd3;
+$sky: #38bdf8;
 $sky-light: #e0f2fe;
 $bg: #f4f8fd;
 $surface: #ffffff;
 $text: #0f172a;
 $text-muted: #64748b;
-$border: #cbd5e1;
-$success: #2dc1a5;
+$border: #e2e8f0;
+$success: #10b981;
 
-$p-critica: #e94f37;
-$p-alta: #f4a261;
-$p-media: #f4d03f;
-$p-baja: #3aafd3;
+$p-critica: #ef4444;
+$p-alta: #f97316;
+$p-media: #f59e0b;
+$p-baja: #38bdf8;
 $p-planificada: #94a3b8;
 
-$radius: 12px;
+// Shape
 $radius-sm: 8px;
-$border-w: 2px;
+$radius-control: 10px;
+$radius: 14px;
+$radius-lg: 16px;
 
-$font-display: 'Archivo Black', 'Arial Black', system-ui, sans-serif;
-$font-accent: 'DM Serif Display', Georgia, serif;
+// Control heights: every control sharing a row uses the same one.
+$h-sm: 36px;
+$h-md: 40px;
+$h-lg: 48px;
+
+// 8-point spacing
+$s-1: 4px;
+$s-2: 8px;
+$s-3: 12px;
+$s-4: 16px;
+$s-5: 20px;
+$s-6: 24px;
+$s-8: 32px;
+
+$font-heading:
+  'Poppins',
+  system-ui,
+  -apple-system,
+  'Segoe UI',
+  sans-serif;
 $font-body:
-  'DM Sans',
+  'Inter',
   system-ui,
   -apple-system,
   'Segoe UI',
