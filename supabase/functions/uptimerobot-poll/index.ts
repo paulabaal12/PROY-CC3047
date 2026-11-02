@@ -27,7 +27,7 @@ interface TicketRecord {
   tags: string[];
   impact: 'Alto';
   urgency: 'Alta';
-  priority: 'CrÃ­tica';
+  priority: 'Cr\u00edtica';
   status: 'Abierto' | 'En progreso' | 'Resuelto' | 'Cerrado';
   channel: 'Monitoreo UptimeRobot';
   requester: { name: string; email: string };
@@ -58,7 +58,7 @@ function json(data: unknown, status = 200): Response {
 }
 
 function priorityForDown(): TicketRecord['priority'] {
-  return 'CrÃ­tica';
+  return 'Cr\u00edtica';
 }
 
 function normalizeUrl(value: string): string {

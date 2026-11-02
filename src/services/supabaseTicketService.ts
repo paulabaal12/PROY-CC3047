@@ -16,6 +16,7 @@ import {
   type TicketService,
 } from './ticketService';
 import { supabaseAuth, supabaseConfig } from './supabaseAuth';
+import { calculatePriority } from '@/utils/priority';
 
 interface TicketRow {
   id: string;
@@ -51,7 +52,14 @@ async function request(path: string, init: RequestInit = {}) {
 async function fetchTickets(): Promise<Ticket[]> {
   const response = await request('service_desk_tickets?select=id,ticket&order=created_at.desc');
   const rows = (await response.json()) as TicketRow[];
-  return rows.map((row) => row.ticket).filter((ticket): ticket is Ticket => Boolean(ticket?.id));
+  return rows
+    .map((row) => row.ticket)
+    .filter((ticket): ticket is Ticket => Boolean(ticket?.id))
+    .map((ticket) => ({
+      ...ticket,
+      // Always derive this label from the matrix; persisted labels may be stale or malformed.
+      priority: calculatePriority(ticket.impact, ticket.urgency),
+    }));
 }
 
 function setSnapshot(tickets: Ticket[]) {
