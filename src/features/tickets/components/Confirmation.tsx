@@ -1,3 +1,4 @@
+import { displayTicketId } from '@/utils/ticketIds';
 import AddIcon from '@mui/icons-material/Add';
 import CheckRoundedIcon from '@mui/icons-material/CheckRounded';
 import VisibilityOutlinedIcon from '@mui/icons-material/VisibilityOutlined';
@@ -22,7 +23,7 @@ export function Confirmation({ ticket, onAnother }: { ticket: Ticket; onAnother:
           <CheckRoundedIcon fontSize="large" />
         </div>
         <p className={styles.eyebrow}>Ticket registrado</p>
-        <h1 className={styles.id}>{ticket.id}</h1>
+        <h1 className={styles.id}>{displayTicketId(ticket.id)}</h1>
         <p className={styles.title}>{ticket.title}</p>
         <dl className={styles.facts}>
           <div>

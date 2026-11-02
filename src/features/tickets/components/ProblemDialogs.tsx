@@ -1,3 +1,4 @@
+import { displayTicketId } from '@/utils/ticketIds';
 import {
   Alert,
   Autocomplete,
@@ -58,7 +59,7 @@ export function ProblemDialog({ ticket, open, onClose }: DialogProps) {
       return setError('Describe la causa raíz (o la hipótesis) en al menos 10 caracteres.');
     void run(
       () => ticketService.createProblem(ticket.id, { rootCause, linkedTicketIds: linked }, actor),
-      `Problema registrado en ${ticket.id}`,
+      `Problema registrado en ${displayTicketId(ticket.id)}`,
     );
   };
 
@@ -117,7 +118,7 @@ export function KnownErrorDialog({ ticket, open, onClose }: DialogProps) {
       return setError('Documenta el workaround (mínimo 10 caracteres).');
     void run(
       () => ticketService.markKnownError(ticket.id, { rootCause, workaround }, actor),
-      `${ticket.id} marcado como error conocido`,
+      `${displayTicketId(ticket.id)} marcado como error conocido`,
     );
   };
 
@@ -170,7 +171,7 @@ export function ChangeRequestDialog({ ticket, open, onClose }: DialogProps) {
   const { actor } = useRole();
   const [changeType, setChangeType] = useState<ChangeType>('Cambio estándar');
   const [category, setCategory] = useState<CategoryId>('mantenimiento-bd');
-  const [title, setTitle] = useState(`Cambio para ${ticket.id}: `);
+  const [title, setTitle] = useState(`Cambio para ${displayTicketId(ticket.id)}: `);
   const [description, setDescription] = useState('');
   const { saving, error, setError, run } = useSubmit(onClose);
 

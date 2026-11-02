@@ -8,8 +8,8 @@
   flex-wrap: wrap;
   align-items: center;
   gap: $s-2 $s-4;
-  margin-bottom: $s-6;
-  padding: $s-3 $s-4;
+  margin-bottom: $s-4;
+  padding: $s-2 $s-3;
 }
 
 .p1Dot {
@@ -156,9 +156,9 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: $s-3;
+  gap: $s-2;
   min-height: 240px;
-  padding: $s-3;
+  padding: $s-2;
   border: 1px dashed transparent;
   border-radius: $radius;
   background: var(--column-bg);
@@ -193,7 +193,7 @@
   justify-content: space-between;
   gap: $s-2;
   height: 28px;
-  padding: 0 $s-1;
+  padding: 0 $s-2;
 
   h2 {
     display: flex;
@@ -266,8 +266,8 @@
   display: flex;
   flex-direction: column;
   gap: 6px;
-  min-height: 148px;
-  padding: 14px;
+  min-height: 136px;
+  padding: $s-3;
 }
 
 .overlay {

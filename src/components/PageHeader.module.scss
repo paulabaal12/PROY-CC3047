@@ -6,8 +6,8 @@
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
-  gap: $s-4 $s-6;
-  margin-bottom: $s-6;
+  gap: $s-3 $s-6;
+  margin-bottom: $s-5;
 }
 
 .text {
@@ -16,7 +16,7 @@
 }
 
 .crumbs {
-  margin-bottom: $s-2;
+  margin-bottom: $s-1;
 
   ol {
     display: flex;
@@ -55,7 +55,7 @@
 }
 
 .title {
-  @include heading(1.5rem);
+  @include heading(1.375rem);
   margin: 0;
   color: var(--heading);
   overflow-wrap: anywhere;

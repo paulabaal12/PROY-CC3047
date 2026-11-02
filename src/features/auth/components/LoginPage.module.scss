@@ -1,0 +1,182 @@
+@use 'styles/mixins' as *;
+@use 'styles/tokens' as *;
+
+// Centered card over a dark navy scene with large, high-contrast shapes.
+.page {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(165deg, #1f3a73 0%, #182c61 45%, #142552 100%);
+}
+
+.scene {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+// Sky glow behind the card.
+.glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 900px;
+  height: 900px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(127, 178, 224, 0.18) 0%, transparent 65%);
+}
+
+.glow2 {
+  position: absolute;
+  right: -200px;
+  top: -200px;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(127, 178, 224, 0.14), transparent 70%);
+}
+
+// Large translucent circles, like frosted glass.
+
+// Thin flowing lines across the scene.
+.waves {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  path {
+    fill: none;
+    stroke: rgba(207, 228, 245, 0.13);
+    stroke-width: 1;
+  }
+}
+
+.center {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: $s-6;
+  min-height: 100vh;
+  padding: $s-6 $s-4;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  width: min(100%, 400px);
+  padding: $s-8 $s-6 $s-6;
+  border-radius: 14px;
+  background: #fff;
+  color: $text;
+  box-shadow:
+    0 24px 64px rgba(5, 12, 30, 0.45),
+    0 0 0 1px rgba(255, 255, 255, 0.6);
+
+  h2 {
+    @include heading(1.375rem);
+    margin: $s-4 0 0;
+    color: $text;
+  }
+}
+
+.brandName {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: $primary;
+}
+
+.lead {
+  margin: $s-1 0 $s-5;
+  font-size: 0.875rem;
+  color: $text-2;
+}
+
+.card :global(.MuiAlert-root) {
+  margin-bottom: $s-4;
+}
+
+.label {
+  margin-bottom: 6px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: $text;
+}
+
+.input {
+  margin-bottom: $s-4 !important;
+
+  :global(.MuiOutlinedInput-root) {
+    height: $h-cta !important;
+    background: #fff;
+    color: $text;
+  }
+
+  :global(.MuiOutlinedInput-notchedOutline) {
+    border-color: $border-strong;
+  }
+
+  :global(.MuiInputAdornment-root) {
+    color: $text-3;
+  }
+
+  // Browser autofill: keep the white field instead of the light-blue fill.
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 100px #fff inset;
+    -webkit-text-fill-color: #{$text};
+    caret-color: #{$text};
+  }
+}
+
+.eye {
+  width: 32px !important;
+  height: 32px !important;
+}
+
+.caps {
+  margin: -$s-2 0 $s-4;
+  font-size: 0.75rem;
+  color: #b45309;
+}
+
+.submit {
+  margin-top: $s-2 !important;
+}
+
+.help {
+  margin: $s-5 0 0;
+  font-size: 0.8125rem;
+  text-align: center;
+  color: $text-2;
+}
+
+.logos {
+  display: flex;
+  gap: $s-3;
+  opacity: 0.9;
+
+  img {
+    height: 28px;
+    width: auto;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: #fff;
+  }
+}
+
+@media (max-width: ($bp-sm - 1)) {
+  .glow {
+    width: 520px;
+    height: 520px;
+  }
+
+  .card {
+    padding: $s-6 $s-5 $s-5;
+  }
+}

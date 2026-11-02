@@ -1,3 +1,5 @@
+import { displayTicketId } from '@/utils/ticketIds';
+import { TicketId } from '@/components/TicketId';
 import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
 import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined';
 import { useDraggable } from '@dnd-kit/core';
@@ -34,7 +36,7 @@ export function BoardCardContent({ ticket, now, overlay }: Props) {
           {ticket.priority === 'Crítica' && (
             <span className={styles.p1Dot} aria-label="P1" role="img" />
           )}
-          {ticket.id}
+          <TicketId id={ticket.id} />
         </span>
         <span className={styles.cardIcons}>
           {(ticket.isProblem || ticket.knownError) && (
@@ -93,7 +95,7 @@ export function BoardCard({ ticket, now }: Props) {
       {...listeners}
       {...attributes}
       aria-roledescription="Tarjeta arrastrable"
-      aria-label={`${ticket.id} ${ticket.title}. Prioridad ${ticket.priority}. Enter para abrir.`}
+      aria-label={`${displayTicketId(ticket.id)} ${ticket.title}. Prioridad ${ticket.priority}. Enter para abrir.`}
       onClick={() => !justDragged() && navigate(`/tickets/${ticket.id}`)}
       onKeyDown={(e) => {
         if (e.key === 'Enter') navigate(`/tickets/${ticket.id}`);

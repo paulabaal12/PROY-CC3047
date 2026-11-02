@@ -1,3 +1,5 @@
+import { displayTicketId } from '@/utils/ticketIds';
+import { TicketId } from '@/components/TicketId';
 import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined';
 import { Chip, Tab, Tabs } from '@mui/material';
 import { useMemo, useState } from 'react';
@@ -26,7 +28,7 @@ function ProblemCard({ problem, all }: { problem: Ticket; all: Ticket[] }) {
   return (
     <Panel className={styles.card} as="article">
       <div className={styles.top}>
-        <span className={styles.id}>{problem.id}</span>
+        <TicketId id={problem.id} className={styles.id} />
         <div className={styles.chips}>
           <Chip
             size="small"
@@ -62,7 +64,7 @@ function ProblemCard({ problem, all }: { problem: Ticket; all: Ticket[] }) {
           <ul className={styles.rows}>
             {incidents.map((i) => (
               <li key={i.id}>
-                <RouterLink to={`/tickets/${i.id}`}>{i.id}</RouterLink>
+                <RouterLink to={`/tickets/${i.id}`}>{displayTicketId(i.id)}</RouterLink>
                 <span>{i.title}</span>
                 <em>{i.status}</em>
               </li>
@@ -76,7 +78,7 @@ function ProblemCard({ problem, all }: { problem: Ticket; all: Ticket[] }) {
           <ul className={styles.rows}>
             {changes.map((c) => (
               <li key={c.id}>
-                <RouterLink to={`/tickets/${c.id}`}>{c.id}</RouterLink>
+                <RouterLink to={`/tickets/${c.id}`}>{displayTicketId(c.id)}</RouterLink>
                 <span>{c.changeType}</span>
                 <em>{c.status}</em>
               </li>

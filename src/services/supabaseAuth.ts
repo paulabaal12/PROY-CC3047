@@ -45,7 +45,8 @@ function load(): AuthSession | null {
 }
 
 async function authRequest(path: string, body?: unknown): Promise<AuthSession> {
-  if (!SUPABASE_URL || !SUPABASE_KEY) throw new Error('Falta configurar Supabase en esta aplicación.');
+  if (!SUPABASE_URL || !SUPABASE_KEY)
+    throw new Error('Falta configurar Supabase en esta aplicación.');
   const response = await fetch(`${SUPABASE_URL}/auth/v1/${path}`, {
     method: 'POST',
     headers: { apikey: SUPABASE_KEY, 'Content-Type': 'application/json' },
@@ -62,7 +63,9 @@ async function authRequest(path: string, body?: unknown): Promise<AuthSession> {
     error_description?: string;
   };
   if (!response.ok || !result.access_token || !result.refresh_token || !result.user) {
-    throw new Error(result.msg ?? result.message ?? result.error_description ?? 'No se pudo iniciar sesión.');
+    throw new Error(
+      result.msg ?? result.message ?? result.error_description ?? 'No se pudo iniciar sesión.',
+    );
   }
   return {
     access_token: result.access_token,

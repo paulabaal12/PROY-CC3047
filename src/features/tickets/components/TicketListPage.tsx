@@ -1,3 +1,4 @@
+import { TicketId } from '@/components/TicketId';
 import AddIcon from '@mui/icons-material/Add';
 import InboxOutlinedIcon from '@mui/icons-material/InboxOutlined';
 import SearchOffIcon from '@mui/icons-material/SearchOff';
@@ -48,7 +49,7 @@ export function TicketListPage() {
       key: 'id',
       header: 'ID',
       width: '112px',
-      render: (x) => <span className={styles.id}>{x.id}</span>,
+      render: (x) => <TicketId id={x.id} className={styles.id} />,
     },
     {
       key: 'title',

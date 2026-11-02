@@ -3,7 +3,7 @@
 
 .stack {
   display: grid;
-  gap: $s-6;
+  gap: $s-4;
 }
 
 .sectionTitle {
@@ -49,6 +49,10 @@
   display: grid;
   justify-items: start;
   gap: 4px;
+
+  span {
+    white-space: nowrap;
+  }
 }
 
 .muted {
@@ -99,7 +103,7 @@
 
 .criteria {
   display: grid;
-  gap: $s-6;
+  gap: $s-4;
   margin-top: $s-5;
   padding-top: $s-5;
   border-top: 1px solid var(--border);
@@ -146,7 +150,7 @@
 // Two cards of equal height.
 .twoCols {
   display: grid;
-  gap: $s-6;
+  gap: $s-4;
   align-items: stretch;
 
   @include up($bp-md) {

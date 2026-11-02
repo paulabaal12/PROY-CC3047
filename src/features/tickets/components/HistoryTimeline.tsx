@@ -1,3 +1,4 @@
+import { displayTicketId } from '@/utils/ticketIds';
 import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined';
 import CallMadeIcon from '@mui/icons-material/CallMade';
@@ -56,7 +57,7 @@ function Transition({ entry }: { entry: HistoryEntry }) {
     );
   }
   if (entry.kind === 'change' && entry.to) {
-    return <RouterLink to={`/tickets/${entry.to}`}>Ver {entry.to}</RouterLink>;
+    return <RouterLink to={`/tickets/${entry.to}`}>Ver {displayTicketId(entry.to)}</RouterLink>;
   }
   if (!entry.from && !entry.to) return null;
   if (entry.kind === 'created') return null;

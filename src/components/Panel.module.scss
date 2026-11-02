@@ -6,7 +6,11 @@
   display: flex;
   flex-direction: column;
   min-width: 0;
-  padding: $s-5;
+  padding: $s-4;
+
+  @include up($bp-md) {
+    padding: $s-4 $s-5;
+  }
 }
 
 .flush {
@@ -33,7 +37,7 @@
   justify-content: space-between;
   gap: $s-3;
   min-height: $h-compact;
-  margin-bottom: $s-4;
+  margin-bottom: $s-3;
 }
 
 .headText {

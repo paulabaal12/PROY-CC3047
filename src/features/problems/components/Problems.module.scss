@@ -4,7 +4,7 @@
 // Cards of the same row stretch to the same height.
 .grid {
   display: grid;
-  gap: $s-6;
+  gap: $s-4;
   align-items: stretch;
 
   @include up($bp-lg) {

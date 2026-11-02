@@ -9,7 +9,7 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: $s-6;
+  gap: $s-4;
   align-items: stretch;
 
   > * {
@@ -18,10 +18,9 @@
   }
 }
 
+// KPIs: two per row on phones and tablets, four on desktop.
 .span3 {
-  @include up($bp-sm) {
-    grid-column: span 6 !important;
-  }
+  grid-column: span 6 !important;
 
   @include up($bp-lg) {
     grid-column: span 3 !important;
@@ -83,7 +82,7 @@
 
 .donutWrap {
   display: grid;
-  gap: $s-6;
+  gap: $s-4;
   align-items: center;
   justify-items: center;
 
@@ -233,7 +232,7 @@
 // ── SLA objectives ──
 .objectives {
   display: grid;
-  gap: $s-6;
+  gap: $s-4;
 
   @include up($bp-md) {
     grid-template-columns: repeat(3, minmax(0, 1fr));

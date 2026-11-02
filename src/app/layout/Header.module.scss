@@ -14,7 +14,7 @@
   border-bottom: 1px solid var(--border);
 
   @include up($bp-sm) {
-    padding: 0 $s-6;
+    padding: 0 $s-6 0 $s-6;
   }
 }
 
@@ -70,8 +70,75 @@
   }
 }
 
-.avatar {
-  display: inline-flex;
-  flex: none;
+.account {
+  display: flex;
+  align-items: center;
+  gap: $s-2;
+  height: $h;
   margin-left: $s-1;
+  padding: 0 $s-2 0 $s-1;
+  border: 0;
+  border-radius: $radius-control;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+  cursor: pointer;
+  flex: none;
+
+  &:hover {
+    background: var(--surface-2);
+  }
+}
+
+.accountText {
+  display: none;
+  text-align: left;
+  line-height: 1.2;
+
+  strong {
+    display: block;
+    max-width: 140px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  span {
+    font-size: 0.6875rem;
+    color: var(--text-2);
+  }
+
+  @include up($bp-lg) {
+    display: block;
+  }
+}
+
+.chevron {
+  color: var(--text-3);
+}
+
+.menuHead {
+  display: grid;
+  gap: 2px;
+  padding: $s-2 $s-4 $s-3;
+  font-size: 0.75rem;
+  color: var(--text-2);
+
+  strong {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--heading);
+  }
+}
+
+.menuRole {
+  justify-self: start;
+  margin-top: $s-1;
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: var(--primary-tint);
+  color: var(--primary) !important;
+  font-weight: 500;
 }

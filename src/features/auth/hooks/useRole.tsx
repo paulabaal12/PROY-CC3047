@@ -21,23 +21,32 @@ export function RoleProvider({ children }: { children: ReactNode }) {
 
   const claim = session?.user.app_metadata?.service_desk_role;
   const authenticatedRole: RoleId =
-    claim === 'service-desk' || claim === 'resp-tecnico' || claim === 'resp-contenido' || claim === 'dueno'
+    claim === 'service-desk' ||
+    claim === 'resp-tecnico' ||
+    claim === 'resp-contenido' ||
+    claim === 'dueno'
       ? claim
       : 'service-desk';
   const activeRole = configured ? authenticatedRole : role;
 
-  const setRole = useCallback((next: RoleId) => {
-    if (configured) return;
-    settingsService.setRole(next);
-    setRoleState(next);
-  }, [configured]);
+  const setRole = useCallback(
+    (next: RoleId) => {
+      if (configured) return;
+      settingsService.setRole(next);
+      setRoleState(next);
+    },
+    [configured],
+  );
 
   const value = useMemo<RoleContextValue>(() => {
     const roleDef = roleById(activeRole);
     return {
       role: activeRole,
       roleDef,
-      actor: { role: activeRole, name: configured ? session?.user.email ?? roleDef.persona.name : roleDef.persona.name },
+      actor: {
+        role: activeRole,
+        name: configured ? (session?.user.email ?? roleDef.persona.name) : roleDef.persona.name,
+      },
       isInternal: isInternalRole(activeRole),
       setRole,
     };

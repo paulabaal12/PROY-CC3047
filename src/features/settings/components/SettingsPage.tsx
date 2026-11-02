@@ -93,24 +93,28 @@ export function SettingsPage() {
       </section>
 
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>{isAuthRequired ? 'Acceso del equipo' : 'Rol simulado'}</h2>
+        <h2 className={styles.sectionTitle}>
+          {isAuthRequired ? 'Acceso del equipo' : 'Rol simulado'}
+        </h2>
         <Row
           title={roleDef.name}
           description={`Sesión de ${roleDef.persona.name}. Cámbialo desde el selector de la barra lateral.`}
         />
-        {!isAuthRequired && <ul className={styles.roles}>
-          {ROLES.map((r) => (
-            <li key={r.id} className={r.id === roleDef.id ? styles.current : undefined}>
-              <span className={styles.roleIcon} aria-hidden>
-                {ROLE_ICON[r.id]}
-              </span>
-              <div>
-                <strong>{r.name}</strong>
-                <span>{r.permissions.join(' · ')}</span>
-              </div>
-            </li>
-          ))}
-        </ul>}
+        {!isAuthRequired && (
+          <ul className={styles.roles}>
+            {ROLES.map((r) => (
+              <li key={r.id} className={r.id === roleDef.id ? styles.current : undefined}>
+                <span className={styles.roleIcon} aria-hidden>
+                  {ROLE_ICON[r.id]}
+                </span>
+                <div>
+                  <strong>{r.name}</strong>
+                  <span>{r.permissions.join(' · ')}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
 
       <section className={styles.section}>
@@ -155,22 +159,24 @@ export function SettingsPage() {
         />
       </section>
 
-      {!isAuthRequired && <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Datos de demostración</h2>
-        <Row
-          title="Restablecer datos"
-          description="Borra los tickets de este navegador y vuelve a cargar los ~28 tickets de ejemplo."
-        >
-          <Button
-            variant="outlined"
-            color="error"
-            startIcon={<RestartAltIcon />}
-            onClick={() => setConfirm(true)}
+      {!isAuthRequired && (
+        <section className={styles.section}>
+          <h2 className={styles.sectionTitle}>Datos de demostración</h2>
+          <Row
+            title="Restablecer datos"
+            description="Borra los tickets de este navegador y vuelve a cargar los ~28 tickets de ejemplo."
           >
-            Restablecer
-          </Button>
-        </Row>
-      </section>}
+            <Button
+              variant="outlined"
+              color="error"
+              startIcon={<RestartAltIcon />}
+              onClick={() => setConfirm(true)}
+            >
+              Restablecer
+            </Button>
+          </Row>
+        </section>
+      )}
 
       <Dialog open={confirm} onClose={() => setConfirm(false)}>
         <DialogTitle>¿Restablecer los datos?</DialogTitle>

@@ -18,14 +18,14 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  gap: $s-6;
+  gap: $s-4;
   align-items: start;
 }
 
 .mainCol,
 .sideCol {
   display: grid;
-  gap: $s-6;
+  gap: $s-4;
   grid-column: span 12;
   min-width: 0;
 }

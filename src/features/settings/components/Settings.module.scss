@@ -1,16 +1,15 @@
 @use 'styles/mixins' as *;
 @use 'styles/tokens' as *;
 
-// Single centered column of 760px.
+// Single column of 760px, aligned with the other pages.
 .page {
   max-width: 760px;
-  margin: 0 auto;
 }
 
 .section {
   @include card;
-  margin-bottom: $s-6;
-  padding: $s-5;
+  margin-bottom: $s-4;
+  padding: $s-4 $s-5;
 }
 
 .sectionTitle {

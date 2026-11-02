@@ -7,3 +7,4 @@ export { Panel } from './Panel';
 export { CardListSkeleton, PageSkeleton } from './Skeletons';
 export { PersonAvatar } from './PersonAvatar';
 export { DataTable, type Column } from './DataTable';
+export { TicketId } from './TicketId';

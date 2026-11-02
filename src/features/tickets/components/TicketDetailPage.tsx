@@ -1,3 +1,5 @@
+import { displayTicketId } from '@/utils/ticketIds';
+import { TicketId } from '@/components/TicketId';
 import SearchOffIcon from '@mui/icons-material/SearchOff';
 import { Alert, Button, Chip, MenuItem, TextField } from '@mui/material';
 import { useState } from 'react';
@@ -74,14 +76,14 @@ export function TicketDetailPage() {
       <PageHeader
         breadcrumbs={
           isInternal
-            ? [{ label: t.nav.board, to: '/board' }, { label: ticket.id }]
-            : [{ label: t.nav.myTickets, to: '/tickets' }, { label: ticket.id }]
+            ? [{ label: t.nav.board, to: '/board' }, { label: displayTicketId(ticket.id) }]
+            : [{ label: t.nav.myTickets, to: '/tickets' }, { label: displayTicketId(ticket.id) }]
         }
         title={ticket.title}
         subtitle={`${service.name} · registrado ${formatDateTime(ticket.createdAt)} por ${ticket.channel}`}
         meta={
           <>
-            <span className={styles.id}>{ticket.id}</span>
+            <TicketId id={ticket.id} className={styles.id} />
             <TypeChip type={ticket.type} />
             <StatusChip status={ticket.status} />
             <PriorityChip
@@ -243,7 +245,7 @@ function LinkList({
     <ul className={styles.links}>
       {tickets.map((x) => (
         <li key={x.id}>
-          <RouterLink to={`/tickets/${x.id}`}>{x.id}</RouterLink>
+          <RouterLink to={`/tickets/${x.id}`}>{displayTicketId(x.id)}</RouterLink>
           <span className={styles.linkTitle}>{x.title}</span>
           <em>{x.status}</em>
         </li>
@@ -261,7 +263,7 @@ function StatusControl({ ticket }: { ticket: Ticket }) {
     setSaving(true);
     try {
       await ticketService.update(ticket.id, { status: to }, actor);
-      notify(`${ticket.id} → ${to}`);
+      notify(`${displayTicketId(ticket.id)} → ${to}`);
     } catch (e) {
       notify(e instanceof Error ? e.message : 'No se pudo cambiar el estado', 'error');
     } finally {

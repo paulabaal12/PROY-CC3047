@@ -1,3 +1,4 @@
+import { displayTicketId } from '@/utils/ticketIds';
 import {
   Alert,
   Button,
@@ -70,7 +71,7 @@ export function EscalateDialog({ ticket, open, onClose, hint }: Props) {
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>Escalar {ticket.id}</DialogTitle>
+      <DialogTitle>Escalar {displayTicketId(ticket.id)}</DialogTitle>
       <DialogContent>
         <Stack gap={2}>
           <Tabs

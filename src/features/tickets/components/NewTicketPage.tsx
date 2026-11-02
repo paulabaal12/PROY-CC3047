@@ -1,3 +1,4 @@
+import { displayTicketId } from '@/utils/ticketIds';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import SendIcon from '@mui/icons-material/Send';
@@ -55,7 +56,7 @@ function NewTicketForm({ preset }: { preset?: CategoryId }) {
     try {
       const ticket = await ticketService.create(toNewTicketInput(state), actor);
       setCreated(ticket);
-      notify(`Ticket ${ticket.id} registrado`);
+      notify(`Ticket ${displayTicketId(ticket.id)} registrado`);
     } catch (e) {
       setSubmitError(e instanceof Error ? e.message : 'No se pudo registrar el ticket');
     } finally {

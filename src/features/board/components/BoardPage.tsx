@@ -1,3 +1,4 @@
+import { displayTicketId } from '@/utils/ticketIds';
 import {
   DndContext,
   DragOverlay,
@@ -41,7 +42,7 @@ function P1Banner({ tickets }: { tickets: Ticket[] }) {
       <div className={styles.p1Links}>
         {tickets.map((t) => (
           <RouterLink key={t.id} to={`/tickets/${t.id}`} className={styles.p1Link}>
-            {t.id}
+            {displayTicketId(t.id)}
           </RouterLink>
         ))}
       </div>
@@ -122,7 +123,7 @@ export function BoardPage() {
     setPending((p) => ({ ...p, [ticket.id]: to }));
     try {
       await ticketService.update(ticket.id, { status: to }, actor, 'Movido en el tablero.');
-      notify(`${ticket.id} → ${to}`);
+      notify(`${displayTicketId(ticket.id)} → ${to}`);
     } catch (ex) {
       notify(ex instanceof Error ? ex.message : 'No se pudo mover', 'error');
       setPending(({ [ticket.id]: _failed, ...rest }) => rest);
