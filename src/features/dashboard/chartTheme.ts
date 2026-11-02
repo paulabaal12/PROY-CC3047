@@ -3,13 +3,14 @@ import type { ThemeMode } from '@/services';
 import type { Priority } from '@/types';
 
 /**
- * Categorical order for the 7 catalog categories. Validated with the dataviz
- * palette checker (lightness band, chroma, CVD and normal-vision separation)
- * against the light surface and, separately, the navy panel in dark mode.
+ * Categorical order for the 7 catalog categories, led by the blues of the identity.
+ * Validated with a palette checker (lightness band, chroma, CVD and normal-vision
+ * separation) against the white card and, separately, the dark panel. Every chart
+ * also has a legend and a table view, so no value depends on color alone.
  */
 const CATEGORICAL: Record<ThemeMode, string[]> = {
-  light: ['#2563EB', '#E07A1F', '#14A38B', '#8B5CF6', '#C2410C', '#0891B2', '#B8326E'],
-  dark: ['#5B8DEF', '#C86A1A', '#1FA58C', '#9B7BF0', '#E2553A', '#1C9DC0', '#D24F8C'],
+  light: ['#2563EB', '#F59E0B', '#0EA5E9', '#8B5CF6', '#0D9488', '#E11D48', '#4F46E5'],
+  dark: ['#3B82F6', '#D97706', '#0284C7', '#8B5CF6', '#0D9488', '#E11D48', '#6366F1'],
 };
 
 export interface ChartTheme {
@@ -25,10 +26,10 @@ export function chartTheme(mode: ThemeMode): ChartTheme {
   const dark = mode === 'dark';
   return {
     categorical: CATEGORICAL[mode],
-    single: dark ? '#5B8DEF' : '#2563EB',
-    grid: dark ? '#1C3352' : '#E2E8F0',
-    axis: dark ? '#9FB2C8' : '#64748B',
-    surface: dark ? '#0D1F36' : '#FFFFFF',
-    priority: (p) => PRIORITY_COLORS[p].bg,
+    single: dark ? '#60A5FA' : '#2563EB',
+    grid: dark ? '#1E2F4A' : '#EEF2F7',
+    axis: dark ? '#94A3B8' : '#64748B',
+    surface: dark ? '#111F35' : '#FFFFFF',
+    priority: (p) => PRIORITY_COLORS[p].color,
   };
 }

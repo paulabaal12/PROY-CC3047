@@ -2,7 +2,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { Alert } from '@mui/material';
-import { HardCard } from '@/components';
+import { Panel } from '@/components';
 import { SLA_OBJECTIVES, type SlaObjective } from '@/config/sla';
 import type { ObjectiveResult } from '@/utils/slaCompliance';
 import clsx from '@/utils/clsx';
@@ -103,7 +103,7 @@ export function SlaObjectives({
 }) {
   const [avail, p1, upd] = SLA_OBJECTIVES;
   return (
-    <HardCard title="Objetivos del SLA (Fase 1)">
+    <Panel title="Objetivos del SLA (Fase 1)">
       <div className={styles.objectives}>
         {avail && <ObjectiveCard objective={avail} value={availability} />}
         {p1 && <ObjectiveCard objective={p1} value={data.p1.percent} result={data.p1} />}
@@ -140,6 +140,6 @@ export function SlaObjectives({
           </p>
         )}
       </div>
-    </HardCard>
+    </Panel>
   );
 }

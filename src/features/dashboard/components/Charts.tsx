@@ -121,7 +121,7 @@ export function HorizontalBars({ data, theme, colorFor, height }: BarsProps) {
             position="right"
             fill={theme.axis}
             fontSize={12}
-            fontWeight={700}
+            fontWeight={600}
           />
         </Bar>
       </BarChart>

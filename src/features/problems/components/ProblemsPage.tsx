@@ -1,11 +1,12 @@
 import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined';
 import { Alert, Chip, Tab, Tabs } from '@mui/material';
 import { useMemo, useState } from 'react';
+import { PRIORITY_COLORS, toneSx } from '@/app/theme';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   CardListSkeleton,
   EmptyState,
-  HardCard,
+  Panel,
   PageHeader,
   PriorityChip,
   StatusChip,
@@ -23,20 +24,16 @@ function ProblemCard({ problem, all }: { problem: Ticket; all: Ticket[] }) {
   const incidents = all.filter((t) => problem.linkedTicketIds.includes(t.id));
   const changes = all.filter((t) => t.parentTicketId === problem.id);
   return (
-    <HardCard className={styles.card} tone={problem.knownError ? 'default' : 'danger'} as="article">
+    <Panel className={styles.card} as="article">
       <div className={styles.top}>
         <RouterLink to={`/tickets/${problem.id}`} className={styles.id}>
           {problem.id}
         </RouterLink>
         <div className={styles.chips}>
           {problem.knownError ? (
-            <Chip
-              size="small"
-              label="Error conocido"
-              sx={{ bgcolor: '#F4A261', color: '#0A1A2E', fontWeight: 800 }}
-            />
+            <Chip size="small" label="Error conocido" sx={toneSx(PRIORITY_COLORS.Alta)} />
           ) : (
-            <Chip size="small" color="error" label="Problema" />
+            <Chip size="small" label="Problema" sx={toneSx(PRIORITY_COLORS.Crítica)} />
           )}
           <PriorityChip priority={problem.priority} />
           <StatusChip status={problem.status} />
@@ -90,7 +87,7 @@ function ProblemCard({ problem, all }: { problem: Ticket; all: Ticket[] }) {
           </ul>
         </div>
       )}
-    </HardCard>
+    </Panel>
   );
 }
 
@@ -124,7 +121,7 @@ export function ProblemsPage() {
         <EmptyState
           icon={<BugReportOutlinedIcon fontSize="large" />}
           title="No hay problemas registrados"
-          description="Desde el detalle de un incidente, usá “Crear problema” cuando se repite o se desconoce su causa."
+          description="Desde el detalle de un incidente, usa “Crear problema” cuando se repite o se desconoce su causa."
         />
       ) : (
         <div className={styles.grid}>

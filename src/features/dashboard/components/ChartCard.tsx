@@ -1,6 +1,6 @@
 import { ToggleButton, ToggleButtonGroup } from '@mui/material';
 import { useState, type ReactNode } from 'react';
-import { HardCard } from '@/components';
+import { Panel } from '@/components';
 import type { Datum } from '../hooks/useDashboardData';
 import styles from './Dashboard.module.scss';
 
@@ -16,7 +16,7 @@ export function ChartCard({ title, data, children, className }: Props) {
   const [view, setView] = useState<'chart' | 'table'>('chart');
   const total = data.reduce((s, d) => s + d.value, 0);
   return (
-    <HardCard
+    <Panel
       className={className}
       title={title}
       action={
@@ -56,6 +56,6 @@ export function ChartCard({ title, data, children, className }: Props) {
           </tbody>
         </table>
       )}
-    </HardCard>
+    </Panel>
   );
 }

@@ -13,7 +13,7 @@ import {
   TextField,
 } from '@mui/material';
 import { useState } from 'react';
-import { HardCard, PageHeader } from '@/components';
+import { Panel, PageHeader } from '@/components';
 import { ROLES } from '@/config/roles';
 import { SERVICE_WINDOW } from '@/config/sla';
 import { useRole } from '@/features/auth';
@@ -43,7 +43,7 @@ export function SettingsPage() {
     <>
       <PageHeader eyebrow="Preferencias" title="Configuración" />
       <div className={styles.grid}>
-        <HardCard title="Apariencia">
+        <Panel title="Apariencia">
           <FormControlLabel
             control={
               <Switch
@@ -51,13 +51,13 @@ export function SettingsPage() {
                 onChange={(e) => updateSettings({ themeMode: e.target.checked ? 'dark' : 'light' })}
               />
             }
-            label="Modo noche (navy del sitio)"
+            label="Modo noche"
           />
-        </HardCard>
+        </Panel>
 
-        <HardCard title="Rol simulado">
+        <Panel title="Rol simulado">
           <p className={styles.text}>
-            Activo: <strong>{roleDef.name}</strong> ({roleDef.persona.name}). Cambialo desde el
+            Activo: <strong>{roleDef.name}</strong> ({roleDef.persona.name}). Cámbialo desde el
             selector de la barra lateral.
           </p>
           <ul className={styles.roles}>
@@ -67,23 +67,22 @@ export function SettingsPage() {
               </li>
             ))}
           </ul>
-        </HardCard>
+        </Panel>
 
-        <HardCard title="Disponibilidad de referencia (UptimeRobot)">
+        <Panel title="Disponibilidad de referencia (UptimeRobot)">
           <p className={styles.text}>
-            El objetivo de disponibilidad (≥ 99% mensual) lo mide UptimeRobot. Registrá aquí el
+            El objetivo de disponibilidad (≥ 99% mensual) lo mide UptimeRobot. Registra aquí el
             valor del mes para el Dashboard.
           </p>
-          <Stack direction="row" gap={1} alignItems="flex-start">
+          <Stack direction="row" gap={1.5} alignItems="center" className={styles.inline}>
             <TextField
-              size="small"
               type="number"
               label="Disponibilidad del mes"
               value={availability}
               onChange={(e) => setAvailability(e.target.value)}
               error={!validAvailability}
-              helperText={validAvailability ? ' ' : 'Entre 0 y 100'}
               disabled={!isInternal}
+              className={styles.inlineField}
               slotProps={{
                 input: { endAdornment: <InputAdornment position="end">%</InputAdornment> },
                 htmlInput: { step: 0.01, min: 0, max: 100 },
@@ -100,15 +99,16 @@ export function SettingsPage() {
               Guardar
             </Button>
           </Stack>
-        </HardCard>
+          {!validAvailability && <p className={styles.error}>Ingresa un valor entre 0 y 100.</p>}
+        </Panel>
 
-        <HardCard title="Ventana de servicio">
+        <Panel title="Ventana de servicio">
           <p className={styles.text}>
             {SERVICE_WINDOW.label}. Los feriados de Guatemala no cuentan para el SLA.
           </p>
-        </HardCard>
+        </Panel>
 
-        <HardCard title="Datos de demostración" tone="danger">
+        <Panel title="Datos de demostración" tone="danger">
           <p className={styles.text}>
             Borra los tickets guardados en este navegador y vuelve a cargar los ~28 tickets de
             ejemplo (fechas de las últimas 3 semanas).
@@ -121,7 +121,7 @@ export function SettingsPage() {
           >
             Restablecer datos de demostración
           </Button>
-        </HardCard>
+        </Panel>
       </div>
 
       <Dialog open={confirm} onClose={() => setConfirm(false)}>
@@ -133,7 +133,9 @@ export function SettingsPage() {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setConfirm(false)}>Cancelar</Button>
+          <Button variant="outlined" onClick={() => setConfirm(false)}>
+            Cancelar
+          </Button>
           <Button
             color="error"
             variant="contained"

@@ -2,8 +2,11 @@
 @use 'styles/tokens' as *;
 
 .sectionTitle {
-  @include display(1.2rem);
-  margin: 32px 0 14px;
+  @include heading(1.125rem);
+  display: flex;
+  align-items: center;
+  gap: $s-2;
+  margin: $s-8 0 $s-4;
   color: var(--heading);
 
   &:first-of-type {
@@ -11,14 +14,24 @@
   }
 
   em {
-    @include accent;
+    display: inline-grid;
+    place-items: center;
+    min-width: 24px;
+    height: 24px;
+    padding: 0 $s-2;
+    border-radius: 99px;
+    background: var(--primary-soft);
     color: var(--primary);
+    font-family: $font-body;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 600;
   }
 }
 
 .grid {
   display: grid;
-  gap: 20px;
+  gap: $s-4;
 
   @include up($bp-md) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -26,10 +39,10 @@
 }
 
 .service {
-  @include lift;
+  @include hover-lift;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: $s-3;
 }
 
 .serviceTop {
@@ -39,41 +52,48 @@
 }
 
 .number {
-  @include display(1.6rem);
-  color: var(--accent);
-  -webkit-text-stroke: 1px var(--ink);
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: $radius-control;
+  background: var(--accent-soft);
+  color: var(--primary);
+  font-family: $font-heading;
+  font-size: 0.875rem;
+  font-weight: 600;
 }
 
 .serviceName {
-  @include display(1.05rem);
+  @include heading(1.0625rem);
   margin: 0;
   color: var(--heading);
 }
 
 .why {
   margin: 0;
-  line-height: 1.5;
-  font-size: 0.92rem;
+  line-height: 1.6;
+  font-size: 0.875rem;
+  color: var(--text);
 
   span {
-    @include accent;
-    font-size: 1.02rem;
+    display: block;
+    margin-bottom: 2px;
+    font-weight: 600;
     color: var(--primary);
   }
 }
 
 .facts {
   display: grid;
-  gap: 10px;
+  gap: $s-3;
   margin: 0;
-  font-size: 0.86rem;
+  padding-top: $s-3;
+  border-top: 1px solid var(--border);
+  font-size: 0.8125rem;
 
   dt {
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--text-muted);
+    @include label;
   }
 
   dd {
@@ -107,62 +127,73 @@
   width: 100%;
   min-width: 620px;
   border-collapse: separate;
-  border-spacing: 6px;
+  border-spacing: $s-2;
 
   th {
-    @include display(0.85rem);
-    padding: 8px;
+    padding: $s-2;
     text-align: left;
+    font-family: $font-heading;
+    font-size: 0.8125rem;
+    font-weight: 600;
     color: var(--heading);
     cursor: help;
   }
 
   td {
-    padding: 10px;
-    border: 2px solid var(--border);
-    border-radius: 10px;
-    background: var(--accent-soft);
+    padding: $s-3;
+    border: 1px solid var(--border);
+    border-radius: $radius-control;
+    background: var(--surface-muted);
     vertical-align: top;
 
     span {
       display: block;
-      margin-top: 6px;
-      font-size: 0.8rem;
+      margin-top: $s-2;
+      font-size: 0.75rem;
+      color: var(--text-muted);
     }
   }
 }
 
 .criteria {
   display: grid;
-  gap: 16px;
-  margin-top: 16px;
+  gap: $s-5;
+  margin-top: $s-5;
+  padding-top: $s-5;
+  border-top: 1px solid var(--border);
 
   @include up($bp-md) {
     grid-template-columns: 1fr 1fr;
   }
 
   h3 {
-    @include display(0.9rem);
-    margin: 0 0 6px;
+    @include heading(0.9375rem);
+    margin: 0 0 $s-2;
+    color: var(--heading);
   }
 
   ul {
     margin: 0;
     padding-left: 18px;
-    font-size: 0.88rem;
-    line-height: 1.5;
+    display: grid;
+    gap: $s-1;
+    font-size: 0.8125rem;
+    line-height: 1.55;
   }
 }
 
 .window {
-  margin: 16px 0 0;
-  font-size: 0.88rem;
+  margin: $s-5 0 0;
+  padding: $s-3 $s-4;
+  border-radius: $radius-control;
+  background: var(--primary-soft);
+  font-size: 0.8125rem;
 }
 
 .twoCols {
   display: grid;
-  gap: 20px;
-  margin-top: 20px;
+  gap: $s-4;
+  margin-top: $s-4;
 
   @include up($bp-md) {
     grid-template-columns: 1fr 1fr;
@@ -173,7 +204,7 @@
   margin: 0;
   padding-left: 18px;
   display: grid;
-  gap: 6px;
-  font-size: 0.88rem;
-  line-height: 1.45;
+  gap: $s-2;
+  font-size: 0.8125rem;
+  line-height: 1.5;
 }

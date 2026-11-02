@@ -1,6 +1,10 @@
+import InboxOutlinedIcon from '@mui/icons-material/InboxOutlined';
+import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
+import ScheduleOutlinedIcon from '@mui/icons-material/ScheduleOutlined';
+import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
 import { MenuItem, TextField } from '@mui/material';
-import { useState } from 'react';
-import { HardCard, PageHeader, PageSkeleton } from '@/components';
+import { useState, type ReactNode } from 'react';
+import { Panel, PageHeader, PageSkeleton } from '@/components';
 import { useNow, useSettings, useTickets } from '@/hooks';
 import type { Priority } from '@/types';
 import { formatBusinessMinutes } from '@/utils/businessHours';
@@ -15,19 +19,26 @@ function Kpi({
   label,
   value,
   hint,
-  tone,
+  icon,
+  tone = 'default',
 }: {
   label: string;
   value: string;
   hint?: string;
-  tone?: 'danger' | 'ok';
+  icon: ReactNode;
+  tone?: 'default' | 'danger' | 'success';
 }) {
   return (
-    <HardCard className={styles.kpi} tone={tone === 'danger' ? 'danger' : 'default'}>
-      <p className={styles.kpiLabel}>{label}</p>
+    <Panel className={styles.kpi}>
+      <div className={styles.kpiHead}>
+        <p className={styles.kpiLabel}>{label}</p>
+        <span className={styles.kpiIcon} data-tone={tone} aria-hidden>
+          {icon}
+        </span>
+      </div>
       <p className={styles.kpiValue}>{value}</p>
       {hint && <p className={styles.kpiHint}>{hint}</p>}
-    </HardCard>
+    </Panel>
   );
 }
 
@@ -53,8 +64,8 @@ export function DashboardPage() {
       <div className={styles.filterRow} role="group" aria-label="Filtros del dashboard">
         <TextField
           select
-          size="small"
           label="Tipo"
+          className={styles.filter}
           value={type}
           onChange={(e) => setType(e.target.value as TypeFilter)}
         >
@@ -64,8 +75,8 @@ export function DashboardPage() {
         </TextField>
         <TextField
           select
-          size="small"
           label="Periodo"
+          className={styles.filter}
           value={range}
           onChange={(e) => setRange(e.target.value as RangeFilter)}
         >
@@ -77,22 +88,31 @@ export function DashboardPage() {
       </div>
 
       <div className={styles.kpis}>
-        <Kpi label="Abiertos" value={String(data.open)} hint="Abierto + En progreso" />
+        <Kpi
+          label="Abiertos"
+          value={String(data.open)}
+          hint="Abierto + En progreso"
+          icon={<InboxOutlinedIcon fontSize="small" />}
+        />
         <Kpi
           label="Críticos abiertos"
           value={String(data.criticalOpen)}
           hint="P1 sin resolver"
-          tone={data.criticalOpen > 0 ? 'danger' : undefined}
+          icon={<ReportProblemOutlinedIcon fontSize="small" />}
+          tone={data.criticalOpen > 0 ? 'danger' : 'default'}
         />
         <Kpi
           label="% dentro de SLA"
           value={data.slaCompliance === null ? '—' : `${data.slaCompliance}%`}
           hint={`${data.breached} con respuesta o resolución vencida`}
+          icon={<VerifiedOutlinedIcon fontSize="small" />}
+          tone="success"
         />
         <Kpi
           label="Tiempo prom. de resolución"
           value={data.avgResolution === null ? '—' : formatBusinessMinutes(data.avgResolution)}
           hint="En horas hábiles"
+          icon={<ScheduleOutlinedIcon fontSize="small" />}
         />
       </div>
 

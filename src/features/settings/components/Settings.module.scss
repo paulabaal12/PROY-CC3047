@@ -3,7 +3,7 @@
 
 .grid {
   display: grid;
-  gap: 20px;
+  gap: $s-4;
   align-items: start;
 
   @include up($bp-md) {
@@ -12,15 +12,41 @@
 }
 
 .text {
-  margin: 0 0 14px;
-  font-size: 0.9rem;
-  line-height: 1.5;
+  margin: 0 0 $s-4;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+
+  strong {
+    font-weight: 600;
+    color: var(--text);
+  }
 }
 
 .roles {
   margin: 0;
   padding-left: 18px;
   display: grid;
-  gap: 6px;
-  font-size: 0.85rem;
+  gap: $s-2;
+  font-size: 0.8125rem;
+
+  strong {
+    font-weight: 600;
+  }
+}
+
+// Field and button share the 40px height and the same baseline.
+.inline {
+  flex-wrap: wrap;
+}
+
+.inlineField {
+  flex: 1 1 200px;
+  max-width: 260px;
+}
+
+.error {
+  margin: $s-2 0 0;
+  font-size: 0.75rem;
+  color: #dc2626;
 }

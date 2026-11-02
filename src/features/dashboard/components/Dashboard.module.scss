@@ -5,27 +5,24 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
+  gap: $s-3;
+  margin-bottom: $s-6;
+}
 
-  :global(.MuiTextField-root) {
-    min-width: 200px;
-  }
-
-  :global(.MuiInputBase-root) {
-    background: var(--surface);
-  }
+.filter {
+  min-width: 220px;
 }
 
 .filterNote {
-  font-size: 0.85rem;
+  font-size: 0.8125rem;
   color: var(--text-muted);
 }
 
+// ── KPIs ──
 .kpis {
   display: grid;
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: $s-4;
+  margin-bottom: $s-6;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 
   @include up($bp-lg) {
@@ -34,35 +31,61 @@
 }
 
 .kpi {
-  padding: 16px;
+  padding: $s-5 !important;
+}
+
+.kpiHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: $s-2;
 }
 
 .kpiLabel {
   margin: 0;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+  font-size: 0.8125rem;
+  font-weight: 500;
   color: var(--text-muted);
 }
 
+.kpiIcon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: $radius-control;
+  background: var(--primary-soft);
+  color: var(--primary);
+
+  &[data-tone='danger'] {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+  }
+
+  &[data-tone='success'] {
+    background: rgba(16, 185, 129, 0.12);
+    color: #047857;
+  }
+}
+
 .kpiValue {
-  @include display(clamp(1.6rem, 4vw, 2.4rem));
-  margin: 6px 0 2px;
+  @include heading(clamp(1.5rem, 3vw, 2rem));
+  margin: $s-3 0 2px;
   color: var(--heading);
+  white-space: nowrap;
 }
 
 .kpiHint {
-  @include accent;
   margin: 0;
-  font-size: 0.92rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
 }
 
 // ── SLA objectives ──
 .objectives {
   display: grid;
-  gap: 16px;
+  gap: $s-4;
 
   @include up($bp-md) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -71,22 +94,22 @@
 
 .objective {
   display: grid;
-  gap: 10px;
+  gap: $s-3;
   align-content: start;
-  padding: 14px;
-  border: 2px solid var(--border);
-  border-radius: 10px;
-  background: var(--accent-soft);
+  padding: $s-4;
+  border: 1px solid var(--border);
+  border-radius: $radius;
+  background: var(--surface-muted);
 }
 
 .objectiveHead {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 8px;
+  gap: $s-2;
 
   h3 {
-    @include display(0.92rem);
+    @include heading(0.875rem);
     margin: 0;
     color: var(--heading);
   }
@@ -95,7 +118,7 @@
 .objectiveDesc,
 .objectiveFoot {
   margin: 0;
-  font-size: 0.82rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
 }
 
@@ -103,63 +126,68 @@
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  padding: 2px 8px;
+  height: 24px;
+  padding: 0 $s-2;
   border-radius: 99px;
-  font-size: 0.75rem;
-  font-weight: 800;
+  font-size: 0.6875rem;
+  font-weight: 600;
   white-space: nowrap;
-  border: 2px solid currentColor;
 
   svg {
-    font-size: 1rem;
+    font-size: 0.875rem;
   }
 }
 
 .met {
-  color: #0f7a63;
+  background: rgba(16, 185, 129, 0.12);
+  color: #047857;
 }
 
 .missed {
-  color: #b4301c;
+  background: rgba(239, 68, 68, 0.1);
+  color: #b91c1c;
 }
 
 .na {
+  background: var(--column-bg);
   color: var(--text-muted);
 }
 
 :global([data-theme='dark']) {
   .met {
-    color: #4fe0c4;
+    color: #6ee7b7;
   }
 
   .missed {
-    color: #ff8a75;
+    color: #fca5a5;
   }
 }
 
 .meter {
   display: grid;
-  gap: 4px;
+  gap: 6px;
 }
 
 .meterHead {
   display: flex;
   justify-content: space-between;
-  gap: 8px;
-  font-size: 0.8rem;
+  gap: $s-2;
+  font-size: 0.75rem;
+  color: var(--text-muted);
 
   strong {
-    @include display(0.95rem);
+    font-family: $font-heading;
+    font-size: 0.875rem;
+    font-weight: 600;
     color: var(--heading);
   }
 }
 
 .meterTrack {
   position: relative;
-  height: 10px;
+  height: 6px;
   border-radius: 99px;
-  background: var(--surface);
-  border: 1px solid var(--border);
+  background: var(--border);
 }
 
 .meterFill {
@@ -174,31 +202,30 @@
 
 .meterTarget {
   position: absolute;
-  top: -4px;
-  bottom: -4px;
+  top: -3px;
+  bottom: -3px;
   width: 2px;
-  background: var(--ink);
+  border-radius: 2px;
+  background: var(--heading);
 }
 
 .months {
-  margin-top: 18px;
+  margin-top: $s-5;
+  padding-top: $s-5;
+  border-top: 1px solid var(--border);
 }
 
 .monthsTitle {
-  margin: 0 0 8px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-muted);
+  @include label;
+  margin: 0 0 $s-3;
 }
 
 .monthStrip {
   list-style: none;
-  margin: 0;
+  margin: 0 0 $s-3;
   padding: 0;
   display: grid;
-  gap: 8px;
+  gap: $s-2;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 
   @include up($bp-md) {
@@ -208,34 +235,42 @@
   li {
     display: grid;
     gap: 2px;
-    padding: 8px;
-    border-radius: 8px;
-    border: 2px solid var(--success);
-    font-size: 0.78rem;
-    text-align: center;
+    padding: $s-2 $s-3;
+    border-radius: $radius-control;
+    background: rgba(16, 185, 129, 0.08);
+    font-size: 0.75rem;
+    color: var(--text-muted);
   }
 
   strong {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #047857;
   }
 }
 
 .monthEmpty {
-  border-color: var(--border) !important;
-  color: var(--text-muted);
+  background: var(--surface-muted) !important;
+
+  strong {
+    color: var(--text-muted) !important;
+  }
 }
 
 .monthBreached {
-  border-color: $p-critica !important;
-  background: rgba(233, 79, 55, 0.1);
+  background: rgba(239, 68, 68, 0.08) !important;
+
+  strong {
+    color: #b91c1c !important;
+  }
 }
 
 // ── Charts ──
 .charts {
   display: grid;
-  gap: 20px;
+  gap: $s-4;
+  margin-top: $s-6;
   align-items: start;
-  margin-top: 20px;
 
   @include up($bp-md) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -251,15 +286,16 @@
 .chart {
   width: 100%;
   min-width: 0;
+  font-family: $font-body;
 }
 
 .donutWrap {
   display: grid;
-  gap: 16px;
+  gap: $s-6;
   align-items: center;
 
   @include up($bp-sm) {
-    grid-template-columns: 240px minmax(0, 1fr);
+    grid-template-columns: 220px minmax(0, 1fr);
   }
 }
 
@@ -276,7 +312,7 @@
   pointer-events: none;
 
   strong {
-    @include display(1.8rem);
+    @include heading(1.75rem);
     color: var(--heading);
   }
 
@@ -291,7 +327,7 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 8px;
+  gap: $s-2 $s-6;
 
   @include up($bp-md) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -300,56 +336,72 @@
   li {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.88rem;
+    gap: $s-2;
+    height: 32px;
+    padding: 0 $s-3;
+    border-radius: $radius-sm;
+    background: var(--surface-muted);
+    font-size: 0.8125rem;
   }
 }
 
 .swatch {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
   flex: none;
   border-radius: 3px;
 }
 
 .legendName {
   color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .legendValue {
   margin-left: auto;
-  font-weight: 800;
+  font-family: $font-heading;
+  font-weight: 600;
   color: var(--heading);
 }
 
 .tooltip {
   display: grid;
   gap: 2px;
-  padding: 8px 10px;
-  border: 2px solid $navy;
-  border-radius: 8px;
+  padding: $s-2 $s-3;
+  border: 1px solid $border;
+  border-radius: $radius-sm;
   background: #fff;
   color: $text;
-  box-shadow: 3px 3px 0 $sky;
-  font-size: 0.82rem;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.1);
+  font-size: 0.8125rem;
+
+  strong {
+    font-weight: 600;
+  }
+
+  span {
+    color: $text-muted;
+  }
 }
 
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.88rem;
+  font-size: 0.8125rem;
 
   th,
   td {
-    padding: 6px 8px;
+    height: 36px;
+    padding: 0 $s-2;
     text-align: left;
     border-bottom: 1px solid var(--border);
   }
 
   th {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    font-size: 0.75rem;
+    font-weight: 500;
     color: var(--text-muted);
   }
 
@@ -360,5 +412,6 @@
 
 .noData {
   margin: 0;
+  font-size: 0.875rem;
   color: var(--text-muted);
 }
