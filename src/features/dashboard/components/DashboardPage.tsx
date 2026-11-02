@@ -1,43 +1,22 @@
-import InboxOutlinedIcon from '@mui/icons-material/InboxOutlined';
-import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
-import ScheduleOutlinedIcon from '@mui/icons-material/ScheduleOutlined';
-import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
 import { MenuItem, TextField } from '@mui/material';
-import { useState, type ReactNode } from 'react';
+import { useState } from 'react';
 import { Panel, PageHeader, PageSkeleton } from '@/components';
 import { useNow, useSettings, useTickets } from '@/hooks';
-import type { Priority } from '@/types';
+import type { Priority, Status } from '@/types';
 import { formatBusinessMinutes } from '@/utils/businessHours';
 import { chartTheme } from '../chartTheme';
 import { useDashboardData, type RangeFilter, type TypeFilter } from '../hooks/useDashboardData';
 import { ChartCard } from './ChartCard';
-import { DonutChart, HorizontalBars } from './Charts';
+import { DonutChart, HorizontalBars, SegmentedBar } from './Charts';
 import { SlaObjectives } from './SlaObjectives';
 import styles from './Dashboard.module.scss';
 
-function Kpi({
-  label,
-  value,
-  hint,
-  icon,
-  tone = 'default',
-}: {
-  label: string;
-  value: string;
-  hint?: string;
-  icon: ReactNode;
-  tone?: 'default' | 'danger' | 'success';
-}) {
+function Kpi({ label, value, context }: { label: string; value: string; context: string }) {
   return (
     <Panel className={styles.kpi}>
-      <div className={styles.kpiHead}>
-        <p className={styles.kpiLabel}>{label}</p>
-        <span className={styles.kpiIcon} data-tone={tone} aria-hidden>
-          {icon}
-        </span>
-      </div>
+      <p className={styles.kpiLabel}>{label}</p>
       <p className={styles.kpiValue}>{value}</p>
-      {hint && <p className={styles.kpiHint}>{hint}</p>}
+      <p className={styles.kpiContext}>{context}</p>
     </Panel>
   );
 }
@@ -53,91 +32,120 @@ export function DashboardPage() {
 
   if (loading) return <PageSkeleton />;
 
+  const resolved = data.byStatus
+    .filter((s) => s.key === 'Resuelto' || s.key === 'Cerrado')
+    .reduce((sum, s) => sum + s.value, 0);
+  const tags = data.byTag.slice(0, 8);
+  const statusColors = data.byStatus.map((s) => theme.status(s.key as Status));
+  const typeColors =
+    settings.themeMode === 'dark' ? ['#7FB2E0', '#3A6FAE'] : ['#182C61', '#7FB2E0'];
+
   return (
     <>
       <PageHeader
-        eyebrow="Gestión del nivel de servicio"
+        breadcrumbs={[{ label: 'Soporte' }, { label: 'Dashboard' }]}
         title="Dashboard"
-        subtitle="Volumen, prioridad y cumplimiento del SLA del Service Desk de centralamerica.games."
+        subtitle={`Volumen, prioridad y cumplimiento del SLA · ${data.total} tickets en la selección`}
+        actions={
+          <>
+            <TextField
+              select
+              value={type}
+              onChange={(e) => setType(e.target.value as TypeFilter)}
+              className={styles.filter}
+              slotProps={{ htmlInput: { 'aria-label': 'Tipo' } }}
+            >
+              <MenuItem value="all">Incidentes y solicitudes</MenuItem>
+              <MenuItem value="Incidente">Solo incidentes</MenuItem>
+              <MenuItem value="Solicitud">Solo solicitudes</MenuItem>
+            </TextField>
+            <TextField
+              select
+              value={range}
+              onChange={(e) => setRange(e.target.value as RangeFilter)}
+              className={styles.filter}
+              slotProps={{ htmlInput: { 'aria-label': 'Periodo' } }}
+            >
+              <MenuItem value="7">Últimos 7 días</MenuItem>
+              <MenuItem value="30">Últimos 30 días</MenuItem>
+              <MenuItem value="all">Todo el historial</MenuItem>
+            </TextField>
+          </>
+        }
       />
 
-      <div className={styles.filterRow} role="group" aria-label="Filtros del dashboard">
-        <TextField
-          select
-          label="Tipo"
-          className={styles.filter}
-          value={type}
-          onChange={(e) => setType(e.target.value as TypeFilter)}
+      <div className={styles.grid}>
+        <div className={styles.span3}>
+          <Kpi label="Abiertos" value={String(data.open)} context="Abierto + En progreso" />
+        </div>
+        <div className={styles.span3}>
+          <Kpi
+            label="Críticos abiertos"
+            value={String(data.criticalOpen)}
+            context={data.criticalOpen ? 'P1 sin resolver: atender primero' : 'Sin P1 pendientes'}
+          />
+        </div>
+        <div className={styles.span3}>
+          <Kpi
+            label="Dentro de SLA"
+            value={data.slaCompliance === null ? '—' : `${data.slaCompliance}%`}
+            context={`${data.breached} con respuesta o resolución vencida`}
+          />
+        </div>
+        <div className={styles.span3}>
+          <Kpi
+            label="Tiempo medio de resolución"
+            value={data.avgResolution === null ? '—' : formatBusinessMinutes(data.avgResolution)}
+            context={`Horas hábiles · ${resolved} resueltos o cerrados`}
+          />
+        </div>
+
+        <ChartCard
+          title="Por prioridad"
+          dimension="Prioridad"
+          data={data.byPriority}
+          className={`${styles.span6} ${styles.h360}`}
         >
-          <MenuItem value="all">Incidentes y solicitudes</MenuItem>
-          <MenuItem value="Incidente">Solo incidentes</MenuItem>
-          <MenuItem value="Solicitud">Solo solicitudes</MenuItem>
-        </TextField>
-        <TextField
-          select
-          label="Periodo"
-          className={styles.filter}
-          value={range}
-          onChange={(e) => setRange(e.target.value as RangeFilter)}
-        >
-          <MenuItem value="7">Últimos 7 días</MenuItem>
-          <MenuItem value="30">Últimos 30 días</MenuItem>
-          <MenuItem value="all">Todo el historial</MenuItem>
-        </TextField>
-        <span className={styles.filterNote}>{data.total} tickets en la selección</span>
-      </div>
-
-      <div className={styles.kpis}>
-        <Kpi
-          label="Abiertos"
-          value={String(data.open)}
-          hint="Abierto + En progreso"
-          icon={<InboxOutlinedIcon fontSize="small" />}
-        />
-        <Kpi
-          label="Críticos abiertos"
-          value={String(data.criticalOpen)}
-          hint="P1 sin resolver"
-          icon={<ReportProblemOutlinedIcon fontSize="small" />}
-          tone={data.criticalOpen > 0 ? 'danger' : 'default'}
-        />
-        <Kpi
-          label="% dentro de SLA"
-          value={data.slaCompliance === null ? '—' : `${data.slaCompliance}%`}
-          hint={`${data.breached} con respuesta o resolución vencida`}
-          icon={<VerifiedOutlinedIcon fontSize="small" />}
-          tone="success"
-        />
-        <Kpi
-          label="Tiempo prom. de resolución"
-          value={data.avgResolution === null ? '—' : formatBusinessMinutes(data.avgResolution)}
-          hint="En horas hábiles"
-          icon={<ScheduleOutlinedIcon fontSize="small" />}
-        />
-      </div>
-
-      <SlaObjectives data={data} availability={settings.availability} />
-
-      <div className={styles.charts}>
-        <ChartCard title="Tickets por categoría" data={data.byCategory} className={styles.wide}>
-          <DonutChart data={data.byCategory} theme={theme} />
-        </ChartCard>
-        <ChartCard title="Tickets por prioridad" data={data.byPriority}>
           <HorizontalBars
             data={data.byPriority}
             theme={theme}
             colorFor={(d) => theme.priority(d.key as Priority)}
+            height={260}
           />
         </ChartCard>
-        <ChartCard title="Tickets por estado" data={data.byStatus}>
-          <HorizontalBars data={data.byStatus} theme={theme} />
+        <ChartCard
+          title="Por categoría"
+          dimension="Categoría"
+          data={data.byCategory}
+          className={`${styles.span6} ${styles.h360}`}
+        >
+          <DonutChart data={data.byCategory} colors={theme.ramp} theme={theme} />
         </ChartCard>
-        <ChartCard title="Tickets por tipo" data={data.byType}>
-          <HorizontalBars data={data.byType} theme={theme} height={130} />
+
+        <ChartCard
+          title="Por estado"
+          dimension="Estado"
+          data={data.byStatus}
+          className={`${styles.span6} ${styles.h280}`}
+        >
+          <SegmentedBar data={data.byStatus} colors={statusColors} />
         </ChartCard>
-        <ChartCard title="Tickets por tag (top 10)" data={data.byTag}>
-          <HorizontalBars data={data.byTag} theme={theme} />
+        <ChartCard
+          title="Por tipo"
+          dimension="Tipo"
+          data={data.byType}
+          className={`${styles.span6} ${styles.h280}`}
+        >
+          <DonutChart data={data.byType} colors={typeColors} theme={theme} size={160} />
         </ChartCard>
+
+        <ChartCard title="Por tag (top 8)" dimension="Tag" data={tags} className={styles.span12}>
+          <HorizontalBars data={tags} theme={theme} height={tags.length * 36 + 8} />
+        </ChartCard>
+
+        <div className={styles.span12}>
+          <SlaObjectives data={data} availability={settings.availability} />
+        </div>
       </div>
     </>
   );

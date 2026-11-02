@@ -1,35 +1,37 @@
-import { PRIORITY_COLORS } from '@/app/theme';
+import { PRIORITY_COLORS, STATUS_COLORS } from '@/app/theme';
 import type { ThemeMode } from '@/services';
-import type { Priority } from '@/types';
+import type { Priority, Status } from '@/types';
 
 /**
- * Categorical order for the 7 catalog categories, led by the blues of the identity.
- * Validated with a palette checker (lightness band, chroma, CVD and normal-vision
- * separation) against the white card and, separately, the dark panel. Every chart
- * also has a legend and a table view, so no value depends on color alone.
+ * Blue ramp (#182C61 → #B5D5EE) extended to 7 steps for the 7 catalog categories.
+ * A sequential ramp is not enough on its own to tell categories apart, so every
+ * chart also shows a legend with values and offers a table view.
  */
-const CATEGORICAL: Record<ThemeMode, string[]> = {
-  light: ['#2563EB', '#F59E0B', '#0EA5E9', '#8B5CF6', '#0D9488', '#E11D48', '#4F46E5'],
-  dark: ['#3B82F6', '#D97706', '#0284C7', '#8B5CF6', '#0D9488', '#E11D48', '#6366F1'],
+const RAMP: Record<ThemeMode, string[]> = {
+  light: ['#182C61', '#24407F', '#2F5597', '#4F86C6', '#7FB2E0', '#9CC4E8', '#B5D5EE'],
+  dark: ['#DCEBF7', '#B5D5EE', '#93C1E7', '#7FB2E0', '#5E98CF', '#4F86C6', '#3A6FAE'],
 };
 
 export interface ChartTheme {
-  categorical: string[];
+  ramp: string[];
   single: string;
   grid: string;
   axis: string;
   surface: string;
   priority: (p: Priority) => string;
+  status: (s: Status) => string;
 }
 
 export function chartTheme(mode: ThemeMode): ChartTheme {
   const dark = mode === 'dark';
   return {
-    categorical: CATEGORICAL[mode],
-    single: dark ? '#60A5FA' : '#2563EB',
-    grid: dark ? '#1E2F4A' : '#EEF2F7',
-    axis: dark ? '#94A3B8' : '#64748B',
-    surface: dark ? '#111F35' : '#FFFFFF',
+    ramp: RAMP[mode],
+    single: dark ? '#7FB2E0' : '#182C61',
+    grid: dark ? '#1A2332' : '#F1F5F9',
+    axis: dark ? '#9CA3AF' : '#6B7280',
+    surface: dark ? '#0F1623' : '#FFFFFF',
     priority: (p) => PRIORITY_COLORS[p].color,
+    // Navy disappears on the dark surface: use the light ramp step instead.
+    status: (s) => (dark && s === 'En progreso' ? '#7FB2E0' : STATUS_COLORS[s].color),
   };
 }
