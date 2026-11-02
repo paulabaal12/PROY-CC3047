@@ -33,7 +33,10 @@ export function BoardColumn({ status, tickets, now, dropAllowed }: Props) {
       aria-label={`${status}: ${tickets.length} tickets`}
     >
       <header className={styles.columnHead}>
-        <h2>{status}</h2>
+        <h2>
+          <span className={styles.statusDot} aria-hidden />
+          {status}
+        </h2>
         <span className={styles.count}>{tickets.length}</span>
       </header>
       <p className={styles.columnHint}>{HINT[status]}</p>

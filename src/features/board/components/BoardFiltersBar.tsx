@@ -1,5 +1,5 @@
 import SearchIcon from '@mui/icons-material/Search';
-import { Button, Chip, InputAdornment, MenuItem, TextField } from '@mui/material';
+import { Button, InputAdornment, MenuItem, TextField } from '@mui/material';
 import { PRIORITY_COLORS } from '@/app/theme';
 import { PRIORITIES } from '@/config/priorityMatrix';
 import { ASSIGNEES, assigneeName } from '@/config/roles';
@@ -7,6 +7,7 @@ import { servicesOfType } from '@/config/services';
 import { t } from '@/config/texts';
 import type { AssigneeId, CategoryId, TicketType } from '@/types';
 import { EMPTY_FILTERS, type BoardFilters } from '../hooks/useBoardFilters';
+import clsx from '@/utils/clsx';
 import styles from './Board.module.scss';
 
 interface Props {
@@ -38,7 +39,7 @@ export function BoardFiltersBar({ type, filters, onChange, active }: Props) {
           input: {
             startAdornment: (
               <InputAdornment position="start">
-                <SearchIcon />
+                <SearchIcon fontSize="small" />
               </InputAdornment>
             ),
           },
@@ -78,27 +79,24 @@ export function BoardFiltersBar({ type, filters, onChange, active }: Props) {
         {PRIORITIES.map((p) => {
           const on = filters.priorities.includes(p);
           return (
-            <Chip
+            <button
               key={p}
-              label={p}
-              size="small"
+              type="button"
               onClick={() => togglePriority(p)}
               aria-pressed={on}
-              sx={{
-                border: '2px solid',
-                borderColor: on ? '#0A1A2E' : 'divider',
-                bgcolor: on ? PRIORITY_COLORS[p].bg : 'background.paper',
-                color: on ? PRIORITY_COLORS[p].ink : 'text.primary',
-              }}
-            />
+              className={clsx(styles.priorityToggle, on && styles.priorityOn)}
+            >
+              <span
+                className={styles.priorityDot}
+                style={{ background: PRIORITY_COLORS[p].color }}
+                aria-hidden
+              />
+              {p}
+            </button>
           );
         })}
       </div>
-      {active && (
-        <Button size="small" onClick={() => onChange(EMPTY_FILTERS)}>
-          {t.common.clearFilters}
-        </Button>
-      )}
+      {active && <Button onClick={() => onChange(EMPTY_FILTERS)}>{t.common.clearFilters}</Button>}
     </div>
   );
 }

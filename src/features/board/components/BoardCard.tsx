@@ -4,11 +4,12 @@ import { useDraggable } from '@dnd-kit/core';
 import { CSS } from '@dnd-kit/utilities';
 import { Tooltip } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import { PriorityChip, SlaTimer } from '@/components';
+import { PersonAvatar, PriorityChip, SlaTimer } from '@/components';
 import { assigneeShort } from '@/config/roles';
 import { categoryName } from '@/config/services';
-import type { Ticket } from '@/types';
+import type { RoleId, Ticket } from '@/types';
 import clsx from '@/utils/clsx';
+import { formatDate } from '@/utils/dates';
 import { getEscalationHints } from '@/utils/escalationHints';
 import { isActive } from '@/utils/workflow';
 import { justDragged } from '../dragState';
@@ -22,6 +23,10 @@ interface Props {
 
 export function BoardCardContent({ ticket, now, overlay }: Props) {
   const hints = getEscalationHints(ticket, now);
+  const holder = assigneeShort(ticket.assignee);
+  const holderRole: RoleId = ticket.assignee.startsWith('proveedor-')
+    ? 'usuario'
+    : (ticket.assignee as RoleId);
   return (
     <div
       className={clsx(
@@ -50,11 +55,26 @@ export function BoardCardContent({ ticket, now, overlay }: Props) {
           />
         </span>
       </div>
-      <p className={styles.cardTitle}>{ticket.title}</p>
-      <p className={styles.cardMeta}>
-        {categoryName(ticket.category)} · <strong>{assigneeShort(ticket.assignee)}</strong>
+      <p className={styles.cardTitle} title={ticket.title}>
+        {ticket.title}
       </p>
-      {isActive(ticket.status) && <SlaTimer ticket={ticket} now={now} compact />}
+      <p className={styles.cardCategory}>{categoryName(ticket.category)}</p>
+      <div className={styles.cardFooter}>
+        <span className={styles.cardAssignee}>
+          <PersonAvatar name={holder} role={holderRole} size={22} />
+          <span>{holder}</span>
+        </span>
+        <div className={styles.cardSla}>
+          {isActive(ticket.status) ? (
+            <SlaTimer ticket={ticket} now={now} compact />
+          ) : (
+            <span className={styles.cardDone}>
+              {ticket.status === 'Cerrado' ? 'Cerrado' : 'Resuelto'}
+              {ticket.resolvedAt ? ` · ${formatDate(ticket.resolvedAt)}` : ''}
+            </span>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

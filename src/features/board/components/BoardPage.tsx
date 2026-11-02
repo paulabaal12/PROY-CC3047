@@ -1,4 +1,4 @@
-import ReportProblemIcon from '@mui/icons-material/ReportProblem';
+import ReportProblemOutlinedIcon from '@mui/icons-material/ReportProblemOutlined';
 import {
   DndContext,
   DragOverlay,
@@ -17,6 +17,7 @@ import { useRole } from '@/features/auth';
 import { useNow, useTickets, useToast } from '@/hooks';
 import { ticketService } from '@/services';
 import type { Status, Ticket, TicketType } from '@/types';
+import { isSlaBreached } from '@/utils/sla';
 import { canTransition, isActive, STATUSES, transitionError } from '@/utils/workflow';
 import { useBoardFilters } from '../hooks/useBoardFilters';
 import { markDragEnd } from '../dragState';
@@ -27,16 +28,19 @@ import styles from './Board.module.scss';
 
 function P1Banner({ tickets }: { tickets: Ticket[] }) {
   if (tickets.length === 0) return null;
+  const many = tickets.length > 1;
   return (
     <div className={styles.p1Banner} role="alert">
-      <ReportProblemIcon className={styles.p1Icon} />
+      <span className={styles.p1Icon} aria-hidden>
+        <ReportProblemOutlinedIcon fontSize="small" />
+      </span>
       <div className={styles.p1Text}>
         <strong>
-          {tickets.length} incidente{tickets.length > 1 ? 's' : ''} Crítico
-          {tickets.length > 1 ? 's' : ''} (P1) abierto{tickets.length > 1 ? 's' : ''}
+          {tickets.length} incidente{many ? 's' : ''} crítico{many ? 's' : ''} (P1) abierto
+          {many ? 's' : ''}
         </strong>
         <span>
-          Objetivo: restaurar en ≤ 90 min (interno 75). Están fijados arriba de su columna.
+          Objetivo: restaurar en 90 min o menos (meta interna: 75). Aparecen primero en su columna.
         </span>
       </div>
       <div className={styles.p1Links}>
@@ -77,6 +81,11 @@ export function BoardPage() {
       Solicitud: data.filter((t) => t.type === 'Solicitud' && isActive(t.status)).length,
     }),
     [data],
+  );
+
+  const breachedActive = useMemo(
+    () => data.filter((t) => isActive(t.status) && isSlaBreached(t, now)).length,
+    [data, now],
   );
 
   const view = useMemo(() => {
@@ -130,18 +139,31 @@ export function BoardPage() {
       <PageHeader
         eyebrow="Service Desk"
         title="Tablero"
-        subtitle="Dos colas separadas. Arrastrá las tarjetas para cambiar su estado; dentro de cada columna se ordenan por prioridad y antigüedad."
+        subtitle="Dos colas separadas. Arrastra las tarjetas para cambiar su estado; dentro de cada columna se ordenan por prioridad y antigüedad."
+        stats={[
+          { label: 'activos', value: counts.Incidente + counts.Solicitud },
+          {
+            label: 'P1 abiertos',
+            value: p1Open.length,
+            tone: p1Open.length ? 'danger' : 'default',
+          },
+          {
+            label: 'con SLA vencido',
+            value: breachedActive,
+            tone: breachedActive ? 'danger' : 'default',
+          },
+        ]}
       />
       <P1Banner tickets={p1Open} />
 
       <Tabs
         value={type}
         onChange={(_, v: TicketType) => setType(v)}
-        sx={{ mb: 2 }}
+        sx={{ mb: 3 }}
         aria-label="Colas"
       >
-        <Tab value="Incidente" label={`Incidentes (${counts.Incidente} activos)`} />
-        <Tab value="Solicitud" label={`Solicitudes (${counts.Solicitud} activas)`} />
+        <Tab value="Incidente" label={`Incidentes · ${counts.Incidente}`} />
+        <Tab value="Solicitud" label={`Solicitudes · ${counts.Solicitud}`} />
       </Tabs>
 
       <BoardFiltersBar type={type} filters={filters} onChange={setFilters} active={active} />
@@ -155,7 +177,7 @@ export function BoardPage() {
         <div className={styles.board}>
           {STATUSES.map((s) => (
             <div key={s} className={styles.column}>
-              <CardListSkeleton count={3} />
+              <CardListSkeleton count={3} height={150} />
             </div>
           ))}
         </div>
