@@ -38,6 +38,8 @@ Los roles permitidos son `service-desk`, `resp-tecnico`, `resp-contenido` y `due
 
 La clave publicable del frontend no es secreta: la protección de los datos depende de RLS y del claim de rol. La función `kobo-ingest` conserva su autenticación Basic propia y usa la clave `service_role` solo dentro del entorno privado de Edge Functions.
 
+Para crear tickets automáticamente cuando UptimeRobot detecta una caída, consulta [`docs/uptimerobot-tickets-automaticos.md`](docs/uptimerobot-tickets-automaticos.md). La integración consulta la API de lectura desde Supabase Cron, por lo que no requiere el Webhook de UptimeRobot Team/Scale.
+
 ## Trazabilidad Fase 1 → Fase 2
 
 | Elemento de la Fase 1 | Dónde está en la Fase 2 |
