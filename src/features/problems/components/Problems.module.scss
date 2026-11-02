@@ -1,0 +1,70 @@
+@use 'styles/mixins' as *;
+@use 'styles/tokens' as *;
+
+.grid {
+  display: grid;
+  gap: 20px;
+
+  @include up($bp-lg) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.card {
+  display: grid;
+  gap: 12px;
+  align-content: start;
+}
+
+.top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.id {
+  @include display(1rem);
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.title {
+  @include display(1.05rem);
+  margin: 0;
+  color: var(--ink);
+}
+
+.meta {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.block {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+
+  > span {
+    display: block;
+    margin-bottom: 2px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+}

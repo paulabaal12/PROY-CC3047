@@ -1,0 +1,179 @@
+@use 'styles/mixins' as *;
+@use 'styles/tokens' as *;
+
+.sectionTitle {
+  @include display(1.2rem);
+  margin: 32px 0 14px;
+  color: var(--ink);
+
+  &:first-of-type {
+    margin-top: 0;
+  }
+
+  em {
+    @include accent;
+    color: var(--primary);
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+
+  @include up($bp-md) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.service {
+  @include lift;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.serviceTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.number {
+  @include display(1.6rem);
+  color: var(--accent);
+  -webkit-text-stroke: 1px var(--ink);
+}
+
+.serviceName {
+  @include display(1.05rem);
+  margin: 0;
+  color: var(--ink);
+}
+
+.why {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 0.92rem;
+
+  span {
+    @include accent;
+    font-size: 1.02rem;
+    color: var(--primary);
+  }
+}
+
+.facts {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  font-size: 0.86rem;
+
+  dt {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  dd {
+    margin: 2px 0 0;
+  }
+}
+
+.inline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.fieldChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.cta {
+  margin-top: auto !important;
+  align-self: flex-start;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.matrix {
+  width: 100%;
+  min-width: 620px;
+  border-collapse: separate;
+  border-spacing: 6px;
+
+  th {
+    @include display(0.85rem);
+    padding: 8px;
+    text-align: left;
+    color: var(--ink);
+    cursor: help;
+  }
+
+  td {
+    padding: 10px;
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    background: var(--accent-soft);
+    vertical-align: top;
+
+    span {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.criteria {
+  display: grid;
+  gap: 16px;
+  margin-top: 16px;
+
+  @include up($bp-md) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  h3 {
+    @include display(0.9rem);
+    margin: 0 0 6px;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 18px;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+}
+
+.window {
+  margin: 16px 0 0;
+  font-size: 0.88rem;
+}
+
+.twoCols {
+  display: grid;
+  gap: 20px;
+  margin-top: 20px;
+
+  @include up($bp-md) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.plainList {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+}
