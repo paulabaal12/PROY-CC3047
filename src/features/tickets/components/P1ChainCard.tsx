@@ -1,15 +1,22 @@
+import { Chip } from '@mui/material';
+import { PRIORITY_COLORS, toneSx } from '@/app/theme';
 import { Panel } from '@/components';
 import { P1_CHAIN, RECURRENCE_RULE } from '@/config/sla';
 import styles from './P1ChainCard.module.scss';
 
 const TOTAL = P1_CHAIN.reduce((sum, s) => sum + s.minutes, 0);
-const COLORS = ['#38BDF8', '#2563EB', '#1D4ED8', '#E2E8F0'];
+// Blue ramp; the slack segment stays light.
+const COLORS = ['#182C61', '#2F5597', '#4F86C6', '#B5D5EE'];
 
 /** OLA reference shown on Critical tickets: how the 90 minutes are split. */
 export function P1ChainCard({ elapsed }: { elapsed: number }) {
   const marker = Math.min(100, (elapsed / TOTAL) * 100);
   return (
-    <Panel title="Cadena del P1 (OLA · 90 min)" tone="danger">
+    <Panel
+      title="Cadena del P1"
+      subtitle="OLA de 90 minutos repartida entre equipos"
+      action={<Chip size="small" label="P1" sx={toneSx(PRIORITY_COLORS.Crítica)} />}
+    >
       <div
         className={styles.bar}
         role="img"
@@ -31,7 +38,9 @@ export function P1ChainCard({ elapsed }: { elapsed: number }) {
         {P1_CHAIN.map((s, i) => (
           <li key={s.step}>
             <span className={styles.swatch} style={{ background: COLORS[i] }} aria-hidden />
-            <strong>{s.minutes} min</strong> {s.step} <em>· {s.owner}</em>
+            <strong>{s.minutes} min</strong>
+            <span>{s.step}</span>
+            <em>{s.owner}</em>
           </li>
         ))}
       </ol>

@@ -1,0 +1,30 @@
+@use 'styles/mixins' as *;
+
+.id {
+  @include id-text;
+}
+
+.titleCell {
+  display: grid;
+  min-width: 0;
+  line-height: 1.35;
+}
+
+.title {
+  font-weight: 500;
+  color: var(--heading);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sub {
+  font-size: 0.75rem;
+  color: var(--text-2);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.muted {
+  font-size: 0.8125rem;
+  color: var(--text-2);
+}

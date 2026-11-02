@@ -9,11 +9,10 @@
   &::before {
     content: '';
     position: absolute;
-    left: 5px;
+    left: 4px;
     top: 8px;
     bottom: 8px;
-    width: 2px;
-    border-radius: 2px;
+    width: 1px;
     background: var(--border);
   }
 }
@@ -21,26 +20,26 @@
 .entry {
   position: relative;
   display: grid;
-  grid-template-columns: 12px minmax(0, 1fr);
-  gap: $s-4;
-  padding-bottom: $s-5;
+  grid-template-columns: 10px minmax(0, 1fr);
+  gap: $s-3;
+  padding-bottom: $s-4;
 
   &:last-child {
     padding-bottom: 0;
   }
 }
 
-// Vertical timeline with small dots, color-coded by event kind.
+// Vertical timeline with small dots; color only hints the event kind.
 .dot {
-  --dot: #94a3b8;
+  --dot: #{$text-3};
   position: relative;
   z-index: 1;
-  width: 12px;
-  height: 12px;
-  margin-top: 4px;
+  width: 9px;
+  height: 9px;
+  margin-top: 6px;
   border-radius: 50%;
-  background: var(--surface);
-  border: 2px solid var(--dot);
+  background: var(--dot);
+  box-shadow: 0 0 0 3px var(--surface);
 
   svg {
     display: none;
@@ -52,16 +51,19 @@
   --dot: #{$primary};
 }
 
-.entry[data-kind='escalation'] .dot,
-.entry[data-kind='assignee'] .dot,
-.entry[data-kind='level'] .dot {
-  --dot: #f97316;
+:global([data-theme='dark']) .entry[data-kind='created'] .dot,
+:global([data-theme='dark']) .entry[data-kind='status'] .dot {
+  --dot: #7fb2e0;
+}
+
+.entry[data-kind='escalation'] .dot {
+  --dot: #{$p-alta};
 }
 
 .entry[data-kind='problem'] .dot,
 .entry[data-kind='known-error'] .dot,
 .entry[data-kind='sla-cause'] .dot {
-  --dot: #ef4444;
+  --dot: #{$p-critica};
 }
 
 .entry[data-kind='change'] .dot {
@@ -78,7 +80,7 @@
   overflow-wrap: anywhere;
 
   strong {
-    font-weight: 600;
+    font-weight: 500;
     color: var(--heading);
   }
 }
@@ -93,5 +95,5 @@
 .meta {
   margin: 2px 0 0;
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-3);
 }

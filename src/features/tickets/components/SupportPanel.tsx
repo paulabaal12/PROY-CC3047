@@ -31,7 +31,6 @@ import type {
   Urgency,
 } from '@/types';
 import { calculatePriority } from '@/utils/priority';
-import { STATUSES, canTransition } from '@/utils/workflow';
 import type { EscalationHint } from '@/utils/escalationHints';
 import { EscalateDialog } from './EscalateDialog';
 import { ChangeRequestDialog, KnownErrorDialog, ProblemDialog } from './ProblemDialogs';
@@ -149,21 +148,6 @@ export function SupportPanel({ ticket, breached, hints }: Props) {
             {h.reason}
           </Alert>
         ))}
-
-        <TextField
-          select
-          size="small"
-          label="Estado"
-          value={draft.status}
-          onChange={(e) => set('status', e.target.value as Status)}
-          disabled={closed}
-        >
-          {STATUSES.map((s) => (
-            <MenuItem key={s} value={s} disabled={!canTransition(ticket.status, s)}>
-              {s}
-            </MenuItem>
-          ))}
-        </TextField>
         <Stack direction="row" gap={1.5}>
           <TextField
             select

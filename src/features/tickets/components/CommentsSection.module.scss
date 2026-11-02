@@ -3,13 +3,13 @@
 
 .section {
   display: grid;
-  gap: $s-5;
+  gap: $s-4;
 }
 
 .empty {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--text-muted);
+  color: var(--text-2);
 }
 
 .list {
@@ -22,22 +22,20 @@
 
 .comment {
   display: grid;
-  grid-template-columns: 36px minmax(0, 1fr);
+  grid-template-columns: 32px minmax(0, 1fr);
   gap: $s-3;
 }
 
 .bubble {
-  padding: $s-3 $s-4;
-  border-radius: 4px $radius $radius $radius;
-  background: var(--surface-muted);
-  border: 1px solid var(--border);
   min-width: 0;
 }
 
 .internal .bubble {
+  padding: $s-2 $s-3;
+  border-left: 3px solid #d97706;
+  border-radius: 0 6px 6px 0;
   background: #fffbeb;
-  border-color: #fde68a;
-  color: #0f172a;
+  color: #111827;
 
   .meta span {
     color: #78716c;
@@ -45,8 +43,7 @@
 }
 
 :global([data-theme='dark']) .internal .bubble {
-  background: rgba(245, 158, 11, 0.08);
-  border-color: rgba(245, 158, 11, 0.3);
+  background: rgba(217, 119, 6, 0.08);
   color: var(--text);
 }
 
@@ -63,12 +60,12 @@
   }
 
   span {
-    color: var(--text-muted);
+    color: var(--text-2);
   }
 }
 
 .text {
-  margin: $s-1 0 0;
+  margin: 2px 0 0;
   font-size: 0.875rem;
   white-space: pre-wrap;
   overflow-wrap: anywhere;

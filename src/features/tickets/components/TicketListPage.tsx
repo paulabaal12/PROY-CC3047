@@ -1,14 +1,28 @@
 import AddIcon from '@mui/icons-material/Add';
 import InboxOutlinedIcon from '@mui/icons-material/InboxOutlined';
 import SearchOffIcon from '@mui/icons-material/SearchOff';
-import { Alert, Button, Stack, Tab, Tabs } from '@mui/material';
+import { Alert, Button, Tab, Tabs } from '@mui/material';
 import { useMemo, useState } from 'react';
 import { Link as RouterLink, useSearchParams } from 'react-router-dom';
-import { CardListSkeleton, EmptyState, PageHeader } from '@/components';
+import {
+  CardListSkeleton,
+  DataTable,
+  EmptyState,
+  PageHeader,
+  PriorityChip,
+  SlaTimer,
+  StatusChip,
+  type Column,
+} from '@/components';
+import { assigneeShort } from '@/config/roles';
+import { categoryName } from '@/config/services';
 import { t } from '@/config/texts';
 import { useRole } from '@/features/auth';
 import { useNow, useTickets } from '@/hooks';
-import { TicketListItem } from './TicketListItem';
+import type { Ticket } from '@/types';
+import { formatRelative } from '@/utils/dates';
+import { isActive } from '@/utils/workflow';
+import styles from './TicketListPage.module.scss';
 
 type Scope = 'mine' | 'all';
 
@@ -29,14 +43,75 @@ export function TicketListPage() {
     return [...list].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt));
   }, [data, isInternal, scope, search, role]);
 
+  const columns: Column<Ticket>[] = [
+    {
+      key: 'id',
+      header: 'ID',
+      width: '112px',
+      render: (x) => <span className={styles.id}>{x.id}</span>,
+    },
+    {
+      key: 'title',
+      header: 'Ticket',
+      render: (x) => (
+        <div className={styles.titleCell}>
+          <span className={styles.title}>{x.title}</span>
+          <span className={styles.sub}>
+            {x.type} · {categoryName(x.category)}
+          </span>
+        </div>
+      ),
+    },
+    {
+      key: 'priority',
+      header: 'Prioridad',
+      width: '140px',
+      render: (x) => <PriorityChip priority={x.priority} />,
+    },
+    {
+      key: 'status',
+      header: 'Estado',
+      width: '120px',
+      hideBelow: 'sm',
+      render: (x) => <StatusChip status={x.status} />,
+    },
+    {
+      key: 'assignee',
+      header: 'Responsable',
+      width: '148px',
+      hideBelow: 'lg',
+      render: (x) => <span className={styles.muted}>{assigneeShort(x.assignee)}</span>,
+    },
+    {
+      key: 'sla',
+      header: 'SLA',
+      width: '172px',
+      hideBelow: 'md',
+      render: (x) =>
+        isActive(x.status) ? (
+          <SlaTimer ticket={x} now={now} compact />
+        ) : (
+          <span className={styles.muted}>—</span>
+        ),
+    },
+    {
+      key: 'updated',
+      header: 'Actualizado',
+      width: '140px',
+      align: 'right',
+      hideBelow: 'md',
+      render: (x) => <span className={styles.muted}>{formatRelative(x.updatedAt, now)}</span>,
+    },
+  ];
+
   return (
     <>
       <PageHeader
-        eyebrow={isInternal ? roleDef.name : 'Portal del usuario'}
+        breadcrumbs={[{ label: 'Portal' }, { label: t.nav.myTickets }]}
         title={search ? `Resultados para “${search}”` : t.nav.myTickets}
         subtitle={
           isInternal
-            ? 'Tickets asignados a tu rol. Cambia a “Todos” para ver la cola completa.'
+            ? `Tickets asignados a ${roleDef.name}. Cambia a “Todos” para ver la cola completa.`
             : `Tickets registrados con ${roleDef.persona.email}.`
         }
         actions={
@@ -58,7 +133,7 @@ export function TicketListPage() {
         </Tabs>
       )}
       {search && (
-        <Button size="small" onClick={() => setParams({})} sx={{ mb: 2 }}>
+        <Button variant="outlined" onClick={() => setParams({})} sx={{ mb: 2 }}>
           Quitar búsqueda
         </Button>
       )}
@@ -69,12 +144,10 @@ export function TicketListPage() {
         </Alert>
       )}
       {loading ? (
-        <CardListSkeleton />
+        <CardListSkeleton count={6} />
       ) : tickets.length === 0 ? (
         <EmptyState
-          icon={
-            search ? <SearchOffIcon fontSize="large" /> : <InboxOutlinedIcon fontSize="large" />
-          }
+          icon={search ? <SearchOffIcon /> : <InboxOutlinedIcon />}
           title={search ? t.empty.noResults : t.empty.noTickets}
           description={search ? t.empty.noResultsHint : t.empty.noTicketsHint}
           action={
@@ -86,11 +159,13 @@ export function TicketListPage() {
           }
         />
       ) : (
-        <Stack gap={1.5}>
-          {tickets.map((ticket) => (
-            <TicketListItem key={ticket.id} ticket={ticket} now={now} />
-          ))}
-        </Stack>
+        <DataTable
+          columns={columns}
+          rows={tickets}
+          getKey={(x) => x.id}
+          getHref={(x) => `/tickets/${x.id}`}
+          caption={t.nav.myTickets}
+        />
       )}
     </>
   );

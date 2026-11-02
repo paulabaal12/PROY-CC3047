@@ -14,15 +14,17 @@
 }
 
 .legend {
-  @include heading(0.9375rem);
   margin-bottom: $s-3;
   padding: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
   color: var(--heading);
 }
 
 .grid2 {
   display: grid;
-  gap: $s-4;
+  gap: $s-3;
+  align-items: stretch;
 
   @include up($bp-sm) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -31,7 +33,8 @@
 
 .grid3 {
   display: grid;
-  gap: $s-4;
+  gap: $s-3;
+  align-items: stretch;
 
   @include up($bp-md) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -40,7 +43,7 @@
 
 .fields {
   display: grid;
-  gap: $s-5 $s-4;
+  gap: $s-4;
 
   @include up($bp-md) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -53,14 +56,15 @@
 
 .hint {
   margin: 0;
-  font-size: 0.875rem;
-  color: var(--text-muted);
+  font-size: 0.8125rem;
+  color: var(--text-2);
 }
 
 .sectionTitle {
-  @include heading(0.9375rem);
   margin: $s-2 0 0;
   padding-top: $s-4;
   border-top: 1px solid var(--border);
+  font-size: 0.875rem;
+  font-weight: 600;
   color: var(--heading);
 }

@@ -6,29 +6,26 @@
   display: grid;
   align-content: start;
   gap: $s-2;
-  padding: $s-4 $s-5;
+  height: 100%;
+  padding: $s-4;
   cursor: pointer;
-  box-shadow: none;
   transition:
-    border-color 140ms ease,
-    background 140ms ease,
-    box-shadow 140ms ease;
+    border-color 120ms ease,
+    background 120ms ease;
 
   &:hover {
     border-color: var(--border-strong);
-    box-shadow: var(--shadow-md);
   }
 
-  &:focus-within {
-    outline: 2px solid var(--focus);
+  &:has(input:focus-visible) {
+    outline: 2px solid var(--accent);
     outline-offset: 2px;
   }
 }
 
 .selected {
   border-color: var(--primary);
-  background: var(--primary-soft);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+  background: var(--primary-tint);
 
   &:hover {
     border-color: var(--primary);
@@ -44,17 +41,20 @@
 .icon {
   display: grid;
   place-items: center;
-  width: 36px;
-  height: 36px;
   flex: none;
-  border-radius: $radius-control;
-  background: var(--accent-soft);
+  color: var(--text-2);
+
+  svg {
+    font-size: 20px;
+  }
+}
+
+.selected .icon {
   color: var(--primary);
 }
 
 .title {
-  font-family: $font-heading;
-  font-size: 0.9375rem;
+  font-size: 0.875rem;
   font-weight: 600;
   line-height: 1.35;
   color: var(--heading);
@@ -63,13 +63,14 @@
 .check {
   margin-left: auto;
   flex: none;
+  font-size: 18px !important;
   color: var(--primary);
 }
 
 .description {
   font-size: 0.8125rem;
   line-height: 1.55;
-  color: var(--text-muted);
+  color: var(--text-2);
 }
 
 .meta {

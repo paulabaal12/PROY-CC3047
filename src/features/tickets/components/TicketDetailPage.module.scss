@@ -2,116 +2,162 @@
 @use 'styles/tokens' as *;
 
 .page {
-  display: grid;
-  gap: $s-5;
-}
-
-.back {
-  justify-self: start;
-  margin-left: -$s-3 !important;
-}
-
-.header {
-  display: grid;
-  gap: $s-2;
-}
-
-.chips {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: $s-2;
+  display: block;
 }
 
 .id {
-  font-family: $font-heading;
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--primary);
+  @include id-text;
+  margin-right: $s-1;
 }
 
-.title {
-  @include heading(clamp(1.375rem, 2.6vw, 1.75rem));
-  margin: 0;
-  color: var(--heading);
-  overflow-wrap: anywhere;
+.statusControl {
+  width: 180px;
 }
 
-.subtitle {
-  margin: 0;
-  font-size: 0.875rem;
-  color: var(--text-muted);
-}
-
+// 8 / 4 grid.
 .grid {
   display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: $s-6;
   align-items: start;
-
-  @include up($bp-lg) {
-    grid-template-columns: minmax(0, 1fr) 360px;
-  }
 }
 
 .mainCol,
 .sideCol {
   display: grid;
   gap: $s-6;
+  grid-column: span 12;
   min-width: 0;
 }
 
+.mainCol {
+  @include up($bp-lg) {
+    grid-column: span 8;
+  }
+}
+
+.sideCol {
+  @include up($bp-lg) {
+    grid-column: span 4;
+  }
+}
+
 .description {
-  margin: 0 0 $s-5;
-  font-size: 0.9375rem;
+  margin: 0 0 $s-4;
+  font-size: 0.875rem;
   line-height: 1.65;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 
+.para {
+  margin: 0 0 $s-4;
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
+
 .label {
   @include label;
-  margin: $s-3 0 $s-2;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.workaround,
+.noWorkaround {
+  margin: 0 0 $s-4;
+  padding: $s-2 $s-3;
+  border-left: 3px solid $success;
+  background: var(--surface-2);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+}
+
+.noWorkaround {
+  border-left-color: var(--border-strong);
+  color: var(--text-2);
 }
 
 .muted {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--text-muted);
+  color: var(--text-2);
 }
 
 .links {
   margin: 0;
-  padding-left: 18px;
+  padding: 0;
+  list-style: none;
   display: grid;
-  gap: $s-1;
   font-size: 0.875rem;
+
+  li {
+    display: grid;
+    grid-template-columns: 80px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: $s-3;
+    min-height: 36px;
+    border-bottom: 1px solid var(--border);
+
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+
+  a {
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+  }
 
   em {
     font-style: normal;
-    color: var(--text-muted);
+    font-size: 0.75rem;
+    color: var(--text-2);
   }
 }
 
+.linkTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Key/value list aligned on two columns.
 .info {
   display: grid;
-  gap: $s-3;
   margin: 0;
 
   div {
     display: grid;
-    grid-template-columns: 112px minmax(0, 1fr);
+    grid-template-columns: 120px minmax(0, 1fr);
     gap: $s-3;
+    padding: $s-2 0;
+    border-bottom: 1px solid var(--border);
     font-size: 0.8125rem;
+
+    @media (max-width: ($bp-sm - 1)) {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 2px;
+    }
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
   }
 
   dt {
-    color: var(--text-muted);
+    color: var(--text-2);
   }
 
   dd {
     margin: 0;
     font-weight: 500;
     overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
   }
 }
 
@@ -119,7 +165,5 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: $s-4;
-  padding-top: $s-4;
-  border-top: 1px solid var(--border);
+  margin-top: $s-3;
 }

@@ -1,11 +1,11 @@
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import BugReportOutlinedIcon from '@mui/icons-material/BugReportOutlined';
 import SearchOffIcon from '@mui/icons-material/SearchOff';
-import { Alert, Button, Chip } from '@mui/material';
-import { PRIORITY_COLORS, STATUS_COLORS, toneSx } from '@/app/theme';
-import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
+import { Alert, Button, Chip, MenuItem, TextField } from '@mui/material';
+import { useState } from 'react';
+import { Link as RouterLink, useParams } from 'react-router-dom';
+import { NEUTRAL_TONE, PRIORITY_COLORS, toneSx } from '@/app/theme';
 import {
   EmptyState,
+  PageHeader,
   Panel,
   PageSkeleton,
   PriorityChip,
@@ -22,6 +22,10 @@ import { businessMinutesBetween } from '@/utils/businessHours';
 import { formatDateTime } from '@/utils/dates';
 import { getEscalationHints } from '@/utils/escalationHints';
 import { isSlaBreached } from '@/utils/sla';
+import { canTransition, STATUSES } from '@/utils/workflow';
+import { ticketService } from '@/services';
+import { useToast } from '@/hooks';
+import type { Status, Ticket } from '@/types';
 import { CommentsSection } from './CommentsSection';
 import { DetailsList } from './DetailsList';
 import { HistoryTimeline } from './HistoryTimeline';
@@ -31,7 +35,6 @@ import styles from './TicketDetailPage.module.scss';
 
 export function TicketDetailPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { isInternal, roleDef } = useRole();
   const now = useNow(15_000);
   const { data: ticket, loading, error } = useTicket(id);
@@ -68,40 +71,38 @@ export function TicketDetailPage() {
 
   return (
     <div className={styles.page}>
-      <Button startIcon={<ArrowBackIcon />} onClick={() => navigate(-1)} className={styles.back}>
-        {t.common.back}
-      </Button>
-
-      <header className={styles.header}>
-        <div className={styles.chips}>
-          <span className={styles.id}>{ticket.id}</span>
-          <TypeChip type={ticket.type} />
-          <StatusChip status={ticket.status} />
-          <PriorityChip
-            priority={ticket.priority}
-            impact={ticket.impact}
-            urgency={ticket.urgency}
-          />
-          {ticket.isProblem && (
-            <Chip
-              size="small"
-              icon={<BugReportOutlinedIcon />}
-              label="Problema"
-              sx={{ ...toneSx(PRIORITY_COLORS.Crítica), '& .MuiChip-icon': { color: 'inherit' } }}
+      <PageHeader
+        breadcrumbs={
+          isInternal
+            ? [{ label: t.nav.board, to: '/board' }, { label: ticket.id }]
+            : [{ label: t.nav.myTickets, to: '/tickets' }, { label: ticket.id }]
+        }
+        title={ticket.title}
+        subtitle={`${service.name} · registrado ${formatDateTime(ticket.createdAt)} por ${ticket.channel}`}
+        meta={
+          <>
+            <span className={styles.id}>{ticket.id}</span>
+            <TypeChip type={ticket.type} />
+            <StatusChip status={ticket.status} />
+            <PriorityChip
+              priority={ticket.priority}
+              impact={ticket.impact}
+              urgency={ticket.urgency}
             />
-          )}
-          {ticket.knownError && (
-            <Chip size="small" label="Error conocido" sx={toneSx(PRIORITY_COLORS.Alta)} />
-          )}
-          {ticket.changeType && (
-            <Chip size="small" label={ticket.changeType} sx={toneSx(STATUS_COLORS.Resuelto)} />
-          )}
-        </div>
-        <h1 className={styles.title}>{ticket.title}</h1>
-        <p className={styles.subtitle}>
-          {service.name} · registrado {formatDateTime(ticket.createdAt)} por {ticket.channel}
-        </p>
-      </header>
+            {ticket.priority === 'Crítica' && ticket.type === 'Incidente' && (
+              <Chip size="small" label="P1" sx={toneSx(PRIORITY_COLORS.Crítica)} />
+            )}
+            {ticket.isProblem && <Chip size="small" label="Problema" sx={toneSx(NEUTRAL_TONE)} />}
+            {ticket.knownError && (
+              <Chip size="small" label="Error conocido" sx={toneSx(NEUTRAL_TONE)} />
+            )}
+            {ticket.changeType && (
+              <Chip size="small" label={ticket.changeType} sx={toneSx(NEUTRAL_TONE)} />
+            )}
+          </>
+        }
+        actions={isInternal ? <StatusControl ticket={ticket} /> : undefined}
+      />
 
       <div className={styles.grid}>
         <div className={styles.mainCol}>
@@ -115,20 +116,17 @@ export function TicketDetailPage() {
           </Panel>
 
           {(ticket.isProblem || ticket.knownError) && (
-            <Panel
-              title={ticket.knownError ? 'Error conocido' : 'Registro de problema'}
-              tone="danger"
-            >
+            <Panel title={ticket.knownError ? 'Error conocido' : 'Registro de problema'}>
               {ticket.rootCause && (
-                <p>
-                  <strong>Causa raíz:</strong> {ticket.rootCause}
+                <p className={styles.para}>
+                  <span className={styles.label}>Causa raíz</span>
+                  {ticket.rootCause}
                 </p>
               )}
-              {ticket.workaround && (
-                <Alert severity="success" variant="outlined" sx={{ mb: 2 }}>
-                  <strong>Workaround:</strong> {ticket.workaround}
-                </Alert>
-              )}
+              <div className={ticket.workaround ? styles.workaround : styles.noWorkaround}>
+                <span className={styles.label}>Workaround</span>
+                {ticket.workaround ?? 'Sin workaround documentado todavía.'}
+              </div>
               <p className={styles.label}>Incidentes asociados</p>
               <LinkList tickets={linked} empty="Sin incidentes asociados." />
             </Panel>
@@ -141,15 +139,15 @@ export function TicketDetailPage() {
                   <p className={styles.label}>Asociado al problema</p>
                   <LinkList tickets={problems} />
                   {problems.find((p) => p.workaround) && (
-                    <Alert severity="success" variant="outlined" sx={{ mt: 1 }}>
-                      <strong>Workaround disponible:</strong>{' '}
+                    <div className={styles.workaround}>
+                      <span className={styles.label}>Workaround disponible</span>
                       {problems.find((p) => p.workaround)?.workaround}
-                    </Alert>
+                    </div>
                   )}
                 </>
               )}
               {ticket.parentTicketId && (
-                <p>
+                <p className={styles.para}>
                   Solicitud de cambio generada desde{' '}
                   <RouterLink to={`/tickets/${ticket.parentTicketId}`}>
                     {ticket.parentTicketId}
@@ -178,7 +176,7 @@ export function TicketDetailPage() {
         </div>
 
         <aside className={styles.sideCol}>
-          <Panel title="SLA" tone={breached ? 'danger' : 'default'}>
+          <Panel title="SLA">
             <SlaTimer ticket={ticket} now={now} />
             {ticket.slaBreachCause && (
               <Alert severity="warning" sx={{ mt: 2 }}>
@@ -211,7 +209,7 @@ export function TicketDetailPage() {
             {ticket.tags.length > 0 && (
               <div className={styles.tags}>
                 {ticket.tags.map((tag) => (
-                  <Chip key={tag} size="small" label={tag} variant="outlined" />
+                  <Chip key={tag} size="small" label={tag} sx={toneSx(NEUTRAL_TONE)} />
                 ))}
               </div>
             )}
@@ -245,9 +243,45 @@ function LinkList({
     <ul className={styles.links}>
       {tickets.map((x) => (
         <li key={x.id}>
-          <RouterLink to={`/tickets/${x.id}`}>{x.id}</RouterLink> {x.title} <em>· {x.status}</em>
+          <RouterLink to={`/tickets/${x.id}`}>{x.id}</RouterLink>
+          <span className={styles.linkTitle}>{x.title}</span>
+          <em>{x.status}</em>
         </li>
       ))}
     </ul>
+  );
+}
+
+/** Status as the page's main action (same transition rules as the board). */
+function StatusControl({ ticket }: { ticket: Ticket }) {
+  const { actor } = useRole();
+  const notify = useToast();
+  const [saving, setSaving] = useState(false);
+  const change = async (to: Status) => {
+    setSaving(true);
+    try {
+      await ticketService.update(ticket.id, { status: to }, actor);
+      notify(`${ticket.id} → ${to}`);
+    } catch (e) {
+      notify(e instanceof Error ? e.message : 'No se pudo cambiar el estado', 'error');
+    } finally {
+      setSaving(false);
+    }
+  };
+  return (
+    <TextField
+      select
+      value={ticket.status}
+      onChange={(e) => void change(e.target.value as Status)}
+      disabled={saving || ticket.status === 'Cerrado'}
+      className={styles.statusControl}
+      slotProps={{ htmlInput: { 'aria-label': 'Estado del ticket' } }}
+    >
+      {STATUSES.map((st) => (
+        <MenuItem key={st} value={st} disabled={!canTransition(ticket.status, st)}>
+          {st}
+        </MenuItem>
+      ))}
+    </TextField>
   );
 }

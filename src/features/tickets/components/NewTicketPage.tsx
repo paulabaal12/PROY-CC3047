@@ -78,9 +78,9 @@ function NewTicketForm({ preset }: { preset?: CategoryId }) {
   return (
     <>
       <PageHeader
-        eyebrow="Ingreso de ticket"
+        breadcrumbs={[{ label: 'Portal' }, { label: 'Nuevo ticket' }]}
         title="Nuevo ticket"
-        subtitle="Cuéntanos qué ocurre en centralamerica.games. Lo clasificamos con el catálogo de servicios y la matriz de prioridad."
+        subtitle="Se clasifica con el catálogo de servicios y la matriz de prioridad de la Fase 1."
       />
       <div className={styles.layout}>
         <Panel className={styles.formCard}>
@@ -171,6 +171,7 @@ function NewTicketForm({ preset }: { preset?: CategoryId }) {
             <div className={styles.actions}>
               <Button
                 variant="outlined"
+                size="large"
                 className={styles.actionBtn}
                 startIcon={<ArrowBackIcon />}
                 onClick={form.back}
@@ -182,6 +183,7 @@ function NewTicketForm({ preset }: { preset?: CategoryId }) {
                 <Button
                   type="submit"
                   variant="contained"
+                  size="large"
                   className={styles.actionBtn}
                   endIcon={<SendIcon />}
                   disabled={submitting}
@@ -192,6 +194,7 @@ function NewTicketForm({ preset }: { preset?: CategoryId }) {
                 <Button
                   type="submit"
                   variant="contained"
+                  size="large"
                   className={styles.actionBtn}
                   endIcon={<ArrowForwardIcon />}
                 >

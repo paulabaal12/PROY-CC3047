@@ -1,40 +1,31 @@
 @use 'styles/mixins' as *;
 @use 'styles/tokens' as *;
 
+// 8 / 4 grid: form and sticky summary.
 .layout {
   display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: $s-6;
   align-items: start;
-
-  @include up($bp-lg) {
-    grid-template-columns: minmax(0, 1fr) 320px;
-  }
 }
 
 .formCard {
-  padding: $s-5 $s-4;
+  grid-column: span 12;
+  padding: $s-5 $s-4 !important;
 
   @include up($bp-sm) {
-    padding: $s-8;
+    padding: $s-6 !important;
+  }
+
+  @include up($bp-lg) {
+    grid-column: span 8;
   }
 }
 
 .stepper {
-  margin-bottom: $s-8;
-
-  :global(.MuiStepLabel-label) {
-    font-size: 0.8125rem;
-    font-weight: 500;
-  }
-
-  :global(.MuiStepIcon-root) {
-    color: var(--border-strong);
-  }
-
-  :global(.MuiStepIcon-root.Mui-active),
-  :global(.MuiStepIcon-root.Mui-completed) {
-    color: var(--primary);
-  }
+  margin-bottom: $s-6;
+  padding-bottom: $s-5;
+  border-bottom: 1px solid var(--border);
 
   :global(.MuiStepConnector-line) {
     border-color: var(--border);
@@ -43,8 +34,6 @@
 
 .stepHead {
   margin-bottom: $s-5;
-  padding-bottom: $s-4;
-  border-bottom: 1px solid var(--border);
 }
 
 .stepCount {
@@ -52,7 +41,7 @@
 }
 
 .stepTitle {
-  @include heading(1.125rem);
+  @include heading(1rem);
   margin: 2px 0 0;
   color: var(--heading);
 }
@@ -66,28 +55,31 @@
   display: flex;
   justify-content: flex-end;
   gap: $s-3;
-  margin-top: $s-8;
+  margin-top: $s-6;
   padding-top: $s-5;
   border-top: 1px solid var(--border);
 }
 
-// Footer buttons share one width.
+// Footer buttons: 44px CTA height and one shared width.
 .actionBtn {
   min-width: 140px !important;
 }
 
 .side {
   display: grid;
-  gap: $s-5;
+  gap: $s-6;
+  grid-column: span 12;
 
   @include up($bp-lg) {
+    grid-column: span 4;
     position: sticky;
-    top: 88px;
+    top: 56px + $s-6;
   }
 }
 
 .sideTitle {
   margin: 0 0 $s-2;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--heading);
 }
@@ -96,7 +88,7 @@
   margin: 0 0 $s-2;
   font-size: 0.8125rem;
   line-height: 1.55;
-  color: var(--text-muted);
+  color: var(--text-2);
 
   strong {
     color: var(--text);

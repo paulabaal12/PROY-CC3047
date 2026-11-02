@@ -45,7 +45,7 @@ export function CommentsSection({ ticket }: { ticket: Ticket }) {
         <ul className={styles.list}>
           {comments.map((c) => (
             <li key={c.id} className={clsx(styles.comment, c.internal && styles.internal)}>
-              <PersonAvatar name={c.author} role={c.role} />
+              <PersonAvatar name={c.author} role={c.role} size={32} />
               <div className={styles.bubble}>
                 <div className={styles.meta}>
                   <strong>{c.author}</strong>
@@ -57,8 +57,8 @@ export function CommentsSection({ ticket }: { ticket: Ticket }) {
                       icon={<LockOutlinedIcon />}
                       label="Nota interna"
                       sx={{
-                        bgcolor: 'rgba(245,158,11,0.14)',
-                        color: '#92400E',
+                        bgcolor: 'rgba(202,138,4,0.1)',
+                        color: '#854D0E',
                         height: 22,
                         '& .MuiChip-icon': { color: 'inherit' },
                         '[data-theme="dark"] &': { color: '#FCD34D' },
