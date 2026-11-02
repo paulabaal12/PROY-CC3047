@@ -1,0 +1,1288 @@
+{
+  "note": "Referencia generada del repo gamedevca (sin correos ni datos de contacto). Solo para el seed y los selects del Service Desk.",
+  "countries": [
+    {
+      "code": "GT",
+      "name": "Guatemala"
+    },
+    {
+      "code": "SV",
+      "name": "El Salvador"
+    },
+    {
+      "code": "HN",
+      "name": "Honduras"
+    },
+    {
+      "code": "NI",
+      "name": "Nicaragua"
+    },
+    {
+      "code": "CR",
+      "name": "Costa Rica"
+    },
+    {
+      "code": "PA",
+      "name": "Panamá"
+    }
+  ],
+  "studios": [
+    {
+      "id": "502-studios",
+      "name": "502 Studios",
+      "country": "GT",
+      "city": "Guatemala",
+      "founded": 2012,
+      "models": [
+        "IP propia",
+        "Codesarrollo",
+        "Work for hire"
+      ],
+      "tech": [
+        "Unity",
+        "GameMaker Studio",
+        "FMOD"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "Game programming",
+        "Porting",
+        "Game production"
+      ]
+    },
+    {
+      "id": "avw-atse-virtual-world",
+      "name": "AVW-ATSE Virtual World",
+      "country": "CR",
+      "city": "Alajuela",
+      "founded": 2010,
+      "models": [
+        "IP propia",
+        "Work for hire",
+        "Gamificación / Serious games"
+      ],
+      "tech": [
+        "Unity",
+        "Unreal Engine",
+        "Godot",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game programming",
+        "VR & XR"
+      ]
+    },
+    {
+      "id": "black-jack-gs",
+      "name": "Black Jack GS",
+      "country": "HN",
+      "city": "San Pedro Sula",
+      "founded": 2021,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Unity",
+        "Blender",
+        "Photoshop",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "Game programming",
+        "2D Art"
+      ]
+    },
+    {
+      "id": "boxcutter-la",
+      "name": "BoxCutter L.A",
+      "country": "GT",
+      "city": "Guatemala",
+      "founded": 2018,
+      "models": [
+        "IP propia",
+        "Work for hire"
+      ],
+      "tech": [
+        "GameMaker Studio",
+        "GDevelop",
+        "Blender",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "2D Art",
+        "2D Animation",
+        "QA Testing",
+        "Game production"
+      ]
+    },
+    {
+      "id": "ceiba-software-arts",
+      "name": "Ceiba Software & Arts",
+      "country": "CR",
+      "city": "San José",
+      "founded": 2015,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Unity",
+        "Unreal Engine",
+        "Blender",
+        "Procreate",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo"
+      ]
+    },
+    {
+      "id": "danny-garay",
+      "name": "Danny Garay",
+      "country": "NI",
+      "city": "Granada",
+      "founded": 2020,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Godot",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo"
+      ]
+    },
+    {
+      "id": "daztrax-studios",
+      "name": "Daztrax Studios",
+      "country": "CR",
+      "city": "Quesada",
+      "founded": 2022,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Unity"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game programming",
+        "Community management"
+      ]
+    },
+    {
+      "id": "droidgames-studio",
+      "name": "DroidGames Studio",
+      "country": "CR",
+      "city": "San Rafael/Cartago",
+      "founded": 2015,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "GameMaker Studio",
+        "Photoshop",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo"
+      ]
+    },
+    {
+      "id": "estudio-shout",
+      "name": "Estudio Shout",
+      "country": "CR",
+      "city": "San José",
+      "founded": 2016,
+      "models": [
+        "IP propia",
+        "Outsourcing",
+        "Work for hire"
+      ],
+      "tech": [
+        "Unity",
+        "Unreal Engine",
+        "Maya",
+        "Blender",
+        "After Effects"
+      ],
+      "services": [
+        "2D Art",
+        "3D Art",
+        "2D Animation",
+        "3D Animation",
+        "VR & XR"
+      ]
+    },
+    {
+      "id": "gallo-pinto-games",
+      "name": "Gallo Pinto Games",
+      "country": "CR",
+      "city": "Heredia",
+      "founded": 2021,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Unity",
+        "Photoshop"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "Game programming",
+        "Concept art",
+        "2D Art"
+      ]
+    },
+    {
+      "id": "gentleman-group-studio",
+      "name": "Gentleman Group Studio",
+      "country": "CR",
+      "city": "San José",
+      "founded": 2021,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Unity",
+        "Blender",
+        "FMOD",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "Game programming",
+        "Concept art",
+        "Game production"
+      ]
+    },
+    {
+      "id": "guerra-pixel-studio",
+      "name": "Guerra Pixel Studio",
+      "country": "HN",
+      "city": "Gloucester",
+      "founded": 2024,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "GameMaker Studio",
+        "Photoshop",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "2D Art",
+        "2D Animation",
+        "Game marketing"
+      ]
+    },
+    {
+      "id": "gunstone-studios",
+      "name": "Gunstone Studios",
+      "country": "SV",
+      "city": "San Salvador",
+      "founded": 2018,
+      "models": [
+        "IP propia",
+        "Codesarrollo",
+        "Outsourcing"
+      ],
+      "tech": [
+        "Unity",
+        "Unreal Engine",
+        "Blender",
+        "Photoshop",
+        "FMOD"
+      ],
+      "services": [
+        "Game programming",
+        "Concept art",
+        "2D Art",
+        "3D Art",
+        "Porting"
+      ]
+    },
+    {
+      "id": "hinuraion-studios",
+      "name": "Hinuraion Studios",
+      "country": "GT",
+      "city": "Guatemala",
+      "founded": 2023,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Unity",
+        "Godot",
+        "GameMaker Studio"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "Game programming",
+        "Concept art"
+      ]
+    },
+    {
+      "id": "hongoneon",
+      "name": "Hongoneon",
+      "country": "CR",
+      "city": "Guápiles, Pococí",
+      "founded": 2025,
+      "models": [
+        "IP propia",
+        "Outsourcing",
+        "Gamificación / Serious games"
+      ],
+      "tech": [
+        "Unity",
+        "Maya",
+        "Blender",
+        "Photoshop",
+        "FMOD"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "2D Art",
+        "3D Art",
+        "2D Animation",
+        "3D Animation"
+      ]
+    },
+    {
+      "id": "jgg-log-studio",
+      "name": "JGG Log Studio",
+      "country": "CR",
+      "city": "San José",
+      "founded": 2025,
+      "models": [
+        "IP propia",
+        "Codesarrollo",
+        "Outsourcing",
+        "Work for hire",
+        "Gamificación / Serious games"
+      ],
+      "tech": [
+        "Unity",
+        "Maya",
+        "Procreate",
+        "After Effects",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game programming",
+        "2D Animation",
+        "3D Animation",
+        "Sound FX and Music"
+      ]
+    },
+    {
+      "id": "ksc-studios",
+      "name": "KSC Studios",
+      "country": "GT",
+      "city": "Guatemala",
+      "founded": 2023,
+      "models": [
+        "IP propia",
+        "Outsourcing",
+        "Work for hire",
+        "Gamificación / Serious games"
+      ],
+      "tech": [
+        "Unity",
+        "Godot",
+        "Maya",
+        "Photoshop"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "Game programming",
+        "QA Testing",
+        "VR & XR"
+      ]
+    },
+    {
+      "id": "level-cosmos",
+      "name": "Level Cosmos",
+      "country": "SV",
+      "city": "",
+      "founded": 2025,
+      "models": [
+        "IP propia",
+        "Work for hire",
+        "Gamificación / Serious games"
+      ],
+      "tech": [
+        "Unity",
+        "Unreal Engine",
+        "Godot",
+        "GameMaker Studio"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "Game programming",
+        "VR & XR",
+        "Game production"
+      ]
+    },
+    {
+      "id": "lost-train-studio",
+      "name": "Lost Train Studio",
+      "country": "GT",
+      "city": "Guatemala",
+      "founded": 2019,
+      "models": [
+        "IP propia",
+        "Outsourcing",
+        "Work for hire",
+        "Gamificación / Serious games"
+      ],
+      "tech": [
+        "Unity",
+        "Blender",
+        "Photoshop",
+        "Procreate",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "Game programming",
+        "3D Art",
+        "VR & XR"
+      ]
+    },
+    {
+      "id": "lrds-studios",
+      "name": "LRDS Studios",
+      "country": "GT",
+      "city": "Ciudad de Guatemala",
+      "founded": 2023,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Unity",
+        "Photoshop",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "2D Art",
+        "Sound FX and Music",
+        "Narrative design"
+      ]
+    },
+    {
+      "id": "luna-interactive",
+      "name": "Luna Interactive",
+      "country": "GT",
+      "city": "Guatemala",
+      "founded": 2020,
+      "models": [
+        "IP propia",
+        "Codesarrollo"
+      ],
+      "tech": [
+        "Unity",
+        "Blender",
+        "Photoshop",
+        "Procreate",
+        "ZBrush"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "Game programming",
+        "3D Art",
+        "3D Animation"
+      ]
+    },
+    {
+      "id": "mediacity-games",
+      "name": "MediaCity Games",
+      "country": "HN",
+      "city": "Tegucigalpa",
+      "founded": 2012,
+      "models": [
+        "IP propia",
+        "Publisher"
+      ],
+      "tech": [
+        "Unity",
+        "Unreal Engine",
+        "Maya",
+        "Photoshop",
+        "ZBrush"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "Game programming",
+        "VR & XR",
+        "Game publishing"
+      ]
+    },
+    {
+      "id": "moonsprout-games-sa",
+      "name": "Moonsprout Games S.A.",
+      "country": "PA",
+      "city": "Panamá",
+      "founded": 2018,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Unity",
+        "Godot",
+        "GameMaker Studio",
+        "Blender",
+        "Procreate"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Narrative design"
+      ]
+    },
+    {
+      "id": "outsider-comet-studios",
+      "name": "Outsider Comet Studios",
+      "country": "SV",
+      "city": "San Salvador",
+      "founded": 2021,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Godot",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "Concept art",
+        "Narrative design"
+      ]
+    },
+    {
+      "id": "rambutan-dog-games",
+      "name": "Rambutan Dog Games",
+      "country": "GT",
+      "city": "Ciudad de Guatemala",
+      "founded": 2022,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Unity",
+        "Maya",
+        "Photoshop",
+        "ZBrush",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "VR & XR"
+      ]
+    },
+    {
+      "id": "red-pixel-studios",
+      "name": "RED PIXEL STUDIOS",
+      "country": "CR",
+      "city": "San José",
+      "founded": 2019,
+      "models": [
+        "IP propia",
+        "Outsourcing"
+      ],
+      "tech": [
+        "Unity",
+        "Blender",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "3D Art",
+        "3D Animation"
+      ]
+    },
+    {
+      "id": "selva-interactive",
+      "name": "Selva Interactive",
+      "country": "GT",
+      "city": "Guatemala",
+      "founded": 2016,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Unity"
+      ],
+      "services": [
+        "Desarrollo completo"
+      ]
+    },
+    {
+      "id": "t3ampo-studio",
+      "name": "T3AMPO STUDIO",
+      "country": "CR",
+      "city": "Limón",
+      "founded": 2021,
+      "models": [
+        "IP propia",
+        "Codesarrollo",
+        "Outsourcing",
+        "Work for hire",
+        "Publisher",
+        "Gamificación / Serious games"
+      ],
+      "tech": [
+        "Unity"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "2D Art",
+        "Sound FX and Music",
+        "QA Testing"
+      ]
+    },
+    {
+      "id": "the-domaginarium",
+      "name": "The Domaginarium",
+      "country": "SV",
+      "city": "Antiguo Cuscatlán",
+      "founded": 2011,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Unity",
+        "Unreal Engine"
+      ],
+      "services": [
+        "Desarrollo completo"
+      ]
+    },
+    {
+      "id": "tuanisapps",
+      "name": "TuanisApps",
+      "country": "CR",
+      "city": "Cartago",
+      "founded": 2018,
+      "models": [
+        "IP propia",
+        "Publisher"
+      ],
+      "tech": [
+        "Godot"
+      ],
+      "services": [
+        "Porting"
+      ]
+    },
+    {
+      "id": "ultraludic",
+      "name": "Ultraludic",
+      "country": "GT",
+      "city": "Ciudad de Guatemala",
+      "founded": 2021,
+      "models": [
+        "IP propia",
+        "Outsourcing",
+        "Work for hire",
+        "Gamificación / Serious games"
+      ],
+      "tech": [
+        "Unity",
+        "Blender",
+        "Photoshop",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "Game programming",
+        "Concept art",
+        "2D Animation"
+      ]
+    },
+    {
+      "id": "unsweetcore",
+      "name": "Unsweetcore",
+      "country": "GT",
+      "city": "Guatemala",
+      "founded": 2020,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Unity",
+        "Blender",
+        "Photoshop",
+        "After Effects"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Concept art",
+        "2D Art"
+      ]
+    },
+    {
+      "id": "world-eater-games",
+      "name": "World Eater Games",
+      "country": "PA",
+      "city": "Panamá",
+      "founded": 2019,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Godot",
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "Game programming"
+      ]
+    },
+    {
+      "id": "yuanworks",
+      "name": "YuanWorks",
+      "country": "CR",
+      "city": "San José",
+      "founded": 1997,
+      "models": [
+        "IP propia"
+      ],
+      "tech": [
+        "Otros"
+      ],
+      "services": [
+        "Desarrollo completo",
+        "Game design",
+        "Game programming",
+        "2D Animation",
+        "Game production"
+      ]
+    }
+  ],
+  "games": [
+    {
+      "slug": "502s-arcade",
+      "name": "502's Arcade",
+      "status": "released",
+      "platforms": [
+        "Steam",
+        "Xbox",
+        "PlayStation",
+        "Nintendo Switch"
+      ],
+      "studios": [
+        {
+          "id": "502-studios",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "ancient-tale-ixkik",
+      "name": "Ancient Tale: Ixkik'",
+      "status": "in-development",
+      "platforms": [
+        "Steam"
+      ],
+      "studios": [
+        {
+          "id": "luna-interactive",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "bittersweet-birthday",
+      "name": "Bittersweet Birthday",
+      "status": "released",
+      "platforms": [
+        "Steam",
+        "GOG"
+      ],
+      "studios": [
+        {
+          "id": "world-eater-games",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "blood-sins",
+      "name": "Blood Sins",
+      "status": "released",
+      "platforms": [
+        "Steam"
+      ],
+      "studios": [
+        {
+          "id": "jgg-log-studio",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "bradamante",
+      "name": "Bradamante",
+      "status": "in-development",
+      "platforms": [
+        "Steam"
+      ],
+      "studios": [
+        {
+          "id": "ceiba-software-arts",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "bug-fables-the-everlasting-sapling",
+      "name": "Bug Fables: The Everlasting Sapling",
+      "status": "released",
+      "platforms": [
+        "Steam",
+        "GOG",
+        "Epic Games",
+        "Nintendo Switch",
+        "Xbox",
+        "PlayStation"
+      ],
+      "studios": [
+        {
+          "id": "moonsprout-games-sa",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "cat-distribution-system-purrfect-match",
+      "name": "Cat Distribution System: Purrfect Match",
+      "status": "demo",
+      "platforms": [
+        "Apple Arcade"
+      ],
+      "studios": [
+        {
+          "id": "estudio-shout",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "chaotic-survivor",
+      "name": "Chaotic Survivor",
+      "status": "demo",
+      "platforms": [
+        "itch.io"
+      ],
+      "studios": [
+        {
+          "id": "lost-train-studio",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "chicken-with-robot-legs",
+      "name": "Chicken With Robot Legs",
+      "status": "released",
+      "platforms": [
+        "Steam"
+      ],
+      "studios": [
+        {
+          "id": "gallo-pinto-games",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "erandique",
+      "name": "Erandique",
+      "status": "released",
+      "platforms": [
+        "Steam",
+        "Google Play",
+        "App Store",
+        "Microsoft Store"
+      ],
+      "studios": [
+        {
+          "id": "black-jack-gs",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "hate-gem-rise-of-demon",
+      "name": "Hate-Gem Rise Of Demon",
+      "status": "early-access",
+      "platforms": [
+        "Steam"
+      ],
+      "studios": [
+        {
+          "id": "hinuraion-studios",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "howling-irons",
+      "name": "Howling Irons",
+      "status": "in-development",
+      "platforms": [],
+      "studios": [
+        {
+          "id": "gunstone-studios",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "illuminaria",
+      "name": "Illuminaria",
+      "status": "released",
+      "platforms": [
+        "Steam",
+        "Google Play",
+        "App Store",
+        "Nintendo Switch"
+      ],
+      "studios": [
+        {
+          "id": "selva-interactive",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "lez",
+      "name": "LEZ",
+      "status": "early-access",
+      "platforms": [
+        "Steam"
+      ],
+      "studios": [
+        {
+          "id": "daztrax-studios",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "mawkey-the-last-macaw",
+      "name": "Mawkey: The Last Macaw",
+      "status": "released",
+      "platforms": [
+        "Steam",
+        "Google Play"
+      ],
+      "studios": [
+        {
+          "id": "guerra-pixel-studio",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "mayan-pitz",
+      "name": "Mayan Pitz",
+      "status": "in-development",
+      "platforms": [
+        "Google Play",
+        "App Store"
+      ],
+      "studios": [
+        {
+          "id": "ultraludic",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "mission-bread",
+      "name": "Mission: B.R.E.A.D",
+      "status": "early-access",
+      "platforms": [
+        "Steam"
+      ],
+      "studios": [
+        {
+          "id": "gentleman-group-studio",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "mix-it",
+      "name": "MIX IT!",
+      "status": "released",
+      "platforms": [
+        "Steam"
+      ],
+      "studios": [
+        {
+          "id": "t3ampo-studio",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "my-last-20",
+      "name": "My Last 20",
+      "status": "released",
+      "platforms": [
+        "Steam",
+        "Google Play"
+      ],
+      "studios": [
+        {
+          "id": "droidgames-studio",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "oscuro-blossoms-glow",
+      "name": "Oscuro Blossom's Glow",
+      "status": "released",
+      "platforms": [
+        "Steam",
+        "PlayStation"
+      ],
+      "studios": [
+        {
+          "id": "hongoneon",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "paleontology-vr",
+      "name": "Paleontology VR",
+      "status": "released",
+      "platforms": [
+        "Meta Quest"
+      ],
+      "studios": [
+        {
+          "id": "rambutan-dog-games",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "quack-squad",
+      "name": "Quack Squad",
+      "status": "released",
+      "platforms": [
+        "Steam",
+        "Epic Games"
+      ],
+      "studios": [
+        {
+          "id": "boxcutter-la",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "rampino",
+      "name": "Rampino",
+      "status": "released",
+      "platforms": [
+        "Google Play"
+      ],
+      "studios": [
+        {
+          "id": "lrds-studios",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "roll-maze",
+      "name": "Roll Maze",
+      "status": "released",
+      "platforms": [
+        "Xbox"
+      ],
+      "studios": [
+        {
+          "id": "avw-atse-virtual-world",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "rotten-apocalypse-survivors",
+      "name": "Rotten Apocalypse - Survivors",
+      "status": "released",
+      "platforms": [
+        "Google Play"
+      ],
+      "studios": [
+        {
+          "id": "ksc-studios",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "soulclass",
+      "name": "Soulclass",
+      "status": "in-development",
+      "platforms": [],
+      "studios": [
+        {
+          "id": "level-cosmos",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "speed-run-project",
+      "name": "Speed Run Project",
+      "status": "released",
+      "platforms": [
+        "Steam"
+      ],
+      "studios": [
+        {
+          "id": "red-pixel-studios",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "the-dreamlands-aislings-quest",
+      "name": "The Dreamlands: Aisling's Quest",
+      "status": "released",
+      "platforms": [
+        "Steam",
+        "Mac",
+        "PlayStation"
+      ],
+      "studios": [
+        {
+          "id": "the-domaginarium",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "the-inheritance-of-crimson-manor",
+      "name": "The Inheritance of Crimson Manor",
+      "status": "released",
+      "platforms": [
+        "Steam",
+        "Xbox",
+        "PlayStation",
+        "App Store"
+      ],
+      "studios": [
+        {
+          "id": "mediacity-games",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "the-show-is-over-it",
+      "name": "The Show is Over It",
+      "status": "released",
+      "platforms": [
+        "Steam"
+      ],
+      "studios": [
+        {
+          "id": "unsweetcore",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "toziuha-night-order-of-the-alchemists",
+      "name": "Toziuha Night: Order of the Alchemists",
+      "status": "released",
+      "platforms": [
+        "Steam",
+        "GOG",
+        "Nintendo Switch",
+        "Google Play"
+      ],
+      "studios": [
+        {
+          "id": "danny-garay",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "wind-and-water-puzzle-battles",
+      "name": "Wind & Water: Puzzle Battles",
+      "status": "released",
+      "platforms": [
+        "SEGA Dreamcast",
+        "GP2X"
+      ],
+      "studios": [
+        {
+          "id": "yuanworks",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "wolleys-dungeon-adventure",
+      "name": "Wolley's Dungeon Adventure",
+      "status": "demo",
+      "platforms": [
+        "Steam",
+        "Nintendo Switch"
+      ],
+      "studios": [
+        {
+          "id": "tuanisapps",
+          "role": "developer"
+        }
+      ]
+    },
+    {
+      "slug": "yume-no-office",
+      "name": "Yume No Office",
+      "status": "released",
+      "platforms": [
+        "Steam"
+      ],
+      "studios": [
+        {
+          "id": "outsider-comet-studios",
+          "role": "developer"
+        }
+      ]
+    }
+  ]
+}

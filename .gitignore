@@ -1,0 +1,18 @@
+# Repo del sitio (solo referencia local, no se versiona aquí)
+gamedevca/
+
+# Dependencias y build
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Entorno y editores
+.env
+.env.local
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/extensions.json
+.idea/
+*.log
