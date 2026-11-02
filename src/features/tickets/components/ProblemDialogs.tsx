@@ -11,7 +11,7 @@ import {
   Stack,
   TextField,
 } from '@mui/material';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { servicesOfType } from '@/config/services';
 import { useRole } from '@/features/auth';
 import { useTickets, useToast } from '@/hooks';
@@ -104,6 +104,11 @@ export function KnownErrorDialog({ ticket, open, onClose }: DialogProps) {
   const [rootCause, setRootCause] = useState(ticket.rootCause ?? '');
   const [workaround, setWorkaround] = useState(ticket.workaround ?? '');
   const { saving, error, setError, run } = useSubmit(onClose);
+
+  // The ticket may refresh after the dialog opens (e.g. right after creating the problem).
+  useEffect(() => {
+    setRootCause((prev) => prev || ticket.rootCause || '');
+  }, [ticket.rootCause]);
 
   const submit = () => {
     if (!rootCause.trim()) return setError('Indicá la causa raíz identificada.');

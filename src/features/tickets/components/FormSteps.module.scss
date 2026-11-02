@@ -17,7 +17,7 @@
   @include display(1rem);
   margin-bottom: 12px;
   padding: 0;
-  color: var(--ink);
+  color: var(--heading);
 }
 
 .grid2 {
@@ -61,5 +61,5 @@
 .sectionTitle {
   @include display(0.95rem);
   margin: 6px 0 0;
-  color: var(--ink);
+  color: var(--heading);
 }

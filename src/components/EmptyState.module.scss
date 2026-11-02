@@ -27,7 +27,7 @@
 .title {
   @include display(1.05rem);
   margin: 0;
-  color: var(--ink);
+  color: var(--heading);
 }
 
 .description {

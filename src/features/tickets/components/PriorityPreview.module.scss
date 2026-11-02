@@ -23,7 +23,7 @@
 
   span {
     @include display(1.05rem);
-    color: var(--ink);
+    color: var(--heading);
   }
 }
 
@@ -57,7 +57,7 @@
   dd {
     @include display(1.1rem);
     margin: 4px 0 0;
-    color: var(--ink);
+    color: var(--heading);
   }
 }
 

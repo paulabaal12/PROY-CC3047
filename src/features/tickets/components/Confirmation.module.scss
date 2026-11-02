@@ -51,7 +51,7 @@
 .id {
   @include display(clamp(2.4rem, 8vw, 3.4rem));
   margin: 4px 0;
-  color: var(--ink);
+  color: var(--heading);
 }
 
 .title {

@@ -49,7 +49,7 @@
 .kpiValue {
   @include display(clamp(1.6rem, 4vw, 2.4rem));
   margin: 6px 0 2px;
-  color: var(--ink);
+  color: var(--heading);
 }
 
 .kpiHint {
@@ -88,7 +88,7 @@
   h3 {
     @include display(0.92rem);
     margin: 0;
-    color: var(--ink);
+    color: var(--heading);
   }
 }
 
@@ -150,7 +150,7 @@
 
   strong {
     @include display(0.95rem);
-    color: var(--ink);
+    color: var(--heading);
   }
 }
 
@@ -277,7 +277,7 @@
 
   strong {
     @include display(1.8rem);
-    color: var(--ink);
+    color: var(--heading);
   }
 
   span {
@@ -319,7 +319,7 @@
 .legendValue {
   margin-left: auto;
   font-weight: 800;
-  color: var(--ink);
+  color: var(--heading);
 }
 
 .tooltip {

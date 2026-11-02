@@ -30,7 +30,7 @@
 .title {
   @include display(clamp(1.4rem, 3vw, 2rem));
   margin: 0;
-  color: var(--ink);
+  color: var(--heading);
   overflow-wrap: anywhere;
 }
 

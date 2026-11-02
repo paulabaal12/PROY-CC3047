@@ -21,7 +21,7 @@
 .title {
   @include display(clamp(1.5rem, 3vw, 2.1rem));
   margin: 0;
-  color: var(--ink);
+  color: var(--heading);
 }
 
 .subtitle {
