@@ -3,24 +3,28 @@
 
 .card {
   @include card;
-  padding: $s-5;
+  display: flex;
+  flex-direction: column;
   min-width: 0;
+  padding: $s-5;
+}
 
-  @include up($bp-sm) {
-    padding: $s-6;
+.flush {
+  padding: 0;
+
+  .head {
+    padding: $s-4 $s-5;
+    margin: 0;
+    border-bottom: 1px solid var(--border);
   }
 }
 
 .interactive {
-  @include hover-lift;
+  @include hover-border;
 }
 
 .accent {
-  background: var(--surface-muted);
-}
-
-.danger {
-  border-left: 2px solid $p-critica;
+  background: var(--surface-2);
 }
 
 .head {
@@ -28,6 +32,7 @@
   align-items: center;
   justify-content: space-between;
   gap: $s-3;
+  min-height: $h-compact;
   margin-bottom: $s-4;
 }
 
@@ -44,5 +49,19 @@
 .subtitle {
   margin: 2px 0 0;
   font-size: 0.8125rem;
-  color: var(--text-muted);
+  color: var(--text-2);
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: $s-2;
+  flex: none;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
 }

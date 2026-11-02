@@ -1,13 +1,13 @@
 import { Avatar } from '@mui/material';
 import type { RoleId } from '@/types';
 
-// Soft tinted backgrounds per role, with dark text for contrast.
+// Neutral tints from the navy/sky family; text stays dark for contrast.
 const ROLE_COLOR: Record<RoleId, { bg: string; ink: string }> = {
-  usuario: { bg: '#E2E8F0', ink: '#334155' },
-  'service-desk': { bg: '#E0F2FE', ink: '#0369A1' },
-  'resp-tecnico': { bg: '#DBEAFE', ink: '#1D4ED8' },
-  'resp-contenido': { bg: '#D1FAE5', ink: '#047857' },
-  dueno: { bg: '#FFEDD5', ink: '#C2410C' },
+  usuario: { bg: '#F3F4F6', ink: '#374151' },
+  'service-desk': { bg: '#E8F4FB', ink: '#075985' },
+  'resp-tecnico': { bg: '#EEF1F8', ink: '#182C61' },
+  'resp-contenido': { bg: '#ECFDF5', ink: '#065F46' },
+  dueno: { bg: '#FEF3C7', ink: '#92400E' },
 };
 
 const initials = (name: string) =>
@@ -22,7 +22,7 @@ const initials = (name: string) =>
 export function PersonAvatar({
   name,
   role,
-  size = 36,
+  size = 32,
 }: {
   name: string;
   role: RoleId;
@@ -35,9 +35,8 @@ export function PersonAvatar({
       sx={{
         width: size,
         height: size,
-        fontSize: size * 0.36,
+        fontSize: Math.max(10, size * 0.38),
         fontWeight: 600,
-        fontFamily: "'Poppins', sans-serif",
         bgcolor: c.bg,
         color: c.ink,
       }}

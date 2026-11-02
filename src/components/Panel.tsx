@@ -9,10 +9,12 @@ interface Props {
   subtitle?: ReactNode;
   action?: ReactNode;
   className?: string;
-  /** Lifts softly on hover (clickable cards). */
+  /** Hover darkens the border (clickable cards). */
   interactive?: boolean;
-  /** `accent`: tinted surface; `danger`: thin red accent on the left edge. */
+  /** `accent` uses the muted surface. Other tones are kept for compatibility and render neutral. */
   tone?: 'default' | 'accent' | 'danger';
+  /** No inner padding (tables). */
+  flush?: boolean;
   as?: ElementType;
 }
 
@@ -25,6 +27,7 @@ export function Panel({
   className,
   interactive = false,
   tone = 'default',
+  flush = false,
   as: Tag = 'section',
 }: Props) {
   return (
@@ -33,7 +36,7 @@ export function Panel({
         styles.card,
         interactive && styles.interactive,
         tone === 'accent' && styles.accent,
-        tone === 'danger' && styles.danger,
+        flush && styles.flush,
         className,
       )}
     >
@@ -43,10 +46,10 @@ export function Panel({
             {title && <h2 className={styles.title}>{title}</h2>}
             {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
           </div>
-          {action}
+          {action && <div className={styles.action}>{action}</div>}
         </div>
       )}
-      {children}
+      <div className={styles.body}>{children}</div>
     </Tag>
   );
 }

@@ -10,7 +10,7 @@ interface Props {
   size?: 'small' | 'medium';
 }
 
-/** Tinted chip with a colored dot: the color supports the label, it never replaces it. */
+/** 8px dot + tinted chip: the color supports the label, it never replaces it. */
 export function PriorityChip({ priority, impact, urgency, size = 'small' }: Props) {
   const tone = PRIORITY_COLORS[priority];
   const chip = (
@@ -18,7 +18,7 @@ export function PriorityChip({ priority, impact, urgency, size = 'small' }: Prop
       size={size}
       icon={<span className={styles.dot} style={{ background: tone.color }} aria-hidden />}
       label={priority}
-      sx={{ ...toneSx(tone), fontWeight: 600, '& .MuiChip-icon': { ml: '8px', mr: '-4px' } }}
+      sx={{ ...toneSx(tone), '& .MuiChip-icon': { ml: '8px', mr: '-2px' } }}
     />
   );
   if (!impact || !urgency) return chip;

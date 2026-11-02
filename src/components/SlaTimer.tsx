@@ -16,11 +16,31 @@ const STATE_CLASS: Record<SlaClock['state'], string> = {
   missed: styles.breached ?? '',
 };
 
-/** Short form for cards: the label carries the state, the value only the time. */
-function describeCompact(label: string, clock: SlaClock): [string, string] {
-  const left = formatBusinessMinutes(Math.abs(clock.remainingMinutes));
-  if (clock.state === 'breached') return [`${label} vencida`, `+${left}`];
-  return [label, `quedan ${left}`];
+/** One-line form for cards: "Resp. +3 d háb" (overdue) or "Resol. 2 h" (time left). */
+function CompactClock({
+  label,
+  clock,
+  paused,
+}: {
+  label: string;
+  clock: SlaClock;
+  paused: boolean;
+}) {
+  const time = formatBusinessMinutes(Math.abs(clock.remainingMinutes));
+  const overdue = clock.state === 'breached';
+  const short = label === t.sla.response ? 'Resp.' : 'Resol.';
+  return (
+    <Tooltip
+      title={`${label} ${overdue ? `vencida hace ${time}` : `· quedan ${time}`} · meta ${formatBusinessMinutes(clock.targetMinutes)} hábiles${paused ? ` · ${t.sla.paused}` : ''}`}
+    >
+      <span className={clsx(styles.compact, STATE_CLASS[clock.state])} role="status">
+        <span className={styles.compactDot} aria-hidden />
+        <span className={styles.compactLabel}>{short}</span>
+        {overdue ? `+${time}` : time}
+        {paused && <PauseCircleOutlineIcon className={styles.pause} aria-label={t.sla.paused} />}
+      </span>
+    </Tooltip>
+  );
 }
 
 function describe(clock: SlaClock): string {
@@ -36,20 +56,7 @@ function describe(clock: SlaClock): string {
   }
 }
 
-function Clock({
-  label,
-  clock,
-  paused,
-  compact = false,
-}: {
-  label: string;
-  clock: SlaClock;
-  paused: boolean;
-  compact?: boolean;
-}) {
-  const [shownLabel, shownValue] = compact
-    ? describeCompact(label, clock)
-    : [label, describe(clock)];
+function Clock({ label, clock, paused }: { label: string; clock: SlaClock; paused: boolean }) {
   const percent = Math.min(100, (clock.elapsedMinutes / clock.targetMinutes) * 100);
   const running = !clock.stopped;
   return (
@@ -58,12 +65,12 @@ function Clock({
     >
       <div className={clsx(styles.clock, STATE_CLASS[clock.state])} role="status">
         <div className={styles.row}>
-          <span className={styles.label}>{shownLabel}</span>
+          <span className={styles.label}>{label}</span>
           <span className={styles.value}>
             {running && paused && (
               <PauseCircleOutlineIcon className={styles.pause} aria-label={t.sla.paused} />
             )}
-            {shownValue}
+            {describe(clock)}
           </span>
         </div>
         <div className={styles.track} aria-hidden>
@@ -86,7 +93,7 @@ export function SlaTimer({ ticket, now, compact = false }: Props) {
     return (
       <p className={styles.exempt}>
         {compact
-          ? 'Problema: sin SLA de incidente'
+          ? 'Sin SLA (problema)'
           : 'Registro de problema: se gestiona por causa raíz, sin SLA de incidente.'}
       </p>
     );
@@ -96,7 +103,7 @@ export function SlaTimer({ ticket, now, compact = false }: Props) {
     // Cards show the clock that matters right now.
     const clock = sla.response.stopped ? sla.resolution : sla.response;
     const label = sla.response.stopped ? t.sla.resolution : t.sla.response;
-    return <Clock label={label} clock={clock} paused={sla.paused} compact />;
+    return <CompactClock label={label} clock={clock} paused={sla.paused && !clock.stopped} />;
   }
   return (
     <div className={styles.stack}>

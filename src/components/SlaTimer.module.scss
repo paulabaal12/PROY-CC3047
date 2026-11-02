@@ -7,7 +7,7 @@
 
 .clock {
   --sla: #047857;
-  --sla-bg: rgba(16, 185, 129, 0.14);
+  --sla-bg: #e5e7eb;
   display: grid;
   gap: 6px;
   min-width: 0;
@@ -17,27 +17,28 @@
 .ok,
 .met {
   --sla: #047857;
-  --sla-bg: rgba(16, 185, 129, 0.14);
 }
 
 .warning {
-  --sla: #b45309;
-  --sla-bg: rgba(245, 158, 11, 0.18);
+  --sla: #a16207;
 }
 
 .breached {
   --sla: #b91c1c;
-  --sla-bg: rgba(239, 68, 68, 0.14);
 }
 
 :global([data-theme='dark']) {
+  .clock {
+    --sla-bg: #1f2937;
+  }
+
   .ok,
   .met {
     --sla: #6ee7b7;
   }
 
   .warning {
-    --sla: #fcd34d;
+    --sla: #fde047;
   }
 
   .breached {
@@ -55,8 +56,7 @@
 
 .label {
   flex: none;
-  font-weight: 500;
-  color: var(--text-muted);
+  color: var(--text-2);
 }
 
 .value {
@@ -64,8 +64,9 @@
   align-items: center;
   gap: 4px;
   min-width: 0;
-  font-weight: 600;
+  font-weight: 500;
   color: var(--sla);
+  font-variant-numeric: tabular-nums;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -93,5 +94,32 @@
 .exempt {
   margin: 0;
   font-size: 0.75rem;
-  color: var(--text-muted);
+  color: var(--text-2);
+}
+
+// Compact (cards, lists): one line, dot + label + time.
+.compact {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  max-width: 100%;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--sla);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.compactDot {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--sla);
+}
+
+.compactLabel {
+  color: var(--text-2);
+  font-weight: 400;
 }

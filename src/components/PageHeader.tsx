@@ -1,36 +1,52 @@
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import type { ReactNode } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import styles from './PageHeader.module.scss';
 
-export interface HeaderStat {
+export interface Crumb {
   label: string;
-  value: string | number;
-  tone?: 'default' | 'danger' | 'success';
+  to?: string;
 }
 
 interface Props {
-  eyebrow?: string;
+  breadcrumbs?: Crumb[];
   title: string;
+  /** One line, truncated beyond 640px. */
   subtitle?: string;
   actions?: ReactNode;
-  /** Optional one-line summary under the title (counts, status). */
-  stats?: HeaderStat[];
+  /** Optional row under the title (chips, status). */
+  meta?: ReactNode;
 }
 
-export function PageHeader({ eyebrow, title, subtitle, actions, stats }: Props) {
+/** The single page header used by every view: breadcrumb, title, one-line subtitle, actions. */
+export function PageHeader({ breadcrumbs, title, subtitle, actions, meta }: Props) {
   return (
     <header className={styles.header}>
       <div className={styles.text}>
-        {eyebrow && <p className={styles.eyebrow}>{eyebrow}</p>}
+        {breadcrumbs && breadcrumbs.length > 0 && (
+          <nav aria-label="Ruta" className={styles.crumbs}>
+            <ol>
+              {breadcrumbs.map((c, i) => (
+                <li key={`${c.label}-${i}`}>
+                  {i > 0 && <ChevronRightIcon className={styles.sep} aria-hidden />}
+                  {c.to ? (
+                    <RouterLink to={c.to}>{c.label}</RouterLink>
+                  ) : (
+                    <span aria-current={i === breadcrumbs.length - 1 ? 'page' : undefined}>
+                      {c.label}
+                    </span>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )}
         <h1 className={styles.title}>{title}</h1>
-        {subtitle && <p className={styles.subtitle}>{subtitle}</p>}
-        {stats && stats.length > 0 && (
-          <ul className={styles.stats}>
-            {stats.map((s) => (
-              <li key={s.label} data-tone={s.tone ?? 'default'}>
-                <strong>{s.value}</strong> {s.label}
-              </li>
-            ))}
-          </ul>
+        {meta && <div className={styles.meta}>{meta}</div>}
+        {subtitle && (
+          <p className={styles.subtitle} title={subtitle}>
+            {subtitle}
+          </p>
         )}
       </div>
       {actions && <div className={styles.actions}>{actions}</div>}
