@@ -46,6 +46,8 @@ function CompactClock({
 function describe(clock: SlaClock): string {
   switch (clock.state) {
     case 'met':
+      // Stopped before any business minute ran (e.g. resolved outside the service window).
+      if (clock.elapsedMinutes < 1) return `${t.sla.met} (fuera del horario hábil)`;
       return `${t.sla.met} (${formatBusinessMinutes(clock.elapsedMinutes)})`;
     case 'missed':
       return `${t.sla.missed} (+${formatBusinessMinutes(-clock.remainingMinutes)})`;

@@ -162,7 +162,12 @@ export default {
 
     const now = new Date().toISOString();
     const submittedAt = textValue(record, '_submission_time');
-    const createdAt = submittedAt && !Number.isNaN(Date.parse(submittedAt)) ? submittedAt : now;
+    // Kobo sends `_submission_time` in UTC without a zone; store it with the zone so the
+    // browser does not read it as local time (6 h in the future in Guatemala).
+    const submittedMs = submittedAt
+      ? Date.parse(/([zZ]|[+-]\d{2}:?\d{2})$/.test(submittedAt) ? submittedAt : `${submittedAt}Z`)
+      : NaN;
+    const createdAt = Number.isNaN(submittedMs) ? now : new Date(submittedMs).toISOString();
     const submissionIdText = String(submissionId);
     const ticketId = `CAG-KB-${submissionIdText}`;
     const priority = calculatePriority(config.impact, config.urgency);

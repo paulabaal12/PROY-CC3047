@@ -16,6 +16,7 @@ import {
   type TicketService,
 } from './ticketService';
 import { supabaseAuth, supabaseConfig } from './supabaseAuth';
+import { toUtcIso } from '@/utils/dates';
 import { calculatePriority } from '@/utils/priority';
 
 interface TicketRow {
@@ -49,6 +50,21 @@ async function request(path: string, init: RequestInit = {}) {
   return response;
 }
 
+/** Older kobo-ingest rows store UTC dates without a zone; read them as UTC. */
+function normalizeDates(ticket: Ticket): Ticket {
+  const opt = (value?: string) => (value ? toUtcIso(value) : value);
+  return {
+    ...ticket,
+    createdAt: toUtcIso(ticket.createdAt),
+    updatedAt: toUtcIso(ticket.updatedAt),
+    respondedAt: opt(ticket.respondedAt),
+    resolvedAt: opt(ticket.resolvedAt),
+    closedAt: opt(ticket.closedAt),
+    comments: ticket.comments.map((c) => ({ ...c, createdAt: toUtcIso(c.createdAt) })),
+    history: ticket.history.map((h) => ({ ...h, at: toUtcIso(h.at) })),
+  };
+}
+
 async function fetchTickets(): Promise<Ticket[]> {
   const response = await request('service_desk_tickets?select=id,ticket&order=created_at.desc');
   const rows = (await response.json()) as TicketRow[];
@@ -56,7 +72,7 @@ async function fetchTickets(): Promise<Ticket[]> {
     .map((row) => row.ticket)
     .filter((ticket): ticket is Ticket => Boolean(ticket?.id))
     .map((ticket) => ({
-      ...ticket,
+      ...normalizeDates(ticket),
       // Always derive this label from the matrix; persisted labels may be stale or malformed.
       priority: calculatePriority(ticket.impact, ticket.urgency),
     }));
