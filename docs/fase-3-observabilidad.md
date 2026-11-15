@@ -110,6 +110,16 @@ Busca errores de lectura de configuración, permisos, conexión a Elasticsearch 
 
 Abre <http://localhost:5601>. Si Kibana todavía no carga, espera un minuto y revisa `docker compose logs --tail 100 kibana`.
 
+**Opción rápida (recomendada):** el dashboard, sus seis paneles Lens y los data views de la API (`centralamerica-games-api-*`) y de Heartbeat (`heartbeat-*`) están exportados en `observability/kibana/dashboard.ndjson`. Se importan con:
+
+```powershell
+curl.exe -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H "kbn-xsrf: true" --form file=@observability/kibana/dashboard.ndjson
+```
+
+Luego abre **Analytics → Dashboard → CentralAmerica.Games — Monitoreo API**. Por defecto muestra las últimas 24 horas y se refresca cada 30 s. El panel *Estado de sistema* muestra, para cada monitor de Heartbeat, el último estado (`up`/`down`) junto con la cantidad de checks.
+
+**Opción manual:**
+
 1. Ve a **Stack Management → Data Views → Create data view**.
 2. Usa el patrón `centralamerica-games-api-*`, selecciona `@timestamp` como campo de tiempo y guarda.
 3. Ve a **Analytics → Dashboard**, crea **CentralAmerica.Games — Monitoreo API** y añade los siguientes paneles usando ese data view:
@@ -127,7 +137,11 @@ Usa un rango temporal que incluya la hora de generación de los logs, pulsa **Sa
 
 ### 4. Tomar evidencias y terminar el informe
 
-1. Captura la vista completa del dashboard, con título, rango de tiempo, paneles y valores visibles. Guarda el archivo en `docs/evidencias/` con un nombre claro, por ejemplo `dashboard-kibana.png`.
+1. Captura la vista completa del dashboard, con título, rango de tiempo, paneles y valores visibles. Las capturas están en `docs/evidencia/`:
+   - `dashboard-completo.png`: vista completa del dashboard.
+   - `dashboard-kpis-estado.png`: error rate, tiempo de respuesta promedio y estado de Heartbeat.
+   - `dashboard-trafico.png`: tráfico de peticiones en el tiempo.
+   - `dashboard-codigos-endpoints.png`: distribución de códigos HTTP y top endpoints.
 2. Conserva `observability/logs/api.log` con al menos 50 líneas generadas por solicitudes reales. No edites ni inventes eventos manualmente.
 3. En el informe técnico, incluye arquitectura, versiones, endpoints, formato ECS, flujo API → archivo → Filebeat → Elasticsearch → Kibana, configuración de Heartbeat, resultados observados y la captura.
 4. Registra cualquier ajuste que haya sido necesario para que los servicios arrancaran en el equipo del grupo.
