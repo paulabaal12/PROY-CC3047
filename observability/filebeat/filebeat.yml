@@ -1,0 +1,22 @@
+filebeat.inputs:
+  - type: filestream
+    id: centralamerica-games-api-json
+    enabled: true
+    paths:
+      - /var/log/centralamerica-games/api.log
+    parsers:
+      - ndjson:
+          target: ""
+          add_error_key: true
+    fields_under_root: true
+    fields:
+      event.dataset: centralamerica_games.api
+
+setup.ilm.enabled: false
+setup.template.name: centralamerica-games-api
+setup.template.pattern: centralamerica-games-api-*
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+  index: "centralamerica-games-api-%{+yyyy.MM.dd}"
+
+logging.level: info

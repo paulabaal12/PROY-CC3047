@@ -1,0 +1,97 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: observability/api/Dockerfile
+    container_name: centralamerica-games-api
+    ports:
+      - "127.0.0.1:3000:3000"
+    volumes:
+      - ./observability/logs:/var/log/centralamerica-games
+    networks:
+      - observability
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/api/health').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELASTIC_VERSION:-9.5.6}
+    container_name: centralamerica-games-elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    ports:
+      - "127.0.0.1:9200:9200"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    networks:
+      - observability
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:9200/_cluster/health?wait_for_status=yellow >/dev/null"]
+      interval: 10s
+      timeout: 5s
+      retries: 20
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:${ELASTIC_VERSION:-9.5.6}
+    container_name: centralamerica-games-kibana
+    environment:
+      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+      XPACK_SECURITY_ENABLED: "false"
+    ports:
+      - "127.0.0.1:5601:5601"
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    networks:
+      - observability
+    restart: unless-stopped
+
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:${ELASTIC_VERSION:-9.5.6}
+    container_name: centralamerica-games-filebeat
+    user: root
+    command: ["--strict.perms=false", "-e"]
+    volumes:
+      - ./observability/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./observability/logs:/var/log/centralamerica-games:ro
+      - filebeat-data:/usr/share/filebeat/data
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+    networks:
+      - observability
+    restart: unless-stopped
+
+  heartbeat:
+    image: docker.elastic.co/beats/heartbeat:${ELASTIC_VERSION:-9.5.6}
+    container_name: centralamerica-games-heartbeat
+    user: root
+    command: ["--strict.perms=false", "-e"]
+    volumes:
+      - ./observability/heartbeat/heartbeat.yml:/usr/share/heartbeat/heartbeat.yml:ro
+      - heartbeat-data:/usr/share/heartbeat/data
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      api:
+        condition: service_healthy
+    networks:
+      - observability
+    restart: unless-stopped
+
+networks:
+  observability:
+    name: centralamerica-games-observability
+
+volumes:
+  elasticsearch-data:
+  filebeat-data:
+  heartbeat-data:

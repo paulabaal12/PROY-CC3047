@@ -16,3 +16,5 @@ Thumbs.db
 !.vscode/extensions.json
 .idea/
 *.log
+!observability/logs/api.log
+!observability/sample-api.log

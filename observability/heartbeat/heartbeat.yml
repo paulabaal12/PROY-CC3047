@@ -1,0 +1,19 @@
+heartbeat.monitors:
+  - type: http
+    id: centralamerica-games-api-health
+    name: CentralAmerica.Games API health
+    schedule: '@every 10s'
+    hosts: ["http://api:3000/api/health"]
+    check.response.status: [200]
+  - type: http
+    id: centralamerica-games-api-games
+    name: CentralAmerica.Games catalog endpoint
+    schedule: '@every 30s'
+    hosts: ["http://api:3000/api/games"]
+    check.response.status: [200]
+
+setup.ilm.enabled: false
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+
+logging.level: info

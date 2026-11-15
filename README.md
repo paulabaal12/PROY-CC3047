@@ -40,6 +40,10 @@ La clave publicable del frontend no es secreta: la protección de los datos depe
 
 Para crear tickets automáticamente cuando UptimeRobot detecta una caída, consulta [`docs/uptimerobot-tickets-automaticos.md`](docs/uptimerobot-tickets-automaticos.md). La integración consulta la API de lectura desde Supabase Cron, por lo que no requiere el Webhook de UptimeRobot Team/Scale.
 
+## Fase 3: API y observabilidad
+
+La API de consulta del catálogo y el stack local de observabilidad se documentan en [`docs/fase-3-observabilidad.md`](docs/fase-3-observabilidad.md). La API usa el catálogo de referencia existente y se ejecuta con `npm run api`; el stack ELK + Filebeat + Heartbeat se levanta con `docker compose up --build -d`.
+
 ## Trazabilidad Fase 1 → Fase 2
 
 | Elemento de la Fase 1 | Dónde está en la Fase 2 |
