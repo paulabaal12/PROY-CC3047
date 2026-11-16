@@ -44,6 +44,22 @@ Para crear tickets automáticamente cuando UptimeRobot detecta una caída, consu
 
 La API de consulta del catálogo y el stack local de observabilidad se documentan en [`docs/fase-3-observabilidad.md`](docs/fase-3-observabilidad.md). La API usa el catálogo de referencia existente y se ejecuta con `npm run api`; el stack ELK + Filebeat + Heartbeat se levanta con `docker compose up --build -d`.
 
+### Importar el dashboard de Kibana
+
+Con el stack levantado, espera a que Kibana esté disponible en <http://localhost:5601>. Desde PowerShell, en la raíz del proyecto, verifica su estado:
+
+```powershell
+Invoke-RestMethod http://localhost:5601/api/status
+```
+
+Después importa el dashboard y sus visualizaciones desde el archivo NDJSON incluido:
+
+```powershell
+curl.exe -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H "kbn-xsrf: true" --form "file=@observability/kibana/dashboard.ndjson"
+```
+
+Kibana debe responder `"success": true` y mostrar `successCount: 9`. La opción `overwrite=true` reemplaza objetos existentes que tengan los mismos IDs. Abre el dashboard en <http://localhost:5601/app/dashboards#/view/centralamerica-games-monitoreo-api>. Para que los paneles muestren datos, genera tráfico con `npm.cmd run api:sample-logs` y espera a que Filebeat lo indexe.
+
 ## Trazabilidad Fase 1 → Fase 2
 
 | Elemento de la Fase 1 | Dónde está en la Fase 2 |
