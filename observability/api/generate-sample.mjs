@@ -1,18 +1,72 @@
 const baseUrl = process.env.API_BASE_URL ?? 'http://localhost:3000';
-const requests = [
-  ...Array.from({ length: 20 }, (_, index) => `/api/games${index % 2 ? '' : '?page=1'}`),
-  ...Array.from({ length: 12 }, () => '/api/studios'),
-  ...Array.from({ length: 12 }, (_, index) => `/api/search?q=${index % 2 ? 'Guatemala' : 'game'}`),
-  ...Array.from({ length: 8 }, () => '/api/health'),
-  ...Array.from({ length: 4 }, (_, index) => `/api/games/missing-${index}`),
-  ...Array.from({ length: 4 }, () => '/api/search'),
+const intervalMs = Number(process.env.API_TRAFFIC_INTERVAL_MS ?? 250);
+const serviceIds = [
+  'registro',
+  'actualizacion',
+  'mantenimiento-bd',
+  'extraccion',
+  'sitio-no-disponible',
+  'busqueda-lenta',
+  'ficha-corrupta',
 ];
+const args = process.argv.slice(2);
+const countFlag = args.indexOf('--count');
+const durationFlag = args.indexOf('--duration-seconds');
+const requestLimit = countFlag >= 0 ? Number(args[countFlag + 1]) : Infinity;
+const durationSeconds = durationFlag >= 0 ? Number(args[durationFlag + 1]) : Infinity;
 
-let failures = 0;
-for (const path of requests) {
-  const response = await fetch(new URL(path, baseUrl));
-  if (response.status >= 500) failures += 1;
-  await response.arrayBuffer();
+if (!Number.isFinite(intervalMs) || intervalMs < 0) {
+  throw new Error('API_TRAFFIC_INTERVAL_MS debe ser un número >= 0.');
 }
-process.stdout.write(`Solicitudes realizadas: ${requests.length}; errores 5xx: ${failures}\n`);
-process.stdout.write(`Los registros se agregaron automáticamente a observability/logs/api.log en el servidor.\n`);
+if (!(Number.isInteger(requestLimit) && requestLimit > 0) && requestLimit !== Infinity) {
+  throw new Error('--count debe ser un entero positivo.');
+}
+if (!(Number.isFinite(durationSeconds) && durationSeconds > 0) && durationSeconds !== Infinity) {
+  throw new Error('--duration-seconds debe ser un número positivo.');
+}
+
+let stopRequested = false;
+let requestCount = 0;
+let transportErrors = 0;
+const statuses = new Map();
+const deadline = Number.isFinite(durationSeconds) ? Date.now() + durationSeconds * 1000 : Infinity;
+
+process.once('SIGINT', () => {
+  stopRequested = true;
+  process.stdout.write('\nDeteniendo el generador después de la petición actual...\n');
+});
+process.once('SIGTERM', () => {
+  stopRequested = true;
+});
+
+process.stdout.write(
+  `Generador continuo para ${serviceIds.length} endpoints en ${baseUrl}. ` +
+  `Intervalo entre solicitudes: ${intervalMs} ms. Presiona Ctrl+C para detenerlo.\n`,
+);
+
+while (!stopRequested && requestCount < requestLimit && Date.now() < deadline) {
+  const serviceId = serviceIds[requestCount % serviceIds.length];
+  const endpoint = `/api/services/${serviceId}`;
+  try {
+    const response = await fetch(new URL(endpoint, baseUrl), {
+      headers: { 'user-agent': 'centralamerica-games-traffic-generator/1.0' },
+      signal: AbortSignal.timeout(10000),
+    });
+    await response.arrayBuffer();
+    statuses.set(response.status, (statuses.get(response.status) ?? 0) + 1);
+  } catch (error) {
+    transportErrors += 1;
+    process.stderr.write(`No se pudo completar ${endpoint}: ${error.message}\n`);
+  }
+  requestCount += 1;
+
+  if (!stopRequested && requestCount < requestLimit && Date.now() < deadline && intervalMs > 0) {
+    await new Promise((resolveWait) => setTimeout(resolveWait, intervalMs));
+  }
+}
+
+const statusSummary = [...statuses.entries()].map(([status, count]) => `${status}: ${count}`).join(', ');
+process.stdout.write(
+  `Resumen: ${requestCount} solicitudes intentadas${statusSummary ? `; respuestas HTTP (${statusSummary})` : ''}; ` +
+  `${transportErrors} fallas de transporte.\n`,
+);

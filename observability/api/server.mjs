@@ -9,9 +9,40 @@ const catalogPath = resolve(projectRoot, 'reference/catalog-reference.json');
 const port = Number(process.env.API_PORT ?? 3000);
 const logPath = process.env.API_LOG_PATH ?? resolve(apiDirectory, '../logs/api.log');
 const serviceName = 'centralamerica-games-api';
+const simulated4xxRate = Number(process.env.API_SIMULATED_4XX_RATE ?? 0.10);
+const simulated5xxRate = Number(process.env.API_SIMULATED_5XX_RATE ?? 0.05);
+const latencyMinMs = Number(process.env.API_LATENCY_MIN_MS ?? 100);
+const latencyMaxMs = Number(process.env.API_LATENCY_MAX_MS ?? 800);
 const catalog = JSON.parse(readFileSync(catalogPath, 'utf8'));
 const games = [...catalog.games].sort((a, b) => a.name.localeCompare(b.name));
 const studios = [...catalog.studios].sort((a, b) => a.name.localeCompare(b.name));
+const serviceCatalog = {
+  registro: 'Registro de un nuevo videojuego o estudio',
+  actualizacion: 'Actualización de información del catálogo',
+  'mantenimiento-bd': 'Mantenimiento de la base de datos',
+  extraccion: 'Extracción de información del catálogo',
+  'sitio-no-disponible': 'Reporte de sitio no disponible',
+  'busqueda-lenta': 'Reporte de búsqueda lenta',
+  'ficha-corrupta': 'Reporte de ficha corrupta',
+};
+
+if (
+  !Number.isFinite(simulated4xxRate) ||
+  !Number.isFinite(simulated5xxRate) ||
+  simulated4xxRate < 0 ||
+  simulated5xxRate < 0 ||
+  simulated4xxRate + simulated5xxRate >= 1
+) {
+  throw new Error('Las tasas de error deben ser >= 0 y sumar menos de 1.');
+}
+if (
+  !Number.isFinite(latencyMinMs) ||
+  !Number.isFinite(latencyMaxMs) ||
+  latencyMinMs < 0 ||
+  latencyMaxMs < latencyMinMs
+) {
+  throw new Error('La latencia debe tener límites válidos: 0 <= mínimo <= máximo.');
+}
 
 mkdirSync(dirname(logPath), { recursive: true });
 const logStream = createWriteStream(logPath, { flags: 'a' });
@@ -47,14 +78,80 @@ function getGame(id) {
   return games.find((game) => game.slug === id || game.id === id);
 }
 
-function route(request, response) {
+const wait = (durationMs) => new Promise((resolveWait) => setTimeout(resolveWait, durationMs));
+
+async function route(request) {
   const url = new URL(request.url ?? '/', 'http://localhost');
   if (request.method !== 'GET') {
-    return { status: 404, body: { error: 'Ruta no encontrada' } };
+    return { status: 405, body: { error: 'Método no permitido' } };
   }
 
   if (url.pathname === '/api/health') {
     return { status: 200, body: { status: 'up', service: serviceName, timestamp: new Date().toISOString() } };
+  }
+  if (url.pathname === '/api/services') {
+    return {
+      status: 200,
+      body: {
+        count: Object.keys(serviceCatalog).length,
+        data: Object.entries(serviceCatalog).map(([id, name]) => ({
+          id,
+          name,
+          endpoint: `/api/services/${id}`,
+          method: 'GET',
+        })),
+      },
+    };
+  }
+  const simulatedServiceMatch = url.pathname.match(/^\/api\/services\/([^/]+)\/?$/);
+  if (simulatedServiceMatch) {
+    let serviceId;
+    try {
+      serviceId = decodeURIComponent(simulatedServiceMatch[1]);
+    } catch {
+      return { status: 400, body: { error: 'Identificador de servicio inválido' } };
+    }
+    const serviceTitle = Object.hasOwn(serviceCatalog, serviceId) ? serviceCatalog[serviceId] : undefined;
+    if (!serviceTitle) return { status: 404, body: { error: 'Servicio no encontrado', id: serviceId } };
+
+    request.simulatedServiceId = serviceId;
+    const simulatedLatencyMs = latencyMinMs + Math.random() * (latencyMaxMs - latencyMinMs);
+    await wait(simulatedLatencyMs);
+
+    const outcome = Math.random();
+    if (outcome < simulated4xxRate) {
+      return {
+        status: 400,
+        body: {
+          error: 'Solicitud simulada rechazada por validación',
+          service: { id: serviceId, name: serviceTitle },
+          simulated: true,
+          simulatedLatencyMs: Math.round(simulatedLatencyMs),
+        },
+      };
+    }
+    if (outcome < simulated4xxRate + simulated5xxRate) {
+      return {
+        status: 503,
+        body: {
+          error: 'Falla temporal simulada del servicio',
+          service: { id: serviceId, name: serviceTitle },
+          simulated: true,
+          simulatedLatencyMs: Math.round(simulatedLatencyMs),
+        },
+      };
+    }
+    return {
+      status: 200,
+      body: {
+        status: 'success',
+        service: { id: serviceId, name: serviceTitle },
+        simulated: true,
+        requestId: crypto.randomUUID(),
+        processedAt: new Date().toISOString(),
+        simulatedLatencyMs: Math.round(simulatedLatencyMs),
+      },
+    };
   }
   if (url.pathname === '/api/games') {
     return { status: 200, body: { count: games.length, data: games } };
@@ -93,13 +190,13 @@ function route(request, response) {
   return { status: 404, body: { error: 'Ruta no encontrada' } };
 }
 
-const server = createServer((request, response) => {
+const server = createServer(async (request, response) => {
   const startedAt = process.hrtime.bigint();
   let statusCode = 500;
   let level = 'error';
   response.once('finish', () => writeLog(request, response, startedAt, statusCode, level));
   try {
-    const result = route(request, response);
+    const result = await route(request);
     statusCode = result.status;
     level = statusCode >= 500 ? 'error' : statusCode >= 400 ? 'warn' : 'info';
     sendJson(response, result.status, result.body);

@@ -8,6 +8,7 @@
     "dev": "vite",
     "api": "node observability/api/server.mjs",
     "api:sample-logs": "node observability/api/generate-sample.mjs",
+    "api:sample-logs:once": "node observability/api/generate-sample.mjs --count 60",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest run",

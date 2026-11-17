@@ -42,7 +42,9 @@ Para crear tickets automáticamente cuando UptimeRobot detecta una caída, consu
 
 ## Fase 3: API y observabilidad
 
-La API de consulta del catálogo y el stack local de observabilidad se documentan en [`docs/fase-3-observabilidad.md`](docs/fase-3-observabilidad.md). La API usa el catálogo de referencia existente y se ejecuta con `npm run api`; el stack ELK + Filebeat + Heartbeat se levanta con `docker compose up --build -d`.
+La API simulada de los siete servicios de Fase 1, sus proporciones de respuesta y el stack local de observabilidad se documentan en [`docs/fase-3-observabilidad.md`](docs/fase-3-observabilidad.md). Conserva las consultas al catálogo y agrega `GET /api/services/:serviceId`. El stack ELK + Filebeat + Heartbeat se levanta con `docker compose up --build -d`; para reconstruir solo la API después de cambios, usa `docker compose up --build -d api`. Para ejecutar la API fuera de Docker usa `npm.cmd run api`.
+
+Después del arranque, `npm.cmd run api:sample-logs` genera tráfico continuo sobre los siete endpoints simulados; deténlo con Ctrl+C. Para producir un lote finito de 60 solicitudes usa `npm.cmd run api:sample-logs:once`.
 
 ### Importar el dashboard de Kibana
 

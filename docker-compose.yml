@@ -4,6 +4,11 @@ services:
       context: .
       dockerfile: observability/api/Dockerfile
     container_name: centralamerica-games-api
+    environment:
+      API_SIMULATED_4XX_RATE: "0.10"
+      API_SIMULATED_5XX_RATE: "0.05"
+      API_LATENCY_MIN_MS: "100"
+      API_LATENCY_MAX_MS: "800"
     ports:
       - "127.0.0.1:3000:3000"
     volumes:
