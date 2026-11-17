@@ -42,25 +42,64 @@ Para crear tickets automáticamente cuando UptimeRobot detecta una caída, consu
 
 ## Fase 3: API y observabilidad
 
-La API simulada de los siete servicios de Fase 1, sus proporciones de respuesta y el stack local de observabilidad se documentan en [`docs/fase-3-observabilidad.md`](docs/fase-3-observabilidad.md). Conserva las consultas al catálogo y agrega `GET /api/services/:serviceId`. El stack ELK + Filebeat + Heartbeat se levanta con `docker compose up --build -d`; para reconstruir solo la API después de cambios, usa `docker compose up --build -d api`. Para ejecutar la API fuera de Docker usa `npm.cmd run api`.
+La Fase 3 agrega una API asociada al catálogo y a los siete servicios definidos en la Fase 1, además del stack local de observabilidad con Elasticsearch, Kibana, Filebeat y Heartbeat. La API conserva las consultas al catálogo (`/api/games`, `/api/studios` y `/api/search`) y expone `GET /api/services/:serviceId` para simular cada servicio. La guía de ejecución está en [`docs/fase-3-observabilidad.md`](docs/fase-3-observabilidad.md); la lista de correcciones pendientes del informe académico está en [`docs/README-docs.md`](docs/README-docs.md).
 
-Después del arranque, `npm.cmd run api:sample-logs` genera tráfico continuo sobre los siete endpoints simulados; deténlo con Ctrl+C. Para producir un lote finito de 60 solicitudes usa `npm.cmd run api:sample-logs:once`.
+### Levantar el entorno
 
-### Importar el dashboard de Kibana
+Requiere Docker Desktop iniciado y configurado para contenedores Linux. Desde la raíz del repositorio, en PowerShell:
 
-Con el stack levantado, espera a que Kibana esté disponible en <http://localhost:5601>. Desde PowerShell, en la raíz del proyecto, verifica su estado:
+```powershell
+docker compose up --build -d
+docker compose ps
+Invoke-RestMethod http://localhost:3000/api/health
+```
+
+Compose inicia cinco servicios: API, Elasticsearch, Kibana, Filebeat y Heartbeat. Espera a que la API y Elasticsearch estén `healthy` y a que Kibana termine de arrancar. URLs locales: API `http://localhost:3000`, Elasticsearch `http://localhost:9200` y Kibana `http://localhost:5601`. Si Docker muestra que no puede conectarse a `dockerDesktopLinuxEngine`, inicia Docker Desktop y espera a que indique que el motor está corriendo.
+
+### Generar tráfico y logs
+
+Con el stack activo, en otra terminal PowerShell:
+
+```powershell
+npm.cmd run api:sample-logs
+```
+
+El generador recorre continuamente los siete endpoints simulados. Deténlo con Ctrl+C. Para una corrida finita de 60 peticiones:
+
+```powershell
+npm.cmd run api:sample-logs:once
+```
+
+Las respuestas objetivo configuradas son 85 % HTTP 200, 10 % HTTP 400 y 5 % HTTP 503. La latencia simulada varía al azar entre 100 y 800 ms. Los porcentajes son probabilidades, por lo que una muestra corta puede arrojar una distribución distinta. Cada respuesta HTTP genera automáticamente un log JSON en `observability/logs/api.log`; Filebeat lo recolecta y lo envía a Elasticsearch. Heartbeat consulta `/api/health` cada 10 segundos y `/api/games` cada 30 segundos.
+
+### Importar y abrir el dashboard de Kibana
+
+Comprueba que Kibana responda y después importa el dashboard y sus visualizaciones desde la raíz del repositorio:
 
 ```powershell
 Invoke-RestMethod http://localhost:5601/api/status
-```
-
-Después importa el dashboard y sus visualizaciones desde el archivo NDJSON incluido:
-
-```powershell
 curl.exe -X POST "http://localhost:5601/api/saved_objects/_import?overwrite=true" -H "kbn-xsrf: true" --form "file=@observability/kibana/dashboard.ndjson"
 ```
 
-Kibana debe responder `"success": true` y mostrar `successCount: 9`. La opción `overwrite=true` reemplaza objetos existentes que tengan los mismos IDs. Abre el dashboard en <http://localhost:5601/app/dashboards#/view/centralamerica-games-monitoreo-api>. Para que los paneles muestren datos, genera tráfico con `npm.cmd run api:sample-logs` y espera a que Filebeat lo indexe.
+Kibana debe responder `success: true` y `successCount: 9`. Abre <http://localhost:5601/app/dashboards#/view/centralamerica-games-monitoreo-api>. El dashboard incluye tráfico, tiempo promedio de respuesta, estado Heartbeat, distribución HTTP, tasa de errores y endpoints más consultados. Ajusta el selector temporal a los datos disponibles y refresca el dashboard. Para analizar las respuestas de la API simulada sin mezclar las llamadas de Heartbeat o las consultas al catálogo, filtra los paneles de API con `url.path : "/api/services/*"`; deja el panel Heartbeat sin ese filtro.
+
+### Evidencias y resultados actuales
+
+Las capturas actualizadas están en `docs/evidencia/`: `dashboard-completo.png`, `dashboard-kpis-estado.png`, `dashboard-trafico.png` y `dashboard-codigos-endpoints.png`. Muestran las rutas simuladas `/api/services/...`, respuestas 503 y los dos monitores Heartbeat en `up`. 
+
+En la captura completa actualizada se observan, como una lectura puntual del dashboard, **5.66 % de error**, **151.96 ms de respuesta promedio** y **0 checks down** (1,135 y 379 checks up en los dos monitores). El dashboard se refresca automáticamente, así que los KPI pueden variar entre capturas. Además, esas cifras agregan todas las rutas visibles —incluidos `/api/health` y `/api/games`— y no describen únicamente las siete rutas simuladas. Si el informe presenta resultados de la API simulada, aplica `url.path : "/api/services/*"` a los paneles de API y deja el panel de Heartbeat sin ese filtro; documenta las métricas que aparezcan tras aplicar el filtro.
+
+El archivo `observability/logs/api.log` contiene miles de registros JSON generados por peticiones reales a la API y continúa creciendo mientras se ejecuta el generador o Heartbeat. Por eso, registra en el informe el conteo y la distribución HTTP de una corrida definida, junto con su rango temporal, en vez de tratar el total acumulado como una muestra fija.
+
+### Apagar el entorno
+
+Para detener el entorno conservando los datos:
+
+```powershell
+docker compose down
+```
+
+`docker compose down -v` también borra los volúmenes de Elasticsearch, Filebeat y Heartbeat.
 
 ## Trazabilidad Fase 1 → Fase 2
 
